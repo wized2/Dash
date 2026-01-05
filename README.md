@@ -75,6 +75,8 @@ This project includes several key apps and platforms built around the **Material
 
 ## Collaborate
 
-Join our **Project Endroid Collaboration WhatsApp Group** to share ideas, contribute to projects, and stay updated with the latest developments:  
+Join our **Project Endroid Collaboration WhatsApp Group or Discord server** to share ideas, contribute to projects, and stay updated with the latest developments:  
 
 [Join WhatsApp Group](https://igit.me/Endroid-WhatsApp)
+
+[Join Discord Server](https://discord.gg/e2FZ3CP6RH)
