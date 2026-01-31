@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endroid Search</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --md-sys-color-primary: #03dac6;
+      --md-sys-color-primary-container: #018786;
+      --md-sys-color-on-primary: #000000;
+      --md-sys-color-surface: #121212;
+      --md-sys-color-surface-container: #1e1e1e;
+      --md-sys-color-on-surface: #ffffff;
+      --md-sys-color-shadow: rgba(0, 0, 0, 0.4);
+      --md-sys-motion-easing: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    [data-theme="light"] {
+      --md-sys-color-primary: #018786;
+      --md-sys-color-primary-container: #03dac6;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-surface: #f9f9f9;
+      --md-sys-color-surface-container: #ffffff;
+      --md-sys-color-on-surface: #121212;
+      --md-sys-color-shadow: rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      transition: background 0.4s var(--md-sys-motion-easing);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* TOP RIGHT USER WIDGET - LIKE GOOGLE.COM */
+    .user-widget {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .widget-sign-in {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s var(--md-sys-motion-easing);
+      box-shadow: 0 2px 8px rgba(3, 218, 198, 0.3);
+    }
+
+    .widget-sign-in:hover {
+      background: var(--md-sys-color-primary-container);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(3, 218, 198, 0.4);
+    }
+
+    .widget-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 24px;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .widget-profile:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] .widget-profile:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .widget-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--md-sys-color-primary);
+      object-fit: cover;
+    }
+
+    .widget-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .widget-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      right: 0;
+      background: var(--md-sys-color-surface-container);
+      border-radius: 12px;
+      padding: 8px 0;
+      min-width: 160px;
+      box-shadow: 0 8px 32px var(--md-sys-color-shadow);
+      z-index: 1001;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] .widget-dropdown {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .widget-dropdown a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      color: var(--md-sys-color-on-surface);
+      text-decoration: none;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+
+    .widget-dropdown a:hover {
+      background: rgba(3, 218, 198, 0.1);
+      color: var(--md-sys-color-primary);
+    }
+
+    /* MAIN SEARCH CONTAINER */
+    .search-container {
+      background: var(--md-sys-color-surface-container);
+      border-radius: 28px;
+      padding: 24px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 8px 32px var(--md-sys-color-shadow);
+      position: relative;
+      transition: all 0.3s var(--md-sys-motion-easing);
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
+
+    .search-container:focus-within {
+      box-shadow: 0 12px 48px var(--md-sys-color-shadow);
+      transform: translateY(-2px);
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 16px;
+      color: var(--md-sys-color-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .search-bar {
+      background: var(--md-sys-color-surface);
+      border-radius: 28px;
+      padding: 16px;
+      transition: all 0.3s var(--md-sys-motion-easing);
+      border: 2px solid transparent;
+      position: relative;
+    }
+
+    .search-bar:focus-within {
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 0 0 4px rgba(3, 218, 198, 0.2);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      font-size: 17px;
+      background: transparent;
+      color: var(--md-sys-color-on-surface);
+      border: none;
+      outline: none;
+      font-weight: 500;
+    }
+
+    .search-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px;
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border: none;
+      border-radius: 28px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s var(--md-sys-motion-easing);
+      box-shadow: 0 4px 12px rgba(3, 218, 198, 0.3);
+    }
+
+    .search-btn:hover {
+      background: var(--md-sys-color-primary-container);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(3, 218, 198, 0.4);
+    }
+
+    .material-symbols-rounded {
+      font-size: 20px;
+      font-variation-settings: 'FILL' 1;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-theme="light"] .theme-toggle {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    /* MENU (THREE DOTS - FOR OTHER APPS) */
+    .menu {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .menu:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-items {
+      display: none;
+      position: absolute;
+      top: 56px;
+      right: 0;
+      background: var(--md-sys-color-surface-container);
+      border-radius: 16px;
+      padding: 8px 0;
+      min-width: 160px;
+      box-shadow: 0 8px 32px var(--md-sys-color-shadow);
+      z-index: 10;
+    }
+
+    .menu-items a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      color: var(--md-sys-color-on-surface);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .menu-items a:hover {
+      background: rgba(3, 218, 198, 0.1);
+      color: var(--md-sys-color-primary);
+    }
+
+    /* LOADING INDICATOR */
+    .loading {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--md-sys-color-primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* BACKGROUND SETTINGS MODAL */
+    .bg-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .bg-modal-content {
+      background: var(--md-sys-color-surface-container);
+      border-radius: 28px;
+      padding: 24px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 16px 48px var(--md-sys-color-shadow);
+      position: relative;
+    }
+
+    .bg-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .bg-modal-header h3 {
+      font-size: 20px;
+      color: var(--md-sys-color-primary);
+    }
+
+    .close-modal {
+      cursor: pointer;
+      color: var(--md-sys-color-on-surface);
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .close-modal:hover {
+      opacity: 1;
+    }
+
+    .bg-input-group {
+      margin-bottom: 20px;
+    }
+
+    .bg-input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--md-sys-color-on-surface);
+      font-weight: 500;
+    }
+
+    .bg-url-input {
+      background: var(--md-sys-color-surface);
+      border-radius: 20px;
+      padding: 12px 16px;
+      border: 2px solid transparent;
+      transition: all 0.3s var(--md-sys-motion-easing);
+    }
+
+    .bg-url-input:focus-within {
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 0 0 4px rgba(3, 218, 198, 0.2);
+    }
+
+    input[type="url"] {
+      width: 100%;
+      font-size: 16px;
+      background: transparent;
+      color: var(--md-sys-color-on-surface);
+      border: none;
+      outline: none;
+      font-weight: 500;
+    }
+
+    .bg-preview {
+      height: 120px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 16px 0;
+      background: var(--md-sys-color-surface);
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .bg-preview::before {
+      content: 'Preview';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--md-sys-color-on-surface);
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    .bg-preview.loaded::before {
+      display: none;
+    }
+
+    .bg-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .bg-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 1;
+      padding: 12px;
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s var(--md-sys-motion-easing);
+    }
+
+    .bg-btn:hover {
+      background: var(--md-sys-color-primary-container);
+      transform: translateY(-2px);
+    }
+
+    .bg-btn.secondary {
+      background: transparent;
+      border: 2px solid var(--md-sys-color-primary);
+      color: var(--md-sys-color-primary);
+    }
+
+    .bg-btn.secondary:hover {
+      background: rgba(3, 218, 198, 0.1);
+    }
+
+    @media (max-width: 480px) {
+      .search-container { padding: 20px; border-radius: 24px; }
+      h2 { font-size: 20px; }
+      .bg-modal-content { padding: 20px; border-radius: 24px; }
+      .user-widget { top: 15px; right: 15px; }
+      .widget-name { max-width: 80px; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <!-- TOP RIGHT USER WIDGET (LIKE GOOGLE.COM) -->
+  <div class="user-widget" id="userWidget">
+    <!-- Content will be dynamically filled by JavaScript -->
+  </div>
+
+  <div class="search-container">
+    <!-- THEME TOGGLE -->
+    <div class="theme-toggle" id="themeToggle">
+      <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
+    </div>
+
+    <h2>Endroid Search</h2>
+    
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search with Google..." autocomplete="off">
+    </div>
+
+    <button class="search-btn" onclick="search()">
+      <span class="material-symbols-rounded">search</span>
+      Search
+    </button>
+
+    <!-- MENU (FOR OTHER APPS) -->
+    <div class="menu" onclick="toggleMenu()">
+      <span class="material-symbols-rounded">more_vert</span>
+    </div>
+    <div class="menu-items" id="menu-items">
+      <a href="https://wized2.github.io/Clock" target="_blank">
+        <span class="material-symbols-rounded">schedule</span>
+        Clock
+      </a>
+      <a href="https://wized2.github.io/Notes" target="_blank">
+        <span class="material-symbols-rounded">note</span>
+        Notes
+      </a>
+      <!-- BACKGROUND OPTION -->
+      <a href="#" onclick="openBgSettings(); return false;">
+        <span class="material-symbols-rounded">wallpaper</span>
+        Background
+      </a>
+      <!-- KEEP ABOUT LINK AT THE BOTTOM -->
+      <a href="https://wized2.github.io/Endroid" target="_blank">
+        <span class="material-symbols-rounded">info</span>
+        About
+      </a>
+    </div>
+  </div>
+
+  <!-- BACKGROUND SETTINGS MODAL -->
+  <div class="bg-modal" id="bgModal">
+    <div class="bg-modal-content">
+      <div class="bg-modal-header">
+        <h3>Custom Background</h3>
+        <span class="material-symbols-rounded close-modal" onclick="closeBgSettings()">close</span>
+      </div>
+      
+      <div class="bg-input-group">
+        <label for="bgUrlInput">Background Image URL</label>
+        <div class="bg-url-input">
+          <input type="url" id="bgUrlInput" placeholder="https://example.com/image.jpg" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="bg-preview" id="bgPreview"></div>
+
+      <div class="bg-actions">
+        <button class="bg-btn secondary" onclick="removeBackground()">
+          <span class="material-symbols-rounded">delete</span>
+          Remove
+        </button>
+        <button class="bg-btn" onclick="applyBackground()">
+          <span class="material-symbols-rounded">check</span>
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
+
+  <script>
+    // ===== FIREBASE CONFIGURATION =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyCK4ehah9mZ9h8PWtDXOrEJqdEcNefGGtY",
+      authDomain: "endroid-search.firebaseapp.com", // USE FIREBASE DOMAIN, NOT GITHUB PAGES
+      projectId: "endroid-search",
+      storageBucket: "endroid-search.firebasestorage.app",
+      messagingSenderId: "36139140746",
+      appId: "1:36139140746:web:ca9c3ce0065998eda28f73",
+      measurementId: "G-5KY8LBYL8P"
+    };
+
+    // Initialize Firebase
+    let app, auth;
+    try {
+      app = firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      console.log("Firebase initialized successfully");
+    } catch (error) {
+      console.error("Firebase initialization failed:", error);
+    }
+
+    // ===== EXISTING VARIABLES =====
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const searchInput = document.getElementById('search-input');
+    const bgModal = document.getElementById('bgModal');
+    const bgUrlInput = document.getElementById('bgUrlInput');
+    const bgPreview = document.getElementById('bgPreview');
+    let isSigningIn = false;
+
+    // ===== TOP-RIGHT USER WIDGET FUNCTIONS =====
+    function showSignInButton() {
+      const userWidget = document.getElementById('userWidget');
+      userWidget.innerHTML = `
+        <button onclick="signInWithGoogle()" class="widget-sign-in">
+          <span class="material-symbols-rounded">account_circle</span>
+          Sign in
+        </button>
+      `;
+    }
+
+    function updateUserProfileUI(user) {
+      const userWidget = document.getElementById('userWidget');
+      const photoURL = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=03dac6&color=000`;
+      
+      userWidget.innerHTML = `
+        <div class="widget-profile" onclick="toggleDropdown()">
+          <img src="${photoURL}" alt="${user.displayName || 'User'}" class="widget-avatar">
+          <span class="widget-name">${user.displayName || 'User'}</span>
+        </div>
+        <div class="widget-dropdown" id="userDropdown">
+          <a href="#" onclick="signOut(); return false;">
+            <span class="material-symbols-rounded">logout</span>
+            Sign Out
+          </a>
+        </div>
+      `;
+    }
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById('userDropdown');
+      if (dropdown) {
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    // Close dropdown when clicking elsewhere
+    document.addEventListener('click', function(event) {
+      const dropdown = document.getElementById('userDropdown');
+      const userWidget = document.getElementById('userWidget');
+      if (dropdown && userWidget && !userWidget.contains(event.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+
+    // ===== GOOGLE LOGIN FUNCTIONS =====
+    function signInWithGoogle() {
+      if (isSigningIn) return;
+      
+      if (!auth) {
+        console.error("Firebase auth not initialized");
+        alert("Authentication service is not available. Please refresh the page.");
+        return;
+      }
+      
+      isSigningIn = true;
+      
+      // Show loading state
+      const userWidget = document.getElementById('userWidget');
+      userWidget.innerHTML = `
+        <button class="widget-sign-in" style="opacity: 0.8; cursor: not-allowed;">
+          <span class="loading"></span>
+          Signing in...
+        </button>
+      `;
+      
+      const provider = new firebase.auth.GoogleAuthProvider();
+      
+      // Use signInWithPopup - works best with GitHub Pages
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          // User signed in successfully
+          console.log("User signed in:", result.user.email);
+          isSigningIn = false;
+          // User interface will update via onAuthStateChanged listener
+        })
+        .catch((error) => {
+          console.error("Sign-in error:", error);
+          isSigningIn = false;
+          showSignInButton();
+          
+          // Handle specific errors
+          if (error.code === 'auth/popup-blocked') {
+            // Try redirect as fallback
+            auth.signInWithRedirect(provider)
+              .then(() => {
+                console.log("Redirect initiated");
+              })
+              .catch((redirectError) => {
+                alert("Popup was blocked. Please allow popups for this site and try again.");
+              });
+          } else if (error.code === 'auth/popup-closed-by-user') {
+            // User closed the popup - just reset the UI
+            showSignInButton();
+          } else {
+            alert("Sign-in error: " + error.message);
+          }
+        });
+    }
+
+    // Check for redirect result when page loads
+    function checkRedirectResult() {
+      if (!auth) return;
+      
+      auth.getRedirectResult()
+        .then((result) => {
+          if (result.user) {
+            console.log("User signed in via redirect:", result.user.email);
+          }
+        })
+        .catch((error) => {
+          console.error("Redirect result error:", error);
+          // Don't show error alert for common non-critical errors
+        });
+    }
+
+    function signOut() {
+      if (!auth) {
+        console.error("Firebase auth not initialized");
+        return;
+      }
+      
+      auth.signOut()
+        .then(() => {
+          console.log("User signed out successfully");
+          toggleDropdown(); // Close the dropdown
+        })
+        .catch((error) => {
+          console.error("Sign-out error:", error);
+          alert("Sign-out failed: " + error.message);
+        });
+    }
+
+    // Listen for auth state changes
+    if (auth) {
+      auth.onAuthStateChanged((user) => {
+        isSigningIn = false; // Reset signing in flag
+        
+        if (user) {
+          // User is signed in - show profile
+          console.log("User detected:", user.email);
+          updateUserProfileUI(user);
+        } else {
+          // User is signed out - show sign-in button
+          console.log("No user signed in");
+          showSignInButton();
+        }
+      }, (error) => {
+        console.error("Auth state listener error:", error);
+        showSignInButton();
+      });
+    } else {
+      // If auth failed to initialize, show sign-in button anyway
+      console.warn("Auth not initialized, showing sign-in button");
+      showSignInButton();
+    }
+
+    // ===== EXISTING FUNCTIONS (Theme, Search, Menu, Background) =====
+    // Load theme and check redirect result
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('endroid-theme') || 'dark';
+      document.body.dataset.theme = savedTheme;
+      updateThemeIcon();
+      
+      // Check for redirect result when page loads
+      checkRedirectResult();
+      
+      // Initialize sign-in button if auth is ready
+      if (!auth) {
+        console.warn("Firebase auth not initialized on DOM load");
+        showSignInButton();
+      }
+    });
+
+    // Theme toggle
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.body.dataset.theme === 'dark';
+      document.body.dataset.theme = isDark ? 'light' : 'dark';
+      localStorage.setItem('endroid-theme', document.body.dataset.theme);
+      updateThemeIcon();
+    });
+
+    function updateThemeIcon() {
+      themeIcon.textContent = document.body.dataset.theme === 'dark' ? 'dark_mode' : 'light_mode';
+    }
+
+    // Search function
+    function search() {
+      const query = searchInput.value.trim();
+      if (query) {
+        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+      }
+    }
+
+    // Enter key for search
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') search();
+    });
+
+    // Menu functions
+    function toggleMenu() {
+      const menu = document.getElementById('menu-items');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Close menu on outside click
+    window.addEventListener('click', (e) => {
+      const menu = document.getElementById('menu-items');
+      if (!e.target.closest('.menu') && !e.target.closest('.theme-toggle')) {
+        menu.style.display = 'none';
+      }
+    });
+
+    // Background functions
+    function openBgSettings() {
+      document.getElementById('menu-items').style.display = 'none';
+      const currentBg = localStorage.getItem('endroid-bg-url') || '';
+      bgUrlInput.value = currentBg;
+      updatePreview(currentBg);
+      bgModal.style.display = 'flex';
+    }
+
+    function closeBgSettings() {
+      bgModal.style.display = 'none';
+    }
+
+    function updatePreview(url) {
+      if (url && isValidUrl(url)) {
+        bgPreview.style.backgroundImage = `url('${url}')`;
+        bgPreview.classList.add('loaded');
+      } else {
+        bgPreview.style.backgroundImage = '';
+        bgPreview.classList.remove('loaded');
+      }
+    }
+
+    function isValidUrl(string) {
+      try {
+        new URL(string);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function applyBackground() {
+      const url = bgUrlInput.value.trim();
+      
+      if (url && isValidUrl(url)) {
+        const img = new Image();
+        img.onload = function() {
+          localStorage.setItem('endroid-bg-url', url);
+          document.body.style.backgroundImage = `url('${url}')`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          document.body.style.backgroundAttachment = 'fixed';
+          document.body.style.backgroundRepeat = 'no-repeat';
+          closeBgSettings();
+          alert('Background applied successfully!');
+        };
+        
+        img.onerror = function() {
+          alert('Error: Could not load image from the provided URL.');
+        };
+        
+        img.src = url;
+      } else if (url === '') {
+        removeBackground();
+      } else {
+        alert('Please enter a valid URL (e.g., https://example.com/image.jpg)');
+      }
+    }
+
+    function removeBackground() {
+      localStorage.removeItem('endroid-bg-url');
+      document.body.style.backgroundImage = '';
+      document.body.style.background = 'var(--md-sys-color-surface)';
+      bgUrlInput.value = '';
+      updatePreview('');
+      closeBgSettings();
+    }
+
+    // Load saved background
+    function loadBackground() {
+      const savedBgUrl = localStorage.getItem('endroid-bg-url');
+      if (savedBgUrl && isValidUrl(savedBgUrl)) {
+        const img = new Image();
+        img.onload = function() {
+          document.body.style.backgroundImage = `url('${savedBgUrl}')`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          document.body.style.backgroundAttachment = 'fixed';
+          document.body.style.backgroundRepeat = 'no-repeat';
+        };
+        img.onerror = function() {
+          console.warn('Failed to load saved background image');
+          localStorage.removeItem('endroid-bg-url');
+        };
+        img.src = savedBgUrl;
+      }
+    }
+
+    // Load background when page loads
+    loadBackground();
+
+    // Close modal on outside click
+    bgModal.addEventListener('click', (e) => {
+      if (e.target === bgModal) {
+        closeBgSettings();
+      }
+    });
+
+    // Preview on input change
+    bgUrlInput.addEventListener('input', (e) => {
+      updatePreview(e.target.value);
+    });
+
+    // Allow pressing Enter in URL input
+    bgUrlInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        applyBackground();
+      }
+    });
+  </script>
+</body>
+</html>
