@@ -1,0 +1,17 @@
+{
+  "name": "Endroid Ai",
+  "short_name": "Ai",
+  "description": "Endroid Ai | Ai assistant by Endroid Powdered By DeepSeek Backend",
+  "start_url": "/Ai/",
+  "scope": "/Ai/",
+  "display": "standalone",
+  "background_color": "#FEF7FF",
+  "theme_color": "#B87E9F",
+  "icons": [
+    {
+      "src": "/Ai/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}
