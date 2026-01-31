@@ -829,7 +829,7 @@
         // ============================================
 
         // Configuration
-        const OPENROUTER_API_KEY = "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";
+        const OPENROUTER_API_KEY = "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";
         const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
         // State management
@@ -838,7 +838,7 @@
         let typingIndicatorId = null;
 
         // System prompt
-        const SYSTEM_PROMPT = `You are Endroid AI, a helpful and friendly assistant powered by DeepSeek.
+        const SYSTEM_PROMPT = `You are Endroid AI, a helpful and friendly assistant.
         You remember conversation context and provide useful, accurate responses.
         Be conversational and engaging in your replies.
         CRITICAL FORMATTING RULES:
@@ -1316,7 +1316,7 @@
 
                 // Prepare request
                 const requestBody = {
-                    model: "deepseek/deepseek-chat",
+                    model: "solar-open-100b",
                     messages: messages,
                     max_tokens: 1000,
                     temperature: 0.7,
