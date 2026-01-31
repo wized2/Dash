@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- SEO Meta Tags -->
+    <title>Endroid AI - Your Intelligent AI Assistant</title>
+    <meta name="description" content="Endroid AI is a powerful AI assistant powered by DeepSeek. Get intelligent responses, code help, and meaningful conversations.">
+    <meta name="keywords" content="AI Assistant, DeepSeek, Chatbot, AI Chat, Code Help, Programming Assistant">
+    <meta name="author" content="Endroid AI">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Endroid AI - Your Intelligent AI Assistant">
+    <meta property="og:description" content="Powerful AI assistant powered by DeepSeek. Get intelligent responses and meaningful conversations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://endroid-ai.example.com">
+    <meta property="og:image" content="icon.svg">
+    <meta property="og:image:alt" content="Endroid AI Logo">
+    <meta property="og:site_name" content="Endroid AI">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Endroid AI - Your Intelligent AI Assistant">
+    <meta name="twitter:description" content="Powerful AI assistant powered by DeepSeek. Get intelligent responses and meaningful conversations.">
+    <meta name="twitter:image" content="icon.svg">
+    <meta name="twitter:image:alt" content="Endroid AI Logo">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon.svg">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Material Symbols Outlined Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Google Fonts for Material You -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           CSS THEME VARIABLES (Material 3 Expressive)
+           ============================================ */
+        :root {
+            /* Primary Color Palette - Dynamic & Vivid */
+            --md-sys-color-primary: rgb(103, 80, 164);
+            --md-sys-color-primary-container: rgb(234, 221, 255);
+            --md-sys-color-on-primary: rgb(255, 255, 255);
+            --md-sys-color-on-primary-container: rgb(33, 0, 94);
+
+            /* Surface & Background Colors */
+            --md-sys-color-surface: rgb(255, 251, 254);
+            --md-sys-color-surface-dim: rgb(222, 217, 221);
+            --md-sys-color-surface-bright: rgb(255, 251, 254);
+            --md-sys-color-surface-container: rgb(247, 242, 247);
+            --md-sys-color-surface-container-high: rgb(241, 235, 241);
+            --md-sys-color-on-surface: rgb(28, 27, 31);
+            --md-sys-color-on-surface-variant: rgb(73, 69, 78);
+
+            /* Outline & Shadows */
+            --md-sys-color-outline: rgb(121, 116, 126);
+            --md-sys-color-outline-variant: rgb(196, 199, 197);
+
+            --md-elevation-level1: 0 1px 3px 0 rgba(0,0,0,0.12);
+            --md-elevation-level2: 0 3px 6px rgba(0,0,0,0.16);
+            --md-elevation-level3: 0 10px 20px rgba(0,0,0,0.19);
+
+            /* Typography */
+            --md-ref-typeface-brand: 'Roboto', system-ui, sans-serif;
+            --md-ref-typeface-plain: 'Roboto', system-ui, sans-serif;
+            --md-ref-typeface-mono: 'Roboto Mono', monospace;
+
+            /* Glassmorphism Effects */
+            --glass-background-light: rgba(255, 255, 255, 0.7);
+            --glass-background-dark: rgba(30, 30, 35, 0.7);
+            --glass-backdrop-blur: blur(20px);
+            --glass-border-light: 1px solid rgba(255, 255, 255, 0.3);
+            --glass-border-dark: 1px solid rgba(255, 255, 255, 0.1);
+
+            /* Animation Timing */
+            --motion-easing-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+            --motion-duration-medium: 300ms;
+
+            /* Current Theme Mode */
+            color-scheme: light;
+        }
+
+        /* DARK MODE THEME VARIABLES */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --md-sys-color-primary: rgb(208, 188, 255);
+                --md-sys-color-primary-container: rgb(79, 55, 139);
+                --md-sys-color-on-primary: rgb(56, 30, 114);
+                --md-sys-color-on-primary-container: rgb(234, 221, 255);
+
+                --md-sys-color-surface: rgb(20, 18, 24);
+                --md-sys-color-surface-dim: rgb(20, 18, 24);
+                --md-sys-color-surface-bright: rgb(59, 56, 62);
+                --md-sys-color-surface-container: rgb(30, 27, 33);
+                --md-sys-color-surface-container-high: rgb(40, 37, 43);
+                --md-sys-color-on-surface: rgb(230, 225, 229);
+                --md-sys-color-on-surface-variant: rgb(196, 199, 197);
+
+                --md-sys-color-outline: rgb(141, 143, 141);
+                --md-sys-color-outline-variant: rgb(68, 72, 70);
+
+                --md-elevation-level1: 0 1px 3px 0 rgba(0,0,0,0.4);
+                --md-elevation-level2: 0 3px 6px rgba(0,0,0,0.5);
+                --md-elevation-level3: 0 10px 20px rgba(0,0,0,0.6);
+
+                color-scheme: dark;
+            }
+        }
+
+        /* Forced Dark/Light Mode Classes */
+        .theme-dark {
+            color-scheme: dark;
+            --md-sys-color-primary: rgb(208, 188, 255);
+            --md-sys-color-primary-container: rgb(79, 55, 139);
+            --md-sys-color-on-primary: rgb(56, 30, 114);
+            --md-sys-color-on-primary-container: rgb(234, 221, 255);
+            --md-sys-color-surface: rgb(20, 18, 24);
+            --md-sys-color-surface-dim: rgb(20, 18, 24);
+            --md-sys-color-surface-bright: rgb(59, 56, 62);
+            --md-sys-color-surface-container: rgb(30, 27, 33);
+            --md-sys-color-surface-container-high: rgb(40, 37, 43);
+            --md-sys-color-on-surface: rgb(230, 225, 229);
+            --md-sys-color-on-surface-variant: rgb(196, 199, 197);
+            --md-sys-color-outline: rgb(141, 143, 141);
+            --md-sys-color-outline-variant: rgb(68, 72, 70);
+            --md-elevation-level1: 0 1px 3px 0 rgba(0,0,0,0.4);
+            --md-elevation-level2: 0 3px 6px rgba(0,0,0,0.5);
+            --md-elevation-level3: 0 10px 20px rgba(0,0,0,0.6);
+        }
+        .theme-light {
+            color-scheme: light;
+            --md-sys-color-primary: rgb(103, 80, 164);
+            --md-sys-color-primary-container: rgb(234, 221, 255);
+            --md-sys-color-on-primary: rgb(255, 255, 255);
+            --md-sys-color-on-primary-container: rgb(33, 0, 94);
+            --md-sys-color-surface: rgb(255, 251, 254);
+            --md-sys-color-surface-dim: rgb(222, 217, 221);
+            --md-sys-color-surface-bright: rgb(255, 251, 254);
+            --md-sys-color-surface-container: rgb(247, 242, 247);
+            --md-sys-color-surface-container-high: rgb(241, 235, 241);
+            --md-sys-color-on-surface: rgb(28, 27, 31);
+            --md-sys-color-on-surface-variant: rgb(73, 69, 78);
+            --md-sys-color-outline: rgb(121, 116, 126);
+            --md-sys-color-outline-variant: rgb(196, 199, 197);
+            --md-elevation-level1: 0 1px 3px 0 rgba(0,0,0,0.12);
+            --md-elevation-level2: 0 3px 6px rgba(0,0,0,0.16);
+            --md-elevation-level3: 0 10px 20px rgba(0,0,0,0.19);
+        }
+
+        /* ============================================
+           BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--md-ref-typeface-plain);
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            height: 100vh;
+            max-width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background-color var(--motion-duration-medium) var(--motion-easing-emphasized);
+        }
+
+        /* ============================================
+           HEADER with THEME TOGGLE
+           ============================================ */
+        .header {
+            padding: 12px 16px;
+            font-family: var(--md-ref-typeface-brand);
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            box-shadow: var(--md-elevation-level1);
+            background: var(--md-sys-color-surface-container);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: var(--glass-backdrop-blur);
+            -webkit-backdrop-filter: var(--glass-backdrop-blur);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            transition: all var(--motion-duration-medium) var(--motion-easing-emphasized);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header .logo-icon {
+            font-size: 1.8rem;
+            color: var(--md-sys-color-primary);
+        }
+
+        .header-title {
+            font-weight: 500;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--motion-duration-medium) var(--motion-easing-emphasized);
+            box-shadow: var(--md-elevation-level1);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.08) rotate(8deg);
+            box-shadow: var(--md-elevation-level2);
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-toggle .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+            transition: transform var(--motion-duration-medium) var(--motion-easing-emphasized);
+        }
+
+        /* ============================================
+           MAIN CHAT CONTAINER
+           ============================================ */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px 16px 100px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
+        /* Welcome Message */
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInUp 0.6s var(--motion-easing-emphasized);
+        }
+
+        .welcome-icon {
+            font-size: 4rem;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 20px;
+            opacity: 0.9;
+            animation: gentlePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-primary-container));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.1rem;
+            color: var(--md-sys-color-on-surface-variant);
+            max-width: 300px;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           CHAT MESSAGE STYLES
+           ============================================ */
+        .message {
+            margin: 8px 0;
+            padding: 16px 20px;
+            border-radius: 24px;
+            max-width: 85%;
+            font-size: 1rem;
+            line-height: 1.5;
+            word-break: break-word;
+            animation: messageSlideIn 0.3s var(--motion-easing-emphasized);
+            position: relative;
+            transition: transform 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .message:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes messageSlideIn {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* User Message */
+        .message.user {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            align-self: flex-end;
+            border-bottom-right-radius: 8px;
+            border-top-right-radius: 24px;
+            border-top-left-radius: 24px;
+            border-bottom-left-radius: 24px;
+            box-shadow: var(--md-elevation-level1);
+            margin-left: auto;
+            border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 20%, transparent);
+        }
+
+        /* Bot Message - Glassmorphism effect */
+        .message.bot {
+            background: color-mix(in srgb, var(--md-sys-color-surface-container) 85%, transparent);
+            color: var(--md-sys-color-on-surface);
+            align-self: flex-start;
+            border-bottom-left-radius: 8px;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            border-bottom-right-radius: 24px;
+            backdrop-filter: var(--glass-backdrop-blur);
+            -webkit-backdrop-filter: var(--glass-backdrop-blur);
+            box-shadow: var(--md-elevation-level1);
+            border: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 15%, transparent);
+        }
+
+        /* Typing Indicator */
+        .message.typing {
+            align-self: flex-start;
+            background: color-mix(in srgb, var(--md-sys-color-surface-container) 85%, transparent);
+            border: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 15%, transparent);
+            padding: 12px 20px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--md-sys-color-primary);
+            opacity: 0.4;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+
+        /* ============================================
+           ENHANCED MARKDOWN RENDERING
+           ============================================ */
+        .message.bot p {
+            margin-bottom: 1em;
+            line-height: 1.6;
+        }
+
+        .message.bot p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message.bot h1,
+        .message.bot h2,
+        .message.bot h3,
+        .message.bot h4,
+        .message.bot h5,
+        .message.bot h6 {
+            margin-top: 1.2em;
+            margin-bottom: 0.6em;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--md-sys-color-on-surface);
+        }
+        .message.bot h1 { font-size: 1.6em; border-bottom: 2px solid var(--md-sys-color-primary); padding-bottom: 0.3em; }
+        .message.bot h2 { font-size: 1.4em; }
+        .message.bot h3 { font-size: 1.2em; }
+        .message.bot h4 { font-size: 1.1em; }
+        .message.bot h5 { font-size: 1em; }
+        .message.bot h6 { font-size: 0.95em; color: var(--md-sys-color-on-surface-variant); }
+
+        .message.bot strong {
+            font-weight: 700;
+            color: color-mix(in srgb, var(--md-sys-color-on-surface) 90%, var(--md-sys-color-primary));
+        }
+
+        .message.bot em {
+            font-style: italic;
+            color: color-mix(in srgb, var(--md-sys-color-on-surface) 80%, var(--md-sys-color-primary));
+        }
+
+        .message.bot a {
+            color: var(--md-sys-color-primary);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+        }
+        .message.bot a:hover {
+            color: color-mix(in srgb, var(--md-sys-color-primary) 80%, black);
+        }
+
+        .message.bot ul,
+        .message.bot ol {
+            padding-left: 1.8em;
+            margin: 0.8em 0;
+        }
+
+        .message.bot li {
+            margin-bottom: 0.4em;
+            line-height: 1.5;
+        }
+
+        .message.bot blockquote {
+            border-left: 4px solid var(--md-sys-color-primary-container);
+            padding-left: 1.2em;
+            margin: 1em 0;
+            font-style: italic;
+            color: var(--md-sys-color-on-surface-variant);
+            background: color-mix(in srgb, var(--md-sys-color-surface-container) 50%, transparent);
+            padding: 1em 1.2em;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* MARKDOWN TABLES */
+        .message.bot table {
+            border-collapse: collapse;
+            margin: 1em 0;
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 12px;
+            box-shadow: var(--md-elevation-level1);
+        }
+
+        .message.bot table thead {
+            background: color-mix(in srgb, var(--md-sys-color-surface-container) 70%, transparent);
+            border-bottom: 2px solid var(--md-sys-color-outline);
+        }
+
+        .message.bot table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            border-right: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .message.bot table td {
+            padding: 10px 16px;
+            border-right: 1px solid var(--md-sys-color-outline-variant);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .message.bot table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .message.bot table th:last-child,
+        .message.bot table td:last-child {
+            border-right: none;
+        }
+
+        .message.bot table tr:nth-child(even) {
+            background: color-mix(in srgb, var(--md-sys-color-surface-container) 30%, transparent);
+        }
+
+        .message.bot table tr:hover {
+            background: color-mix(in srgb, var(--md-sys-color-primary-container) 10%, transparent);
+        }
+
+        /* Table cell content styling */
+        .message.bot table td strong,
+        .message.bot table th strong {
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .message.bot table td em,
+        .message.bot table th em {
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .message.bot table td code,
+        .message.bot table th code {
+            background: color-mix(in srgb, var(--md-sys-color-primary-container) 30%, transparent);
+            color: var(--md-sys-color-on-primary-container);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-family: var(--md-ref-typeface-mono);
+        }
+
+        /* CODE BLOCK with Copy Button */
+        .message.bot pre {
+            background: var(--md-sys-color-surface-container-high);
+            border-radius: 16px;
+            padding: 1.2em;
+            margin: 1em 0;
+            overflow-x: auto;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .message.bot code {
+            font-family: var(--md-ref-typeface-mono);
+            font-size: 0.9em;
+        }
+
+        .message.bot pre code {
+            background: transparent;
+            padding: 0;
+            color: var(--md-sys-color-on-surface);
+            display: block;
+            line-height: 1.4;
+        }
+
+        .message.bot :not(pre) > code {
+            background: color-mix(in srgb, var(--md-sys-color-primary-container) 30%, transparent);
+            color: var(--md-sys-color-on-primary-container);
+            padding: 0.2em 0.5em;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 500;
+            border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 20%, transparent);
+        }
+
+        /* Copy Code Button */
+        .code-block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8em;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 0.85em;
+            font-family: var(--md-ref-typeface-mono);
+        }
+
+        .copy-code-btn {
+            background: color-mix(in srgb, var(--md-sys-color-primary) 15%, transparent);
+            color: var(--md-sys-color-primary);
+            border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 30%, transparent);
+            border-radius: 12px;
+            padding: 6px 12px;
+            font-size: 0.8em;
+            font-family: var(--md-ref-typeface-plain);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .copy-code-btn:hover {
+            background: color-mix(in srgb, var(--md-sys-color-primary) 25%, transparent);
+            transform: translateY(-1px);
+        }
+
+        .copy-code-btn.copied {
+            background: color-mix(in srgb, var(--md-sys-color-primary) 40%, transparent);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        /* ============================================
+           INPUT AREA
+           ============================================ */
+        .input-area {
+            padding: 16px 20px;
+            background: var(--md-sys-color-surface-container);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+            backdrop-filter: var(--glass-backdrop-blur);
+            -webkit-backdrop-filter: var(--glass-backdrop-blur);
+            transition: all var(--motion-duration-medium) var(--motion-easing-emphasized);
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid var(--md-sys-color-outline-variant);
+            border-radius: 28px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-size: 1.05rem;
+            outline: none;
+            transition: all var(--motion-duration-medium) var(--motion-easing-emphasized);
+            font-family: var(--md-ref-typeface-plain);
+            min-height: 56px;
+            resize: none;
+            line-height: 1.4;
+        }
+
+        #messageInput:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-sys-color-primary) 25%, transparent);
+            background: var(--md-sys-color-surface-bright);
+        }
+
+        #messageInput::placeholder {
+            color: var(--md-sys-color-on-surface-variant);
+            opacity: 0.7;
+        }
+
+        /* Action Buttons */
+        .icon-btn {
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            border-radius: 26px;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--motion-duration-medium) var(--motion-easing-emphasized);
+            box-shadow: var(--md-elevation-level1);
+        }
+
+        /* Send Button */
+        #sendBtn {
+            background: var(--md-sys-color-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #sendBtn:hover {
+            transform: scale(1.08);
+            box-shadow: var(--md-elevation-level2);
+            background: color-mix(in srgb, var(--md-sys-color-primary) 90%, white);
+        }
+
+        #sendBtn:active {
+            transform: scale(0.95);
+        }
+
+        #sendBtn:disabled {
+            background: var(--md-sys-color-outline-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* Clear Button */
+        #clearBtn {
+            background: color-mix(in srgb, var(--md-sys-color-surface) 90%, transparent);
+            color: var(--md-sys-color-on-surface-variant);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        #clearBtn:hover {
+            background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 90%, transparent);
+            color: var(--md-sys-color-on-surface);
+            border-color: var(--md-sys-color-outline);
+        }
+
+        .icon-btn .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+
+        /* ============================================
+           ERROR DISPLAY
+           ============================================ */
+        .error {
+            background: color-mix(in srgb, #d32f2f 10%, var(--md-sys-color-surface));
+            color: #d32f2f;
+            padding: 16px;
+            border-radius: 16px;
+            margin: 16px 20px;
+            font-size: 0.95rem;
+            text-align: center;
+            border-left: 4px solid #d32f2f;
+            animation: fadeIn 0.5s;
+            box-shadow: var(--md-elevation-level1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 600px) {
+            .header { padding: 10px 14px; font-size: 1.1rem; }
+            .header .logo-icon { font-size: 1.6rem; }
+            .theme-toggle { width: 40px; height: 40px; }
+
+            .chat-container { padding: 16px 12px 90px 12px; gap: 16px; }
+
+            .welcome-icon { font-size: 3rem; }
+            .welcome-title { font-size: 1.7rem; }
+            .welcome-subtitle { font-size: 1rem; max-width: 260px; }
+
+            .message { padding: 14px 18px; max-width: 90%; font-size: 0.98rem; }
+
+            .message.bot table {
+                font-size: 0.9em;
+            }
+            
+            .message.bot table th,
+            .message.bot table td {
+                padding: 8px 12px;
+            }
+
+            .input-area { padding: 12px 16px; gap: 10px; }
+            #messageInput { padding: 14px 18px; font-size: 1rem; min-height: 52px; }
+            .icon-btn { width: 48px; height: 48px; min-width: 48px; }
+        }
+
+        /* ============================================
+           UTILITY ANIMATIONS
+           ============================================ */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Smooth theme transition */
+        .smooth-transition * {
+            transition: background-color var(--motion-duration-medium) var(--motion-easing-emphasized),
+                        color var(--motion-duration-medium) var(--motion-easing-emphasized),
+                        border-color var(--motion-duration-medium) var(--motion-easing-emphasized),
+                        box-shadow var(--motion-duration-medium) var(--motion-easing-emphasized);
+        }
+    </style>
+</head>
+<body class="smooth-transition">
+    <!-- HEADER WITH THEME TOGGLE -->
+    <div class="header">
+        <div class="header-left">
+            <span class="material-symbols-outlined logo-icon">smart_toy</span>
+            <span class="header-title">Endroid AI</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+        </button>
+    </div>
+
+    <!-- MAIN CHAT CONTAINER -->
+    <div class="chat-container" id="chatContainer">
+        <!-- Welcome Screen (shown when empty) -->
+        <div class="welcome-container" id="welcomeMessage">
+            <span class="material-symbols-outlined welcome-icon">psychology</span>
+            <h1 class="welcome-title">Hello, I'm Endroid</h1>
+            <p class="welcome-subtitle">Your AI assistant powered by DeepSeek. Ask me anything, and let's have a great conversation!</p>
+        </div>
+        <!-- Chat messages will be appended here -->
+    </div>
+
+    <!-- INPUT AREA -->
+    <div class="input-area">
+        <button class="icon-btn" id="clearBtn" title="Clear History">
+            <span class="material-symbols-outlined">delete</span>
+        </button>
+        <textarea id="messageInput" placeholder="Message Endroid AI..." rows="1" autocomplete="off"></textarea>
+        <button class="icon-btn" id="sendBtn" title="Send Message">
+            <span class="material-symbols-outlined">send</span>
+        </button>
+    </div>
+
+    <!-- ERROR DISPLAY -->
+    <div id="error" class="error hidden"></div>
+
+    <script>
+        // ============================================
+        // ENDROID AI - COMPLETE INTEGRATED JAVASCRIPT
+        // ============================================
+
+        // Configuration
+        const OPENROUTER_API_KEY = "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";
+        const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+
+        // State management
+        let conversationHistory = [];
+        const MAX_HISTORY = 8;
+        let typingIndicatorId = null;
+
+        // System prompt
+        const SYSTEM_PROMPT = `You are Endroid AI, a helpful and friendly assistant powered by DeepSeek.
+        You remember conversation context and provide useful, accurate responses.
+        Be conversational and engaging in your replies.
+        CRITICAL FORMATTING RULES:
+        1. ALWAYS respond using PROPER MARKDOWN formatting, NOT HTML
+        2. Use **bold** for emphasis, NOT <strong> tags
+        3. Use *italic* for emphasis, NOT <em> tags
+        4. Use # for headings, NOT <h1> tags
+        5. Use - for bullet points, NOT <ul> or <li> tags
+        6. Use \`code\` for inline code and \`\`\`language\ncode\n\`\`\` for code blocks
+        7. Use markdown tables when comparing things
+        8. NEVER use HTML tags like <br>, <p>, <div>, or any other HTML
+        9. Format all responses in clean, readable markdown
+        10. You can use markdown inside table cells (like **bold**, *italic*, \`code\`)
+
+        You remember conversation context and provide useful, accurate responses.
+        Be conversational and engaging in your replies.`;
+
+        // ============================================
+        // ENHANCED MARKDOWN RENDERER (FIXED VERSION)
+        // ============================================
+
+        function renderMarkdown(text) {
+            if (!text || typeof text !== 'string') return '';
+            
+            let processedText = text;
+            
+            // Store replacements for code blocks
+            const codeBlocks = [];
+            const inlineCodeBlocks = [];
+            
+            // 1. Handle code blocks first (most important)
+            processedText = processedText.replace(/```(\w+)?\n([\s\S]*?)```/g, function(match, language, code) {
+                const id = 'code-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                const lang = language || 'text';
+                
+                // Escape HTML in code
+                const escapedCode = escapeHtml(code);
+                
+                const html = `
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span>${lang}</span>
+                        <button class="copy-code-btn" data-code-id="${id}">
+                            <span class="material-symbols-outlined" style="font-size:18px">content_copy</span>
+                            Copy
+                        </button>
+                    </div>
+                    <pre><code id="${id}" class="language-${lang}">${escapedCode}</code></pre>
+                </div>`;
+                
+                codeBlocks.push({ id: id, html: html, rawCode: code });
+                return `__CODE_BLOCK_${codeBlocks.length - 1}__`;
+            });
+
+            // 2. Handle inline code (store for later replacement)
+            processedText = processedText.replace(/`([^`]+)`/g, function(match, code) {
+                const id = 'inline-code-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                inlineCodeBlocks.push({ id: id, code: code });
+                return `__INLINE_CODE_${inlineCodeBlocks.length - 1}__`;
+            });
+
+            // 3. Handle tables (markdown tables) - Process markdown inside cells
+            processedText = processedText.replace(/(?:\|.*\|.*\n)(?:\|?:?-+:?\|.*\n)+(?:\|.*\|.*\n)+/g, function(match) {
+                const rows = match.trim().split('\n').filter(row => row.trim());
+                if (rows.length < 2) return match; // Not a valid table
+                
+                let tableHtml = '<table>\n<thead>\n<tr>\n';
+                
+                // Parse header (first row)
+                const headerRow = rows[0].trim();
+                const headers = headerRow.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
+                headers.forEach(header => {
+                    // Process markdown in header
+                    let headerContent = processMarkdownInCell(header);
+                    tableHtml += `<th>${headerContent}</th>\n`;
+                });
+                tableHtml += '</tr>\n</thead>\n<tbody>\n';
+                
+                // Skip separator row (second row) and process data rows
+                for (let i = 2; i < rows.length; i++) {
+                    const row = rows[i].trim();
+                    if (row.includes('---') || row.includes('===')) continue; // Skip separator rows
+                    
+                    const cells = row.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
+                    if (cells.length > 0) {
+                        tableHtml += '<tr>\n';
+                        cells.forEach(cell => {
+                            // Process markdown in cells
+                            let cellContent = processMarkdownInCell(cell);
+                            tableHtml += `<td>${cellContent}</td>\n`;
+                        });
+                        tableHtml += '</tr>\n';
+                    }
+                }
+                
+                tableHtml += '</tbody>\n</table>';
+                return tableHtml;
+            });
+
+            // 4. Process remaining markdown
+            processedText = processBasicMarkdown(processedText);
+
+            // 5. Handle lists
+            processedText = processLists(processedText);
+
+            // 6. Restore inline code blocks (after all other processing)
+            inlineCodeBlocks.forEach((block, index) => {
+                processedText = processedText.replace(
+                    `__INLINE_CODE_${index}__`, 
+                    `<code>${escapeHtml(block.code)}</code>`
+                );
+            });
+
+            // 7. Restore code blocks
+            codeBlocks.forEach((block, index) => {
+                processedText = processedText.replace(`__CODE_BLOCK_${index}__`, block.html);
+            });
+
+            // 8. Handle paragraphs and line breaks
+            processedText = processParagraphs(processedText);
+
+            return processedText;
+        }
+
+        // Helper function to process markdown inside table cells
+        function processMarkdownInCell(text) {
+            if (!text) return '';
+            
+            let processed = text;
+            
+            // Handle bold
+            processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Handle italic
+            processed = processed.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Handle inline code
+            processed = processed.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // Handle links
+            processed = processed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, 
+                '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+            
+            // Escape HTML
+            processed = escapeHtml(processed);
+            
+            // Unescape the HTML tags we added
+            processed = processed.replace(/&lt;(\/?)(strong|em|code|a\b[^&]*?)&gt;/g, '<$1$2>');
+            
+            return processed;
+        }
+
+        // Helper function to process basic markdown
+        function processBasicMarkdown(text) {
+            let processed = text;
+            
+            // Handle headers
+            processed = processed.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+            processed = processed.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+            processed = processed.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+            
+            // Handle bold (outside of tables)
+            processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Handle italic (outside of tables)
+            processed = processed.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Handle blockquotes
+            processed = processed.replace(/^>\s*(.+)$/gm, '<blockquote>$1</blockquote>');
+            
+            // Handle links
+            processed = processed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, 
+                '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+            
+            return processed;
+        }
+
+        // Helper function to process lists
+        function processLists(text) {
+            const lines = text.split('\n');
+            let resultLines = [];
+            let inList = false;
+            let listType = 'ul';
+            let listItems = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+                
+                // Check for unordered list
+                if (line.match(/^\s*[-*+]\s+/)) {
+                    if (!inList) {
+                        inList = true;
+                        listType = 'ul';
+                    }
+                    const content = line.replace(/^\s*[-*+]\s+/, '');
+                    listItems.push(`<li>${content}</li>`);
+                }
+                // Check for ordered list
+                else if (line.match(/^\s*\d+\.\s+/)) {
+                    if (!inList) {
+                        inList = true;
+                        listType = 'ol';
+                    }
+                    const content = line.replace(/^\s*\d+\.\s+/, '');
+                    listItems.push(`<li>${content}</li>`);
+                } else {
+                    // Close the list if we were in one
+                    if (inList && listItems.length > 0) {
+                        resultLines.push(`<${listType}>${listItems.join('')}</${listType}>`);
+                        inList = false;
+                        listItems = [];
+                    }
+                    resultLines.push(line);
+                }
+            }
+            
+            // Close any remaining list
+            if (inList && listItems.length > 0) {
+                resultLines.push(`<${listType}>${listItems.join('')}</${listType}>`);
+            }
+            
+            return resultLines.join('\n');
+        }
+
+        // Helper function to process paragraphs
+        function processParagraphs(text) {
+            const lines = text.split('\n');
+            const resultLines = [];
+            let currentParagraph = [];
+            
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+                
+                if (trimmedLine === '') {
+                    if (currentParagraph.length > 0) {
+                        resultLines.push(`<p>${currentParagraph.join('<br>')}</p>`);
+                        currentParagraph = [];
+                    }
+                } else if (line.startsWith('<') && (line.endsWith('>') || line.includes('</'))) {
+                    // This is already HTML (h1, ul, table, etc.)
+                    if (currentParagraph.length > 0) {
+                        resultLines.push(`<p>${currentParagraph.join('<br>')}</p>`);
+                        currentParagraph = [];
+                    }
+                    resultLines.push(line);
+                } else {
+                    currentParagraph.push(line);
+                }
+            }
+            
+            if (currentParagraph.length > 0) {
+                resultLines.push(`<p>${currentParagraph.join('<br>')}</p>`);
+            }
+            
+            return resultLines.join('\n');
+        }
+
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============================================
+        // COPY CODE FUNCTIONALITY
+        // ============================================
+
+        function setupCopyButtons() {
+            // Use event delegation for copy buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.copy-code-btn')) {
+                    const button = e.target.closest('.copy-code-btn');
+                    const codeId = button.getAttribute('data-code-id');
+                    if (codeId) {
+                        copyCodeToClipboard(codeId, button);
+                    }
+                }
+            });
+        }
+
+        function copyCodeToClipboard(codeId, button) {
+            const codeElement = document.getElementById(codeId);
+            if (!codeElement) return;
+            
+            // Get the text content
+            const text = codeElement.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">check</span>Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">check</span>Copied!';
+                    button.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.classList.remove('copied');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Fallback copy failed:', err);
+                }
+                document.body.removeChild(textArea);
+            });
+        }
+
+        // ============================================
+        // UI FUNCTIONS (PROPERLY INTEGRATED)
+        // ============================================
+
+        function addMessageToUI(role, text, isTyping = false) {
+            const container = document.getElementById('chatContainer');
+            const welcomeEl = document.getElementById('welcomeMessage');
+
+            // Hide welcome message on first real message
+            if (welcomeEl && container.contains(welcomeEl) && (role === 'user' || role === 'assistant')) {
+                welcomeEl.style.display = 'none';
+            }
+
+            // Remove existing typing indicator if adding a real message
+            if (!isTyping && typingIndicatorId) {
+                removeTypingIndicator();
+            }
+
+            if (isTyping && role === 'assistant') {
+                // Create typing indicator
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message bot typing';
+                typingDiv.id = 'typingIndicator';
+                typingDiv.innerHTML = `
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <span style="margin-left:8px;color:var(--md-sys-color-on-surface-variant);">Endroid is thinking</span>
+                    </div>
+                `;
+                container.appendChild(typingDiv);
+                typingIndicatorId = 'typingIndicator';
+                container.scrollTop = container.scrollHeight;
+                return typingDiv;
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role === 'assistant' ? 'bot' : role}`;
+
+            if (role === 'assistant') {
+                const renderedHtml = renderMarkdown(text);
+                messageDiv.innerHTML = renderedHtml;
+                
+                // Setup copy buttons for any code blocks in this message
+                setTimeout(() => {
+                    const copyButtons = messageDiv.querySelectorAll('.copy-code-btn');
+                    copyButtons.forEach(button => {
+                        if (!button.hasAttribute('data-code-id')) {
+                            const codeId = button.closest('.code-block')?.querySelector('code')?.id;
+                            if (codeId) {
+                                button.setAttribute('data-code-id', codeId);
+                            }
+                        }
+                    });
+                }, 0);
+            } else {
+                messageDiv.textContent = text;
+            }
+
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+            return messageDiv;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+                typingIndicatorId = null;
+            }
+        }
+
+        function showErrorInUI(message) {
+            const errorDiv = document.getElementById('error');
+            if (errorDiv) {
+                errorDiv.textContent = message;
+                errorDiv.classList.remove('hidden');
+                setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+            }
+        }
+
+        // ============================================
+        // THEME MANAGEMENT
+        // ============================================
+
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        let currentTheme = localStorage.getItem('endroid-theme') || 'system';
+
+        function applyTheme(theme) {
+            document.body.classList.remove('theme-light', 'theme-dark');
+
+            if (theme === 'dark' || (theme === 'system' && prefersDarkScheme.matches)) {
+                document.body.classList.add('theme-dark');
+                themeIcon.textContent = 'light_mode';
+            } else {
+                document.body.classList.add('theme-light');
+                themeIcon.textContent = 'dark_mode';
+            }
+
+            currentTheme = theme;
+            localStorage.setItem('endroid-theme', theme);
+        }
+
+        applyTheme(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+
+        prefersDarkScheme.addEventListener('change', (e) => {
+            if (currentTheme === 'system') {
+                applyTheme('system');
+            }
+        });
+
+        // ============================================
+        // API FUNCTIONS
+        // ============================================
+
+        async function callDeepSeekAPI(userMessage) {
+            console.log("🤖 API: Calling DeepSeek...");
+            
+            try {
+                // Build messages array
+                const messages = [];
+                messages.push({
+                    role: "system",
+                    content: SYSTEM_PROMPT
+                });
+
+                // Add conversation history
+                const recentHistory = conversationHistory
+                    .filter(msg => msg.role === "user" || msg.role === "assistant")
+                    .slice(-MAX_HISTORY);
+                
+                recentHistory.forEach(msg => {
+                    messages.push({
+                        role: msg.role,
+                        content: msg.text
+                    });
+                });
+
+                // Add current user message
+                messages.push({
+                    role: "user",
+                    content: userMessage
+                });
+
+                // Prepare request
+                const requestBody = {
+                    model: "deepseek/deepseek-chat",
+                    messages: messages,
+                    max_tokens: 1000,
+                    temperature: 0.7,
+                    stream: false
+                };
+
+                console.log("📤 API: Sending request...");
+
+                // Make API call
+                const response = await fetch(OPENROUTER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                        'Content-Type': 'application/json',
+                        'HTTP-Referer': window.location.origin || 'http://localhost',
+                        'X-Title': 'Endroid AI'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                console.log(`📥 API: Response status - ${response.status}`);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("❌ API Error:", errorText);
+                    
+                    let errorMessage = `API Error: ${response.status}`;
+                    if (response.status === 401) errorMessage = "Invalid API key";
+                    if (response.status === 429) errorMessage = "Rate limit exceeded";
+                    if (response.status === 402) errorMessage = "Insufficient credits";
+                    
+                    throw new Error(errorMessage);
+                }
+
+                const data = await response.json();
+                console.log("✅ API: Success!");
+
+                if (data.choices && data.choices[0] && data.choices[0].message) {
+                    return data.choices[0].message.content;
+                } else {
+                    throw new Error("Invalid response format from API");
+                }
+
+            } catch (error) {
+                console.error("🔥 API Call Failed:", error);
+                throw error;
+            }
+        }
+
+        // ============================================
+        // CHAT HISTORY MANAGEMENT
+        // ============================================
+
+        function addToHistory(role, text) {
+            if (role === "user" || role === "assistant") {
+                conversationHistory.push({ role, text });
+                
+                if (conversationHistory.length > MAX_HISTORY * 2) {
+                    conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
+                }
+                
+                saveToStorage();
+            }
+        }
+
+        function saveToStorage() {
+            try {
+                localStorage.setItem("endroid_conversation", JSON.stringify(conversationHistory));
+            } catch (e) {
+                console.warn("Could not save to localStorage:", e);
+            }
+        }
+
+        function loadFromStorage() {
+            try {
+                const saved = localStorage.getItem("endroid_conversation");
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) {
+                        conversationHistory = parsed;
+                        
+                        const container = document.getElementById("chatContainer");
+                        const welcomeEl = document.getElementById("welcomeMessage");
+                        
+                        if (parsed.length > 0 && welcomeEl && container.contains(welcomeEl)) {
+                            welcomeEl.style.display = 'none';
+                        }
+                        
+                        parsed.forEach(msg => {
+                            if (msg.role === "assistant") {
+                                addMessageToUI(msg.role, msg.text, false);
+                            } else if (msg.role === "user") {
+                                addMessageToUI(msg.role, msg.text, false);
+                            }
+                        });
+                        
+                        console.log("📂 Loaded", parsed.length, "messages from storage");
+                    }
+                }
+            } catch (e) {
+                console.warn("Could not load from localStorage:", e);
+                conversationHistory = [];
+            }
+        }
+
+        function clearHistory() {
+            if (confirm("Clear all chat history? This cannot be undone.")) {
+                conversationHistory = [];
+                localStorage.removeItem("endroid_conversation");
+                
+                const container = document.getElementById("chatContainer");
+                const welcomeEl = document.getElementById("welcomeMessage");
+                
+                container.innerHTML = '';
+                
+                if (welcomeEl) {
+                    welcomeEl.style.display = 'flex';
+                    container.appendChild(welcomeEl);
+                }
+                
+                console.log("🗑️ Chat history cleared");
+            }
+        }
+
+        // ============================================
+        // MAIN MESSAGE HANDLING
+        // ============================================
+
+        async function sendMessage() {
+            console.log("🚀 sendMessage() called");
+            
+            const input = document.getElementById("messageInput");
+            const sendBtn = document.getElementById("sendBtn");
+            
+            if (!input || !sendBtn) {
+                console.error("Input or button not found!");
+                return;
+            }
+            
+            const userMessage = input.value.trim();
+            if (!userMessage) {
+                console.log("Empty message, ignoring");
+                return;
+            }
+            
+            console.log("User message:", userMessage);
+            
+            // Clear input and disable button
+            input.value = "";
+            sendBtn.disabled = true;
+            
+            // Reset textarea height
+            input.style.height = 'auto';
+            
+            // Add user message to UI
+            addMessageToUI("user", userMessage, false);
+            addToHistory("user", userMessage);
+            
+            // Show typing indicator
+            addMessageToUI("assistant", "", true);
+            
+            try {
+                console.log("Calling API...");
+                
+                // Call the API
+                const aiResponse = await callDeepSeekAPI(userMessage);
+                
+                console.log("Got response:", aiResponse.substring(0, 100) + "...");
+                
+                // Remove typing indicator
+                removeTypingIndicator();
+                
+                // Add AI response to UI
+                addMessageToUI("assistant", aiResponse, false);
+                addToHistory("assistant", aiResponse);
+                
+            } catch (error) {
+                console.error("sendMessage error:", error);
+                
+                // Remove typing indicator
+                removeTypingIndicator();
+                
+                // Show user-friendly error
+                let userFriendlyError = "I encountered an error. ";
+                
+                if (error.message.includes("API key") || error.message.includes("401")) {
+                    userFriendlyError += "Please check your OpenRouter API key.";
+                } else if (error.message.includes("credits") || error.message.includes("402")) {
+                    userFriendlyError += "Your OpenRouter account needs more credits.";
+                } else if (error.message.includes("rate") || error.message.includes("429")) {
+                    userFriendlyError += "Rate limit reached. Free tier allows 50 requests/day.";
+                } else if (error.message.includes("network")) {
+                    userFriendlyError += "Network error. Please check your connection.";
+                } else {
+                    userFriendlyError += error.message.substring(0, 100);
+                }
+                
+                addMessageToUI("assistant", userFriendlyError, false);
+                showErrorInUI(error.message);
+                
+            } finally {
+                // Re-enable send button
+                sendBtn.disabled = false;
+                
+                // Focus input for next message
+                setTimeout(() => {
+                    if (input) input.focus();
+                }, 100);
+            }
+        }
+
+        // ============================================
+        // EVENT HANDLERS
+        // ============================================
+
+        function setupEventListeners() {
+            const input = document.getElementById("messageInput");
+            const sendBtn = document.getElementById("sendBtn");
+            const clearBtn = document.getElementById("clearBtn");
+            
+            if (input) {
+                // Enter to send (Shift+Enter for new line)
+                input.addEventListener("keydown", function(e) {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+                
+                // Enable/disable send button
+                input.addEventListener("input", function() {
+                    if (sendBtn) {
+                        sendBtn.disabled = !this.value.trim();
+                    }
+                    
+                    // Auto-resize textarea
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+                
+                // Focus input on load
+                setTimeout(() => {
+                    if (input) input.focus();
+                }, 500);
+            }
+            
+            if (sendBtn) {
+                sendBtn.addEventListener("click", sendMessage);
+                sendBtn.disabled = true;
+            }
+            
+            if (clearBtn) {
+                clearBtn.addEventListener("click", clearHistory);
+            }
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        function initializeApp() {
+            console.log("🎬 Initializing Endroid AI...");
+            
+            // Setup copy button functionality
+            setupCopyButtons();
+            
+            // Load previous conversation
+            loadFromStorage();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            console.log("✅ Endroid AI initialized and ready!");
+        }
+
+        // Start the application
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+
+        // Debug functions
+        window.testMarkdown = function() {
+            const testMarkdown = `# Markdown Test with Tables
+
+## Feature Comparison Table
+| Feature | **Python** | **JavaScript** |
+|---------|-----------|---------------|
+| Typing | Dynamic | Dynamic |
+| Speed | \`Fast\` for ML | *Fast* for Web |
+| Learning Curve | **Easy** | Moderate |
+| Use Case | Data Science | Web Development |
+
+## Code with Formatting
+\`\`\`python
+def greet(name: str) -> str:
+    """Greet someone with emphasis!"""
+    return f"**Hello**, {name}!"
+\`\`\`
+
+## List Example
+- **Important Item 1**
+- *Italic Item 2*
+- Normal Item 3 with \`inline code\`
+
+> This is a **blockquote** with *emphasis*`;
+            
+            const container = document.getElementById('chatContainer');
+            const welcomeEl = document.getElementById('welcomeMessage');
+            if (welcomeEl) welcomeEl.style.display = 'none';
+            
+            addMessageToUI('assistant', testMarkdown, false);
+        };
+        
+        window.testAPI = async function() {
+            console.log("🧪 Testing API connection...");
+            try {
+                const testResponse = await callDeepSeekAPI("Say 'API test successful' if you can read this.");
+                console.log("✅ API Test Successful:", testResponse.substring(0, 50));
+                return true;
+            } catch (error) {
+                console.error("❌ API Test Failed:", error);
+                return false;
+            }
+        };
+    </script>
+</body>
+</html>
