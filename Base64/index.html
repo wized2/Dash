@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Primary Meta Tags -->
+    <title>Endroid Base64 | Secure Local Encoding Tool</title>
+    <meta name="description" content="100% local Base64 encoder/decoder. No data leaves your browser. Secure, private text conversion.">
+    <meta name="keywords" content="base64, encoder, decoder, local, secure, privacy, endroid">
+    <meta name="author" content="Endroid Tools">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Endroid Base64 | Secure Local Encoding Tool">
+    <meta property="og:description" content="100% local Base64 encoder/decoder. No data leaves your browser.">
+    <meta property="og:image" content="icon.svg">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:url" content="">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Endroid Base64 | Secure Local Encoding Tool">
+    <meta name="twitter:description" content="100% local Base64 encoder/decoder. No data leaves your browser.">
+    <meta name="twitter:image" content="icon.svg">
+    
+    <!-- PWA Meta -->
+    <meta name="theme-color" content="#6750A4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Endroid Base64">
+    <link rel="apple-touch-icon" href="icon.svg">
+    
+    <!-- Favicon & PWA Icons -->
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Styles & Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    
+    <style>
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-primary-dark: #5A4B8C;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-surface-container: #F3EDF7;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-elevation-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --md-sys-elevation-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            --install-prompt-z: 1000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--md-sys-color-surface-container);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--md-sys-elevation-2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .subtitle {
+            color: var(--md-sys-color-outline);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .converter-box {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 16px;
+            border: 2px solid #E6E0E9;
+            border-radius: 16px;
+            background: white;
+            font-size: 16px;
+            resize: vertical;
+            transition: all 0.2s;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.1);
+        }
+
+        textarea::placeholder {
+            color: var(--md-sys-color-outline);
+            opacity: 0.7;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            min-width: 160px;
+            justify-content: center;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .primary-btn {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .primary-btn:hover, .primary-btn:active {
+            background: var(--md-sys-color-primary-dark);
+            box-shadow: var(--md-sys-elevation-1);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: var(--md-sys-color-primary);
+            border: 2px solid var(--md-sys-color-primary);
+        }
+
+        .secondary-btn:hover, .secondary-btn:active {
+            background: rgba(103, 80, 164, 0.08);
+        }
+
+        .swap-btn {
+            background: transparent;
+            color: var(--md-sys-color-outline);
+            border: 2px solid var(--md-sys-color-outline);
+            min-width: auto;
+            padding: 12px 20px;
+        }
+
+        .swap-btn:hover, .swap-btn:active {
+            background: rgba(121, 116, 126, 0.08);
+        }
+
+        .actions-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 8px 0;
+        }
+
+        .result-box {
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 8px 16px;
+            background: var(--md-sys-color-primary);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        textarea:hover + .copy-btn,
+        .copy-btn:hover,
+        .copy-btn:active {
+            opacity: 1;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: var(--md-sys-color-primary);
+            color: white;
+            border-radius: 16px;
+            box-shadow: var(--md-sys-elevation-2);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+            z-index: 1001;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: var(--md-sys-elevation-2);
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            z-index: var(--install-prompt-z);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .install-prompt.show {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, 100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        .install-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .install-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .install-btn {
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .install-primary {
+            background: var(--md-sys-color-primary);
+            color: white;
+        }
+
+        .install-secondary {
+            background: transparent;
+            color: var(--md-sys-color-primary);
+            border: 2px solid var(--md-sys-color-primary);
+        }
+
+        footer {
+            margin-top: 32px;
+            text-align: center;
+            color: var(--md-sys-color-outline);
+            font-size: 12px;
+            padding-top: 16px;
+            border-top: 1px solid #E6E0E9;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+            
+            .container {
+                padding: 20px;
+                border-radius: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            textarea {
+                height: 120px;
+            }
+        }
+
+        @media (display-mode: standalone) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            
+            header {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <span class="material-symbols-outlined">lock</span>
+                Endroid Base64
+            </h1>
+            <p class="subtitle">Secure local Base64 encoding & decoding • No data leaves your browser • Works offline</p>
+        </header>
+
+        <div class="converter-box">
+            <div class="input-group">
+                <label for="inputText">
+                    <span class="material-symbols-outlined">keyboard</span>
+                    Input Text
+                </label>
+                <textarea 
+                    id="inputText" 
+                    placeholder="Enter text to encode or Base64 to decode..."
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                ></textarea>
+            </div>
+
+            <div class="actions-group">
+                <button class="swap-btn" id="swapBtn" title="Swap input/output">
+                    <span class="material-symbols-outlined">swap_vert</span>
+                    Swap
+                </button>
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" id="encodeBtn">
+                    <span class="material-symbols-outlined">lock</span>
+                    Encode to Base64
+                </button>
+                <button class="secondary-btn" id="decodeBtn">
+                    <span class="material-symbols-outlined">lock_open</span>
+                    Decode from Base64
+                </button>
+            </div>
+
+            <div class="input-group result-box">
+                <label for="outputText">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Result
+                </label>
+                <textarea 
+                    id="outputText" 
+                    placeholder="Encoded or decoded result will appear here..."
+                    readonly
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                ></textarea>
+                <button class="copy-btn" id="copyBtn">
+                    <span class="material-symbols-outlined">content_copy</span>
+                    Copy
+                </button>
+            </div>
+        </div>
+
+        <footer>
+            <p>⚠️ <strong>100% Local Processing:</strong> All encoding/decoding happens in your browser. No data is sent to any server.</p>
+            <p>📱 <strong>PWA Supported:</strong> Install as an app for offline use. Works without internet.</p>
+            <p>🔒 <strong>Private & Secure:</strong> Your data never leaves your device.</p>
+        </footer>
+    </div>
+
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-header">
+            <span class="material-symbols-outlined" style="color: #6750A4;">install_desktop</span>
+            <div>
+                <strong>Install Endroid Base64</strong>
+                <p style="font-size: 14px; color: #666; margin-top: 4px;">Use offline like a native app</p>
+            </div>
+        </div>
+        <div class="install-buttons">
+            <button class="install-btn install-secondary" id="installCancel">Later</button>
+            <button class="install-btn install-primary" id="installConfirm">Install</button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span id="notificationText">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        // DOM Elements
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        const encodeBtn = document.getElementById('encodeBtn');
+        const decodeBtn = document.getElementById('decodeBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const swapBtn = document.getElementById('swapBtn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        const installPrompt = document.getElementById('installPrompt');
+        const installConfirm = document.getElementById('installConfirm');
+        const installCancel = document.getElementById('installCancel');
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed:', error);
+                    });
+            });
+        }
+
+        // Install Prompt Logic
+        let deferredPrompt;
+        const installPromptShown = localStorage.getItem('installPromptShown');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show custom prompt if not shown before
+            if (!installPromptShown) {
+                setTimeout(() => {
+                    installPrompt.classList.add('show');
+                    localStorage.setItem('installPromptShown', 'true');
+                }, 3000);
+            }
+        });
+
+        installConfirm.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                showNotification('App installed successfully!');
+            }
+            
+            deferredPrompt = null;
+            installPrompt.classList.remove('show');
+        });
+
+        installCancel.addEventListener('click', () => {
+            installPrompt.classList.remove('show');
+        });
+
+        // Base64 Functions
+        function encodeToBase64(text) {
+            try {
+                return btoa(unescape(encodeURIComponent(text)));
+            } catch (error) {
+                throw new Error('Failed to encode text');
+            }
+        }
+
+        function decodeFromBase64(base64) {
+            try {
+                return decodeURIComponent(escape(atob(base64)));
+            } catch (error) {
+                throw new Error('Invalid Base64 format');
+            }
+        }
+
+        // Notification System
+        function showNotification(message, isError = false) {
+            notificationText.textContent = message;
+            notification.style.background = isError ? 'var(--md-sys-color-error)' : 'var(--md-sys-color-primary)';
+            notification.style.display = 'flex';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Event Handlers
+        encodeBtn.addEventListener('click', () => {
+            const text = inputText.value.trim();
+            
+            if (!text) {
+                showNotification('Please enter text to encode', true);
+                return;
+            }
+            
+            try {
+                outputText.value = encodeToBase64(text);
+                showNotification('Text encoded successfully!');
+            } catch (error) {
+                showNotification(error.message, true);
+            }
+        });
+
+        decodeBtn.addEventListener('click', () => {
+            const base64 = inputText.value.trim();
+            
+            if (!base64) {
+                showNotification('Please enter Base64 to decode', true);
+                return;
+            }
+            
+            try {
+                outputText.value = decodeFromBase64(base64);
+                showNotification('Base64 decoded successfully!');
+            } catch (error) {
+                showNotification(error.message, true);
+            }
+        });
+
+        copyBtn.addEventListener('click', () => {
+            if (!outputText.value.trim()) {
+                showNotification('Nothing to copy', true);
+                return;
+            }
+            
+            navigator.clipboard.writeText(outputText.value)
+                .then(() => showNotification('Copied to clipboard!'))
+                .catch(() => {
+                    outputText.select();
+                    document.execCommand('copy');
+                    showNotification('Copied to clipboard!');
+                });
+        });
+
+        swapBtn.addEventListener('click', () => {
+            if (outputText.value) {
+                [inputText.value, outputText.value] = [outputText.value, inputText.value];
+                showNotification('Input and output swapped!');
+            }
+        });
+
+        inputText.addEventListener('input', () => {
+            if (outputText.value) outputText.value = '';
+        });
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                encodeBtn.click();
+            }
+            
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'Enter') {
+                e.preventDefault();
+                decodeBtn.click();
+            }
+            
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c' && document.activeElement === outputText) {
+                copyBtn.click();
+            }
+        });
+
+        // Offline Detection
+        window.addEventListener('online', () => {
+            showNotification('Back online ✓', false);
+        });
+
+        window.addEventListener('offline', () => {
+            showNotification('Working offline - app fully functional', false);
+        });
+
+        // Initialize
+        if (navigator.onLine) {
+            showNotification('Endroid Base64 ready - 100% local processing', false);
+        }
+    </script>
+</body>
+</html>
