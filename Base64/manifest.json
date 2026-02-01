@@ -1,0 +1,17 @@
+{
+  "name": "Endroid Base64",
+  "short_name": "Base64",
+  "description": "Secure local Base64 encoder/decoder",
+  "start_url": "/Base64/",
+  "scope": "/Base64/",
+  "display": "standalone",
+  "background_color": "#FEF7FF",
+  "theme_color": "#6750A4",
+  "icons": [
+    {
+      "src": "/Base64/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}
