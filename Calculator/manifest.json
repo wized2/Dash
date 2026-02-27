@@ -1,0 +1,22 @@
+{
+  "name": "Endroid Calculator",
+  "short_name": "Calculator",
+  "description": "Beautiful Material You 3 calculator with green theme. Offline-first PWA.",
+  "start_url": "/Calculator/",
+  "scope": "/Calculator/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "theme_color": "#00691B",
+  "background_color": "#F3FCEC",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+}
