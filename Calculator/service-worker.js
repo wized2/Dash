@@ -1,7 +1,7 @@
 const CACHE_NAME = "endroid-calculate-v2.1";
 
 const urlsToCache = [
-  "/", // Root (usually serves index.html)
+  "/Calculator", // Root (usually serves index.html)
   "/index.html",
   "/manifest.json",
   "/icon.svg",
