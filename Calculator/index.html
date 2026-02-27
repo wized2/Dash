@@ -502,4 +502,203 @@
 
             <!-- Row 2 -->
             <button class="btn btn-number" data-action="number" data-value="7">7</button>
-            <button class="btn 
+            <button class="btn btn-number" data-action="number" data-value="8">8</button>
+            <button class="btn btn-number" data-action="number" data-value="9">9</button>
+            <button class="btn btn-operator" data-action="operation" data-value="×"><span class="material-symbols-rounded">close</span></button>
+
+            <!-- Row 3 -->
+            <button class="btn btn-number" data-action="number" data-value="4">4</button>
+            <button class="btn btn-number" data-action="number" data-value="5">5</button>
+            <button class="btn btn-number" data-action="number" data-value="6">6</button>
+            <button class="btn btn-operator" data-action="operation" data-value="−"><span class="material-symbols-rounded">remove</span></button>
+
+            <!-- Row 4 -->
+            <button class="btn btn-number" data-action="number" data-value="1">1</button>
+            <button class="btn btn-number" data-action="number" data-value="2">2</button>
+            <button class="btn btn-number" data-action="number" data-value="3">3</button>
+            <button class="btn btn-operator" data-action="operation" data-value="+"><span class="material-symbols-rounded">add</span></button>
+
+            <!-- Row 5 - SWAPPED: decimal (.) button first, then 0, then theme, then equals -->
+            <button class="btn btn-number" data-action="decimal" data-value=".">.</button>
+            <button class="btn btn-number" data-action="number" data-value="0">0</button>
+            <button class="btn btn-theme" data-action="theme-switch" id="theme-switch-btn"><span class="material-symbols-rounded" id="theme-icon">light_mode</span></button>
+            <button class="btn btn-equals" data-action="equals"><span class="material-symbols-rounded">equal</span></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    class Calculator {
+        constructor(previousOperandTextElement, currentOperandTextElement) {
+            this.previousOperandTextElement = previousOperandTextElement
+            this.currentOperandTextElement = currentOperandTextElement
+            this.clear()
+        }
+
+        clear() {
+            this.currentOperand = ''
+            this.previousOperand = ''
+            this.operation = undefined
+            this.updateDisplay()
+        }
+        
+        delete() {
+            this.currentOperand = this.currentOperand.toString().slice(0, -1)
+            this.updateDisplay(true)
+        }
+        
+        appendNumber(number) {
+            if (number === '.' && this.currentOperand.includes('.')) return
+            this.currentOperand = this.currentOperand.toString() + number.toString()
+            this.updateDisplay(true)
+        }
+
+        chooseOperation(operation) {
+            if (this.currentOperand === '') return
+            if (this.previousOperand !== '') this.compute()
+            this.operation = operation
+            this.previousOperand = this.currentOperand
+            this.currentOperand = ''
+            this.updateDisplay()
+        }
+
+        compute() {
+            let computation
+            const prev = parseFloat(this.previousOperand)
+            const current = parseFloat(this.currentOperand)
+
+            if (this.operation === '%') {
+                if (isNaN(current)) return
+                computation = current / 100
+                this.previousOperand = ''
+                this.currentOperand = computation.toString()
+                this.operation = undefined
+                this.updateDisplay(true)
+                return
+            }
+            
+            if (isNaN(prev) || isNaN(current)) return
+            
+            switch (this.operation) {
+                case '+': computation = prev + current; break
+                case '−': computation = prev - current; break
+                case '×': computation = prev * current; break
+                case '÷': computation = prev / current; break
+                default: return
+            }
+
+            this.currentOperand = parseFloat(computation.toFixed(10))
+            this.operation = undefined
+            this.previousOperand = ''
+            this.updateDisplay(true)
+        }
+        
+        getDisplayNumber(number) {
+            const stringNumber = number.toString()
+            const integerDigits = parseFloat(stringNumber.split('.')[0])
+            const decimalDigits = stringNumber.split('.')[1]
+            let integerDisplay
+
+            if (isNaN(integerDigits)) {
+                integerDisplay = '0'
+            } else {
+                integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+            }
+
+            return decimalDigits != null ? `${integerDisplay}.${decimalDigits}` : integerDisplay
+        }
+
+        updateDisplay(animate = false) {
+            this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand) || '0'
+
+            if (this.operation != null && this.previousOperand !== '') {
+                this.previousOperandTextElement.innerText = 
+                    `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
+            } else {
+                this.previousOperandTextElement.innerText = ''
+            }
+
+            if (animate) {
+                this.currentOperandTextElement.classList.add('number-updated');
+                setTimeout(() => {
+                    this.currentOperandTextElement.classList.remove('number-updated');
+                }, 200);
+            }
+        }
+    }
+
+    // Theme switching
+    const body = document.body;
+    const themeButton = document.getElementById('theme-switch-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    
+    function toggleTheme() {
+        if (body.classList.contains('light-theme')) {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            themeIcon.innerText = 'dark_mode';
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#00E546');
+        } else {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            themeIcon.innerText = 'light_mode';
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#00691B');
+        }
+    }
+
+    // Initialize
+    const previousOperandTextElement = document.getElementById('previous-operand')
+    const currentOperandTextElement = document.getElementById('current-operand')
+    const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
+    const buttons = document.querySelectorAll('.btn')
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const action = button.dataset.action
+            const value = button.dataset.value
+            
+            if (action === 'number' || action === 'decimal') calculator.appendNumber(value || button.innerText)
+            else if (action === 'operation') calculator.chooseOperation(value || button.innerText)
+            else if (action === 'equals') calculator.compute()
+            else if (action === 'clear') calculator.clear()
+            else if (action === 'delete') calculator.delete()
+            else if (action === 'percent' && calculator.currentOperand !== '') calculator.chooseOperation('%')
+            else if (action === 'theme-switch') toggleTheme()
+        })
+    })
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+        const key = e.key
+        if (/[0-9]/.test(key)) calculator.appendNumber(key)
+        else if (key === '.') calculator.appendNumber('.')
+        else if (key === 'Enter' || key === '=') calculator.compute()
+        else if (key === 'Backspace') calculator.delete()
+        else if (key === 'Escape') calculator.clear()
+        else if (['+', '-', '*', '/'].includes(key)) {
+            let op = key
+            if (key === '*') op = '×'
+            if (key === '/') op = '÷'
+            calculator.chooseOperation(op)
+        }
+    })
+
+    // Prevent zoom on double tap
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (e) => {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) e.preventDefault();
+        lastTouchEnd = now;
+    }, false);
+
+    // Service worker registration
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("/service-worker.js").catch((err) => {
+                console.warn("Service worker registration failed:", err);
+            });
+        });
+    }
+</script>
+</body>
+</html>
