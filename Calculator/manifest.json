@@ -6,7 +6,7 @@
   "scope": "https://endroid.pages.dev/Calculator/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#00691B",
+  "theme_color": "#80B17B",
   "background_color": "#F3FCEC",
   "icons": [
     {
