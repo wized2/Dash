@@ -10,9 +10,9 @@
   "background_color": "#F3FCEC",
   "icons": [
     {
-      "src": "https://endroid.pages.dev/Calculator/icon.svg",
+      "src": "https://endroid.pages.dev/Calculator/icon.png",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
