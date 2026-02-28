@@ -4,7 +4,7 @@
   "description": "Beautiful Material You 3 calculator with custom green theme. Offline-first PWA.",
   "start_url": "https://endroid.pages.dev/Calculator/",
   "scope": "https://endroid.pages.dev/Calculator/",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#00691B",
   "background_color": "#F3FCEC",
