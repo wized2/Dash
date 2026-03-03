@@ -1,0 +1,22 @@
+{
+  "name": "Endroid Clock",
+  "short_name": "Clock",
+  "description": "Beautiful Material You 3 clock with digital & analog modes and a dynamic blue theme. Offline‑first PWA.",
+  "start_url": "https://endroid.pages.dev/Clock/",
+  "scope": "https://endroid.pages.dev/Clock/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#53AAFF",
+  "background_color": "#F3FCEC",
+  "icons": [
+    {
+      "src": "https://endroid.pages.dev/Clock/icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+}
