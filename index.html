@@ -23,7 +23,7 @@
   <meta property="og:url" content="https://endroid.pages.dev/">
   <meta property="og:title" content="Endroid Dashboard - Modern Web Applications Collection">
   <meta property="og:description" content="Experience modern design with Material You 3, expressive animations, and eye-catching visual effects across all our projects.">
-  <meta property="og:image" content="https://endroid.pages.dev/icon.png">
+  <meta property="og:image" content="https://endroid.pages.dev/favicon.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Endroid Dashboard Preview">
@@ -35,7 +35,7 @@
   <meta name="twitter:url" content="https://endroid.pages.dev/">
   <meta name="twitter:title" content="Endroid Dashboard - Modern Web Applications Collection">
   <meta name="twitter:description" content="Experience modern design with Material You 3, expressive animations, and eye-catching visual effects across all our projects.">
-  <meta name="twitter:image" content="https://endroid.pages.dev/icon.png">
+  <meta name="twitter:image" content="https://endroid.pages.dev/favicon.png">
   <meta name="twitter:creator" content="@Endroid">
   <meta name="twitter:site" content="@Endroid">
   
@@ -47,53 +47,17 @@
   <meta name="application-name" content="Endroid Dashboard">
   <meta name="apple-mobile-web-app-title" content="Endroid">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#0F1621">
-  <meta name="msapplication-TileColor" content="#0F1621">
-  <meta name="msapplication-tap-highlight" content="no">
   <meta name="format-detection" content="telephone=no">
-  
-  <!-- iOS Meta Tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <!-- Android Meta Tags -->
-  <meta name="theme-color" content="#0F1621" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#F8FBFF" media="(prefers-color-scheme: light)">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/icons/icon-192x192.png" type="image/png" sizes="192x192">
+  <link rel="icon" href="/icons/icon-512x512.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/icons/icon-180x180.png">
   
   <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
-  
-  <!-- Icons -->
-  <!-- Favicon for all browsers -->
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  
-  <!-- Apple Touch Icons -->
-  <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="57x57" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="60x60" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="72x72" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="76x76" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="114x114" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="120x120" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="144x144" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="152x152" href="icon.svg">
-  <link rel="apple-touch-icon" sizes="180x180" href="icon.svg">
-  
-  <!-- Android/Chrome Icons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="icon.svg">
-  <link rel="icon" type="image/png" sizes="16x16" href="icon.svg">
-  
-  <!-- Microsoft Tiles -->
-  <meta name="msapplication-TileImage" content="icon.svg">
-  <meta name="msapplication-square70x70logo" content="icon.svg">
-  <meta name="msapplication-square150x150logo" content="icon.svg">
-  <meta name="msapplication-wide310x150logo" content="icon.svg">
-  <meta name="msapplication-square310x310logo" content="icon.svg">
-  
-  <!-- Safari Pinned Tab -->
-  <link rel="mask-icon" href="icon.svg" color="#7CB9E8">
+  <link rel="manifest" href="/manifest.json">
   
   <!-- Additional SEO Meta Tags -->
   <meta name="language" content="English">
@@ -125,7 +89,7 @@
       "name": "Endroid",
       "url": "https://github.com/Wized2"
     },
-    "screenshot": "https://endroid.pages.dev/icon.png",
+    "screenshot": "https://endroid.pages.dev/favicon.png",
     "softwareVersion": "3.0",
     "featureList": [
       "AI Assistant",
@@ -147,7 +111,7 @@
     "@type": "Organization",
     "name": "Endroid",
     "url": "https://endroid.pages.dev/",
-    "logo": "https://endroid.pages.dev/icon.svg",
+    "logo": "https://endroid.pages.dev/favicon.svg",
     "sameAs": [
       "https://github.com/Wized2"
     ]
@@ -751,8 +715,8 @@
         <div class="project-icon">
           <span class="material-symbols-rounded">smart_toy</span>
         </div>
-        <div class="project-title">Endroid Ai</div>
-        <div class="project-description">A free and Open-Source Ai powered by DeepSeek, with Material You 3 Expressive theme, icons, and seamless dark/light themes.</div>
+        <div class="project-title">Endroid Elyx</div>
+        <div class="project-description">A free and Open-Source Ai powered by Gemini, with Material You 3 Expressive theme, icons, and seamless dark/light themes.</div>
         <a href="https://wized2.github.io/Ai/" class="project-btn">
           <span class="material-symbols-rounded">rocket_launch</span>
           Launch AI Assistant
@@ -905,9 +869,6 @@
           card.style.transform = 'translateY(0)';
         }, 100 + (index * 100));
       });
-      
-      // Update theme-color meta tag dynamically
-      updateThemeColorMeta();
     });
 
     // Enhanced theme toggle with visual feedback
@@ -925,7 +886,6 @@
       // Save preference
       localStorage.setItem('endroid-dashboard-theme', newTheme);
       updateThemeIcon();
-      updateThemeColorMeta();
       
       // Animate background illusions
       const illusions = document.querySelectorAll('.background-illusion');
@@ -946,19 +906,6 @@
         themeIcon.style.transform = 'scale(1)';
       }, 300);
     }
-    
-    function updateThemeColorMeta() {
-      const themeColor = body.dataset.theme === 'dark' ? '#0F1621' : '#F8FBFF';
-      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-      const metaMsTileColor = document.querySelector('meta[name="msapplication-TileColor"]');
-      
-      if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', themeColor);
-      }
-      if (metaMsTileColor) {
-        metaMsTileColor.setAttribute('content', themeColor);
-      }
-    }
 
     // Auto-detect system theme changes
     const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -969,7 +916,6 @@
         const newTheme = e.matches ? 'dark' : 'light';
         body.dataset.theme = newTheme;
         updateThemeIcon();
-        updateThemeColorMeta();
       }
     }
     
@@ -1064,14 +1010,12 @@
       body.dataset.theme = 'light';
       localStorage.setItem('endroid-dashboard-theme', 'light');
       updateThemeIcon();
-      updateThemeColorMeta();
     };
     
     window.enableDarkMode = function() {
       body.dataset.theme = 'dark';
       localStorage.setItem('endroid-dashboard-theme', 'dark');
       updateThemeIcon();
-      updateThemeColorMeta();
     };
   </script>
 </body>
