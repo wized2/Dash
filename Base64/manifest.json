@@ -1,17 +1,43 @@
 {
   "name": "Endroid Base64",
   "short_name": "Base64",
-  "description": "Secure local Base64 encoder/decoder",
+  "description": "100% local Base64 encoder/decoder + Image/Media converter. Privacy-first, works offline.",
   "start_url": "/Base64/",
-  "scope": "/Base64/",
   "display": "standalone",
-  "background_color": "#FEF7FF",
   "theme_color": "#6750A4",
+  "background_color": "#FEF7FF",
+  "orientation": "portrait",
+  "scope": "/Base64/",
   "icons": [
     {
-      "src": "/Base64/icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any"
+      "src": "https://endroid.pages.dev/Base64/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://endroid.pages.dev/Base64/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://endroid.pages.dev/Base64/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://endroid.pages.dev/Base64/icons/icon-192x192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://endroid.pages.dev/Base64/icons/icon-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
