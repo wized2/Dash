@@ -757,7 +757,7 @@
     // ========== ORIGINAL SERVICE WORKER & INSTALL PROMPT (unchanged) ==========
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('service-worker.js')
+            navigator.serviceWorker.register('https://endroid.pages.dev/Base64/service-worker.js')
                 .then(reg => console.log('SW registered:', reg.scope))
                 .catch(err => console.log('SW failed:', err));
         });
