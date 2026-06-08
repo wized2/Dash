@@ -2,655 +2,799 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     
-    <!-- Primary Meta Tags -->
-    <title>Endroid Base64 | Secure Local Encoding Tool</title>
-    <meta name="description" content="100% local Base64 encoder/decoder. No data leaves your browser. Secure, private text conversion.">
-    <meta name="keywords" content="base64, encoder, decoder, local, secure, privacy, endroid">
+    <!-- Primary Meta Tags (SEO) -->
+    <title>Endroid Base64 | Text + Media Toolkit</title>
+    <meta name="title" content="Endroid Base64 | Secure Local Encoding & Media Converter">
+    <meta name="description" content="100% local Base64 encoder/decoder + Image/Media converter. No data leaves your browser. Privacy-first, works offline.">
+    <meta name="keywords" content="base64, encoder, decoder, local, secure, privacy, endroid, image, media, convert, offline, pwa">
     <meta name="author" content="Endroid Tools">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://endroid.pages.dev">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Endroid Base64 | Secure Local Encoding Tool">
-    <meta property="og:description" content="100% local Base64 encoder/decoder. No data leaves your browser.">
-    <meta property="og:image" content="icon.svg">
+    <meta property="og:url" content="https://endroid.pages.dev">
+    <meta property="og:title" content="Endroid Base64 | Secure Local Encoding">
+    <meta property="og:description" content="100% local Base64 & media conversion. No data leaves your browser.">
+    <meta property="og:image" content="https://endroid.pages.dev/favicon.svg">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
-    <meta property="og:url" content="">
+    <meta property="og:site_name" content="Endroid Tools">
+    <meta property="og:locale" content="en_US">
     
-    <!-- Twitter -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Endroid Base64 | Secure Local Encoding Tool">
-    <meta name="twitter:description" content="100% local Base64 encoder/decoder. No data leaves your browser.">
-    <meta name="twitter:image" content="icon.svg">
+    <meta name="twitter:url" content="https://endroid.pages.dev">
+    <meta name="twitter:title" content="Endroid Base64 | Secure Local Encoding">
+    <meta name="twitter:description" content="100% local Base64 encoder/decoder + media tools.">
+    <meta name="twitter:image" content="https://endroid.pages.dev/favicon.svg">
+    <meta name="twitter:site" content="@endroid">
+    <meta name="twitter:creator" content="@endroid">
     
-    <!-- PWA Meta -->
-    <meta name="theme-color" content="#6750A4">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Additional SEO / Social -->
+    <meta name="application-name" content="Endroid Base64">
     <meta name="apple-mobile-web-app-title" content="Endroid Base64">
-    <link rel="apple-touch-icon" href="icon.svg">
+    <meta name="msapplication-TileColor" content="#6750A4">
+    <meta name="theme-color" content="#6750A4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1E1A2F" media="(prefers-color-scheme: dark)">
     
-    <!-- Favicon & PWA Icons -->
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
-    <link rel="manifest" href="manifest.json">
+    <!-- PWA & Icons (updated) -->
+    <link rel="icon" href="/favicon.svg" sizes="48x48">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="/icons/icon-512x512.png" type="image/png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/icons/icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <!-- Styles & Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <!-- Fallback favicon (SVG) - replaces icon.svg -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Material You 3 Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Google+Sans+Flex:wdth,wght@75,400;100,500;125,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     
     <style>
-        :root {
-            --md-sys-color-primary: #6750A4;
-            --md-sys-color-primary-dark: #5A4B8C;
-            --md-sys-color-on-primary: #FFFFFF;
-            --md-sys-color-surface: #FEF7FF;
-            --md-sys-color-surface-container: #F3EDF7;
-            --md-sys-color-on-surface: #1C1B1F;
-            --md-sys-color-outline: #79747E;
-            --md-sys-color-error: #BA1A1A;
-            --md-sys-elevation-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            --md-sys-elevation-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-            --install-prompt-z: 1000;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Material You 3 Dynamic Color Tokens (light / dark) */
+        :root {
+            --sys-primary: #6750A4;
+            --sys-on-primary: #FFFFFF;
+            --sys-primary-container: #EADDFF;
+            --sys-secondary: #625B71;
+            --sys-surface: #FEF7FF;
+            --sys-surface-container-low: #F7F2FA;
+            --sys-surface-container: #F3EDF7;
+            --sys-surface-container-high: #ECE6F0;
+            --sys-surface-container-highest: #E6E0E9;
+            --sys-on-surface: #1C1B1F;
+            --sys-on-surface-variant: #49454F;
+            --sys-outline: #79747E;
+            --sys-outline-variant: #CAC4D0;
+            --sys-error: #BA1A1A;
+            --sys-inverse-surface: #313033;
+            --sys-inverse-on-surface: #F4EFF4;
+            
+            --md-elevation-1: 0 1px 2px 0 rgba(0,0,0,0.05), 0 1px 3px 1px rgba(0,0,0,0.05);
+            --md-elevation-2: 0 1px 2px 0 rgba(0,0,0,0.08), 0 2px 6px 2px rgba(0,0,0,0.05);
+            --shape-corner-extra-large: 28px;
+            --shape-corner-large: 16px;
+            --shape-corner-full: 9999px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --sys-primary: #D0BCFF;
+                --sys-on-primary: #381E72;
+                --sys-primary-container: #4A378B;
+                --sys-secondary: #CCC2DC;
+                --sys-surface: #1C1B1F;
+                --sys-surface-container-low: #1C1B1F;
+                --sys-surface-container: #211F26;
+                --sys-surface-container-high: #2B2930;
+                --sys-surface-container-highest: #36343B;
+                --sys-on-surface: #E6E1E5;
+                --sys-on-surface-variant: #CAC4D0;
+                --sys-outline: #938F99;
+                --sys-outline-variant: #49454F;
+                --sys-error: #F2B8B5;
+                --sys-inverse-surface: #E6E1E5;
+                --sys-inverse-on-surface: #1C1B1F;
+            }
+        }
+
         body {
-            background: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
+            background: var(--sys-surface);
+            color: var(--sys-on-surface);
+            font-family: 'Inter', system-ui, 'Google Sans Flex', sans-serif;
             min-height: 100vh;
-            padding: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .app-root {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* M3 Tab Bar */
+        .m3-tab-bar {
+            display: flex;
+            background: var(--sys-surface-container);
+            padding: 8px 12px 0 12px;
+            gap: 8px;
+            border-bottom: 1px solid var(--sys-outline-variant);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(20px);
+            background: color-mix(in srgb, var(--sys-surface-container) 85%, transparent);
+        }
+
+        .m3-tab {
+            flex: 1;
+            display: flex;
             align-items: center;
-            -webkit-font-smoothing: antialiased;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            font-family: 'Google Sans Flex', 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--sys-on-surface-variant);
+            border-radius: var(--shape-corner-full);
+            transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+            cursor: pointer;
+        }
+        
+        .m3-tab .material-symbols-outlined {
+            font-size: 22px;
+            font-variation-settings: 'FILL' 0, 'wght' 400;
+        }
+        
+        .m3-tab.active {
+            color: var(--sys-primary);
+            background: var(--sys-primary-container);
+        }
+        
+        .m3-tab.active .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 500;
         }
 
-        .container {
+        .tab-content {
+            flex: 1;
+            padding: 20px;
+            max-width: 1280px;
+            margin: 0 auto;
             width: 100%;
-            max-width: 800px;
-            background: var(--md-sys-color-surface-container);
-            border-radius: 24px;
-            padding: 32px;
-            box-shadow: var(--md-sys-elevation-2);
-            animation: fadeIn 0.5s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        
+        .tab-pane {
+            display: none;
+            animation: fadeSlide 0.25s ease;
+        }
+        
+        .tab-pane.active-pane {
+            display: block;
+        }
+        
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 32px;
+        .m3-card {
+            background: var(--sys-surface-container-low);
+            border-radius: var(--shape-corner-extra-large);
+            padding: 24px;
+            box-shadow: var(--md-elevation-1);
         }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--md-sys-color-primary);
-            margin-bottom: 8px;
+        
+        .input-group {
+            margin-bottom: 24px;
+        }
+        
+        .input-label {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--sys-primary);
+            margin-bottom: 12px;
         }
-
-        .subtitle {
-            color: var(--md-sys-color-outline);
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.4;
+        
+        .m3-textarea, .m3-input {
+            width: 100%;
+            background: var(--sys-surface-container-highest);
+            border: 1px solid var(--sys-outline-variant);
+            border-radius: var(--shape-corner-large);
+            padding: 16px;
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            color: var(--sys-on-surface);
+            resize: vertical;
         }
-
-        .converter-box {
+        
+        .m3-textarea:focus, .m3-input:focus {
+            outline: none;
+            border-color: var(--sys-primary);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--sys-primary) 20%, transparent);
+        }
+        
+        .button-row {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0 16px;
+        }
+        
+        .m3-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: var(--shape-corner-full);
+            font-weight: 600;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: var(--sys-surface-container-highest);
+            color: var(--sys-on-surface);
+        }
+        
+        .m3-button.primary {
+            background: var(--sys-primary);
+            color: var(--sys-on-primary);
+            box-shadow: var(--md-elevation-1);
+        }
+        
+        .m3-button.primary:active {
+            transform: scale(0.96);
+        }
+        
+        .m3-button.secondary {
+            border: 1px solid var(--sys-outline);
+            background: transparent;
+        }
+        
+        /* Circular icon button */
+        .circle-btn {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--sys-surface-container-highest);
+            color: var(--sys-on-surface);
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .circle-btn:active {
+            transform: scale(0.92);
+            background: var(--sys-surface-container);
+        }
+        
+        .dropzone {
+            border: 2px dashed var(--sys-outline);
+            border-radius: var(--shape-corner-extra-large);
+            padding: 32px 20px;
+            text-align: center;
+            background: var(--sys-surface-container-low);
+            transition: all 0.2s;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .dropzone.drag-over {
+            border-color: var(--sys-primary);
+            background: var(--sys-primary-container);
+        }
+        
+        .preview-area {
+            margin: 20px 0;
+            background: var(--sys-surface-container);
+            border-radius: var(--shape-corner-large);
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .media-preview {
+            max-width: 100%;
+            max-height: 260px;
+            border-radius: var(--shape-corner-medium);
+            object-fit: contain;
+        }
+        
+        .footer-info {
+            margin-top: 32px;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--sys-outline);
+            border-top: 1px solid var(--sys-outline-variant);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 24px;
         }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--md-sys-color-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 16px;
-            border: 2px solid #E6E0E9;
-            border-radius: 16px;
-            background: white;
-            font-size: 16px;
-            resize: vertical;
-            transition: all 0.2s;
-            font-family: 'Roboto Mono', monospace;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.1);
-        }
-
-        textarea::placeholder {
-            color: var(--md-sys-color-outline);
-            opacity: 0.7;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 16px 24px;
-            border: none;
-            border-radius: 100px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            min-width: 160px;
-            justify-content: center;
-            user-select: none;
-            touch-action: manipulation;
-        }
-
-        .primary-btn {
-            background: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-        }
-
-        .primary-btn:hover, .primary-btn:active {
-            background: var(--md-sys-color-primary-dark);
-            box-shadow: var(--md-sys-elevation-1);
-        }
-
-        .secondary-btn {
-            background: transparent;
-            color: var(--md-sys-color-primary);
-            border: 2px solid var(--md-sys-color-primary);
-        }
-
-        .secondary-btn:hover, .secondary-btn:active {
-            background: rgba(103, 80, 164, 0.08);
-        }
-
-        .swap-btn {
-            background: transparent;
-            color: var(--md-sys-color-outline);
-            border: 2px solid var(--md-sys-color-outline);
-            min-width: auto;
-            padding: 12px 20px;
-        }
-
-        .swap-btn:hover, .swap-btn:active {
-            background: rgba(121, 116, 126, 0.08);
-        }
-
-        .actions-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 8px 0;
-        }
-
-        .result-box {
-            margin-top: 16px;
-            position: relative;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 8px 16px;
-            background: var(--md-sys-color-primary);
-            color: white;
-            border: none;
-            border-radius: 100px;
-            font-size: 14px;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            z-index: 2;
-        }
-
-        textarea:hover + .copy-btn,
-        .copy-btn:hover,
-        .copy-btn:active {
-            opacity: 1;
-        }
-
-        .notification {
+        
+        /* Cool chip notification (rounded pill, solid) */
+        .chip-notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 16px 24px;
-            background: var(--md-sys-color-primary);
-            color: white;
-            border-radius: 16px;
-            box-shadow: var(--md-sys-elevation-2);
-            display: none;
-            align-items: center;
-            gap: 8px;
-            animation: slideIn 0.3s ease;
-            z-index: 1001;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .install-prompt {
-            position: fixed;
-            bottom: 20px;
+            bottom: 28px;
             left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: var(--md-sys-elevation-2);
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-            z-index: var(--install-prompt-z);
-            max-width: 90%;
-            width: 400px;
-        }
-
-        .install-prompt.show {
-            display: flex;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translate(-50%, 100%); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
-        }
-
-        .install-header {
+            transform: translateX(-50%) translateY(100px);
+            background: var(--sys-inverse-surface);
+            color: var(--sys-inverse-on-surface);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            z-index: 1000;
+            box-shadow: var(--md-elevation-2);
+            transition: transform 0.2s ease;
+            pointer-events: none;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
         }
-
-        .install-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
+        
+        .chip-notification.show {
+            transform: translateX(-50%) translateY(0);
         }
-
-        .install-btn {
-            padding: 8px 16px;
-            border-radius: 100px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .install-primary {
-            background: var(--md-sys-color-primary);
-            color: white;
-        }
-
-        .install-secondary {
-            background: transparent;
-            color: var(--md-sys-color-primary);
-            border: 2px solid var(--md-sys-color-primary);
-        }
-
-        footer {
-            margin-top: 32px;
-            text-align: center;
-            color: var(--md-sys-color-outline);
-            font-size: 12px;
-            padding-top: 16px;
-            border-top: 1px solid #E6E0E9;
-            line-height: 1.6;
-        }
-
+        
         @media (max-width: 600px) {
-            body {
-                padding: 12px;
-            }
-            
-            .container {
-                padding: 20px;
-                border-radius: 20px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .button-group {
-                flex-direction: column;
-            }
-            
-            button {
-                width: 100%;
-            }
-            
-            textarea {
-                height: 120px;
-            }
-        }
-
-        @media (display-mode: standalone) {
-            body {
-                padding-top: env(safe-area-inset-top);
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-            
-            header {
-                margin-top: 10px;
-            }
+            .tab-content { padding: 16px; }
+            .m3-card { padding: 18px; }
+            .button-row { flex-direction: column; }
+            .m3-button { justify-content: center; }
+            .chip-notification { font-size: 0.75rem; padding: 6px 16px; white-space: nowrap; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>
-                <span class="material-symbols-outlined">lock</span>
-                Endroid Base64
-            </h1>
-            <p class="subtitle">Secure local Base64 encoding & decoding • No data leaves your browser • Works offline</p>
-        </header>
+<div class="app-root">
+    <div class="m3-tab-bar">
+        <button class="m3-tab active" data-tab="text-tab">
+            <span class="material-symbols-outlined">code_blocks</span>
+            <span>Text Base64</span>
+        </button>
+        <button class="m3-tab" data-tab="media-tab">
+            <span class="material-symbols-outlined">image</span>
+            <span>Image & Media</span>
+        </button>
+    </div>
 
-        <div class="converter-box">
+    <!-- Text Tab -->
+    <div id="text-tab" class="tab-pane active-pane tab-content">
+        <div class="m3-card">
             <div class="input-group">
-                <label for="inputText">
-                    <span class="material-symbols-outlined">keyboard</span>
-                    Input Text
-                </label>
-                <textarea 
-                    id="inputText" 
-                    placeholder="Enter text to encode or Base64 to decode..."
-                    autocomplete="off"
-                    autocorrect="off"
-                    autocapitalize="off"
-                    spellcheck="false"
-                ></textarea>
+                <div class="input-label">
+                    <span class="material-symbols-outlined">edit_note</span>
+                    <span>Input</span>
+                </div>
+                <textarea id="textInput" class="m3-textarea" rows="5" placeholder="Enter text to encode or Base64 to decode..."></textarea>
             </div>
-
-            <div class="actions-group">
-                <button class="swap-btn" id="swapBtn" title="Swap input/output">
-                    <span class="material-symbols-outlined">swap_vert</span>
-                    Swap
-                </button>
+            
+            <div class="button-row">
+                <button id="encodeTextBtn" class="m3-button primary"><span class="material-symbols-outlined">lock</span> Encode</button>
+                <button id="decodeTextBtn" class="m3-button secondary"><span class="material-symbols-outlined">lock_open</span> Decode</button>
+                <button id="swapTextBtn" class="m3-button"><span class="material-symbols-outlined">swap_horiz</span> Swap</button>
             </div>
-
-            <div class="button-group">
-                <button class="primary-btn" id="encodeBtn">
-                    <span class="material-symbols-outlined">lock</span>
-                    Encode to Base64
-                </button>
-                <button class="secondary-btn" id="decodeBtn">
-                    <span class="material-symbols-outlined">lock_open</span>
-                    Decode from Base64
-                </button>
+            
+            <div class="input-group">
+                <div class="input-label">
+                    <span class="material-symbols-outlined">output</span>
+                    <span>Result</span>
+                </div>
+                <textarea id="textOutput" class="m3-textarea" rows="5" readonly placeholder="Converted output appears here..."></textarea>
+                <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 12px;">
+                    <button id="copyTextOutputBtn" class="m3-button"><span class="material-symbols-outlined">content_copy</span> Copy</button>
+                    <button id="downloadTextOutputBtn" class="circle-btn" title="Save Base64 as .txt file"><span class="material-symbols-outlined">download</span></button>
+                </div>
             </div>
-
-            <div class="input-group result-box">
-                <label for="outputText">
-                    <span class="material-symbols-outlined">check_circle</span>
-                    Result
-                </label>
-                <textarea 
-                    id="outputText" 
-                    placeholder="Encoded or decoded result will appear here..."
-                    readonly
-                    autocomplete="off"
-                    autocorrect="off"
-                    autocapitalize="off"
-                    spellcheck="false"
-                ></textarea>
-                <button class="copy-btn" id="copyBtn">
-                    <span class="material-symbols-outlined">content_copy</span>
-                    Copy
-                </button>
-            </div>
-        </div>
-
-        <footer>
-            <p>⚠️ <strong>100% Local Processing:</strong> All encoding/decoding happens in your browser. No data is sent to any server.</p>
-            <p>📱 <strong>PWA Supported:</strong> Install as an app for offline use. Works without internet.</p>
-            <p>🔒 <strong>Private & Secure:</strong> Your data never leaves your device.</p>
-        </footer>
-    </div>
-
-    <!-- Install Prompt -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-header">
-            <span class="material-symbols-outlined" style="color: #6750A4;">install_desktop</span>
-            <div>
-                <strong>Install Endroid Base64</strong>
-                <p style="font-size: 14px; color: #666; margin-top: 4px;">Use offline like a native app</p>
-            </div>
-        </div>
-        <div class="install-buttons">
-            <button class="install-btn install-secondary" id="installCancel">Later</button>
-            <button class="install-btn install-primary" id="installConfirm">Install</button>
         </div>
     </div>
 
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <span class="material-symbols-outlined">check_circle</span>
-        <span id="notificationText">Copied to clipboard!</span>
+    <!-- Media Tab -->
+    <div id="media-tab" class="tab-pane tab-content">
+        <div class="m3-card">
+            <div class="input-label">
+                <span class="material-symbols-outlined">upload_file</span>
+                <span>Encode Media → Base64</span>
+            </div>
+            <div id="dropzone" class="dropzone">
+                <span class="material-symbols-outlined" style="font-size: 48px;">cloud_upload</span>
+                <p style="margin-top: 8px;">Drag & drop or click to select image, video, or audio</p>
+                <input type="file" id="fileInput" accept="image/*,video/*,audio/*" style="display: none;">
+                <button id="selectFileBtn" class="m3-button secondary" style="margin-top: 16px;">Browse Files</button>
+            </div>
+            
+            <div id="mediaPreviewContainer" class="preview-area" style="display: none;">
+                <div class="input-label">Preview</div>
+                <div id="dynamicPreview"></div>
+                <div id="fileMeta" style="font-size: 0.8rem; margin-top: 8px;"></div>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-label">
+                    <span class="material-symbols-outlined">data_object</span>
+                    <span>Base64 Output</span>
+                </div>
+                <textarea id="mediaBase64Output" class="m3-textarea" rows="4" readonly placeholder="Encoded Base64 will appear here..."></textarea>
+                <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 12px;">
+                    <button id="copyMediaBase64Btn" class="m3-button"><span class="material-symbols-outlined">content_copy</span> Copy</button>
+                    <button id="downloadMediaBase64Btn" class="circle-btn" title="Save Base64 as .txt file"><span class="material-symbols-outlined">download</span></button>
+                </div>
+            </div>
+            
+            <div class="input-label" style="margin-top: 28px;">
+                <span class="material-symbols-outlined">transform</span>
+                <span>Decode Base64 → Media</span>
+            </div>
+            <div class="input-group">
+                <textarea id="decodeMediaBase64Input" class="m3-textarea" rows="3" placeholder="Paste Base64 string (data:image/png;base64,... or raw base64)"></textarea>
+                <div class="button-row" style="margin-top: 12px;">
+                    <button id="decodeMediaBtn" class="m3-button primary"><span class="material-symbols-outlined">preview</span> Decode & Preview</button>
+                    <button id="downloadDecodedMediaBtn" class="m3-button secondary" disabled><span class="material-symbols-outlined">download</span> Download File</button>
+                </div>
+                <div id="decodedPreviewArea" class="preview-area" style="display: none;"></div>
+            </div>
+        </div>
     </div>
+    
+    <div class="footer-info">
+        <span><span class="material-symbols-outlined" style="font-size: 16px;">security</span> 100% Local - Zero Data Transfer</span>
+        <span><span class="material-symbols-outlined" style="font-size: 16px;">download_for_offline</span> PWA ready / Offline capable</span>
+        <span><span class="material-symbols-outlined" style="font-size: 16px;">palette</span> Material You 3</span>
+    </div>
+</div>
 
-    <script>
-        // DOM Elements
-        const inputText = document.getElementById('inputText');
-        const outputText = document.getElementById('outputText');
-        const encodeBtn = document.getElementById('encodeBtn');
-        const decodeBtn = document.getElementById('decodeBtn');
-        const copyBtn = document.getElementById('copyBtn');
-        const swapBtn = document.getElementById('swapBtn');
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notificationText');
-        const installPrompt = document.getElementById('installPrompt');
-        const installConfirm = document.getElementById('installConfirm');
-        const installCancel = document.getElementById('installCancel');
+<!-- Chip notification element -->
+<div id="chipNotification" class="chip-notification">
+    <span class="material-symbols-outlined" style="font-size: 18px;">check_circle</span>
+    <span id="chipMessage"></span>
+</div>
 
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registered:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('ServiceWorker registration failed:', error);
-                    });
-            });
+<script>
+    // ---------- Helper: Chip Notification (short messages) ----------
+    function showMessage(msg, isError = false) {
+        const chip = document.getElementById('chipNotification');
+        const msgSpan = document.getElementById('chipMessage');
+        msgSpan.innerText = msg;
+        chip.classList.add('show');
+        // change background for errors
+        chip.style.background = isError ? "var(--sys-error)" : "var(--sys-inverse-surface)";
+        chip.style.color = isError ? "var(--sys-on-error)" : "var(--sys-inverse-on-surface)";
+        setTimeout(() => chip.classList.remove('show'), 1800);
+    }
+    
+    // Reliable copy function
+    async function copyToClipboard(text, successMsg = "Copied") {
+        if (!text) { showMessage("Empty", true); return false; }
+        try {
+            await navigator.clipboard.writeText(text);
+            showMessage(successMsg);
+            return true;
+        } catch (err) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            const success = document.execCommand('copy');
+            document.body.removeChild(textarea);
+            if (success) showMessage(successMsg);
+            else showMessage("Failed", true);
+            return success;
         }
-
-        // Install Prompt Logic
-        let deferredPrompt;
-        const installPromptShown = localStorage.getItem('installPromptShown');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show custom prompt if not shown before
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    installPrompt.classList.add('show');
-                    localStorage.setItem('installPromptShown', 'true');
-                }, 3000);
-            }
-        });
-
-        installConfirm.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            
-            if (outcome === 'accepted') {
-                showNotification('App installed successfully!');
-            }
-            
-            deferredPrompt = null;
-            installPrompt.classList.remove('show');
-        });
-
-        installCancel.addEventListener('click', () => {
-            installPrompt.classList.remove('show');
-        });
-
-        // Base64 Functions
-        function encodeToBase64(text) {
-            try {
-                return btoa(unescape(encodeURIComponent(text)));
-            } catch (error) {
-                throw new Error('Failed to encode text');
-            }
+    }
+    
+    // Download Base64 string as .txt file
+    function downloadAsTxt(content, filename = "base64.txt") {
+        if (!content) { showMessage("Empty", true); return; }
+        const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showMessage("Saved");
+    }
+    
+    // ========== TEXT TAB ==========
+    const textInput = document.getElementById('textInput');
+    const textOutput = document.getElementById('textOutput');
+    const encodeBtn = document.getElementById('encodeTextBtn');
+    const decodeBtn = document.getElementById('decodeTextBtn');
+    const swapBtn = document.getElementById('swapTextBtn');
+    const copyTextBtn = document.getElementById('copyTextOutputBtn');
+    const downloadTextBtn = document.getElementById('downloadTextOutputBtn');
+    
+    function utf8ToBase64(str) {
+        return btoa(unescape(encodeURIComponent(str)));
+    }
+    function base64ToUtf8(base64) {
+        return decodeURIComponent(escape(atob(base64)));
+    }
+    
+    encodeBtn.onclick = () => {
+        const val = textInput.value;
+        if(!val) { showMessage("Empty", true); return; }
+        try { textOutput.value = utf8ToBase64(val); showMessage("Encoded"); }
+        catch(e) { showMessage("Error", true); }
+    };
+    decodeBtn.onclick = () => {
+        const val = textInput.value.trim();
+        if(!val) { showMessage("Empty", true); return; }
+        try { textOutput.value = base64ToUtf8(val); showMessage("Decoded"); }
+        catch(e) { showMessage("Invalid", true); }
+    };
+    swapBtn.onclick = () => {
+        if(textOutput.value) {
+            [textInput.value, textOutput.value] = [textOutput.value, textInput.value];
+            showMessage("Swapped");
+        } else showMessage("Nothing", true);
+    };
+    copyTextBtn.onclick = () => copyToClipboard(textOutput.value, "Copied");
+    downloadTextBtn.onclick = () => downloadAsTxt(textOutput.value, "base64_result.txt");
+    
+    // ========== MEDIA TAB (fixed preview & copy) ==========
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const selectFileBtn = document.getElementById('selectFileBtn');
+    const mediaBase64Out = document.getElementById('mediaBase64Output');
+    const copyMediaBtn = document.getElementById('copyMediaBase64Btn');
+    const downloadMediaBtn = document.getElementById('downloadMediaBase64Btn');
+    const mediaPreviewContainer = document.getElementById('mediaPreviewContainer');
+    const dynamicPreview = document.getElementById('dynamicPreview');
+    const fileMetaSpan = document.getElementById('fileMeta');
+    
+    let currentObjectUrl = null;
+    
+    function cleanupPreview() {
+        if (currentObjectUrl) {
+            URL.revokeObjectURL(currentObjectUrl);
+            currentObjectUrl = null;
         }
-
-        function decodeFromBase64(base64) {
-            try {
-                return decodeURIComponent(escape(atob(base64)));
-            } catch (error) {
-                throw new Error('Invalid Base64 format');
-            }
+    }
+    
+    function renderMediaPreview(file) {
+        cleanupPreview();
+        const url = URL.createObjectURL(file);
+        currentObjectUrl = url;
+        dynamicPreview.innerHTML = '';
+        fileMetaSpan.innerText = `${file.name} | ${(file.size/1024).toFixed(2)} KB`;
+        
+        if(file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = url;
+            img.className = 'media-preview';
+            img.style.maxHeight = '200px';
+            img.onload = () => URL.revokeObjectURL(url);
+            dynamicPreview.appendChild(img);
+        } else if(file.type.startsWith('video/')) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.controls = true;
+            video.className = 'media-preview';
+            video.style.maxHeight = '200px';
+            video.onloadeddata = () => URL.revokeObjectURL(url);
+            dynamicPreview.appendChild(video);
+        } else if(file.type.startsWith('audio/')) {
+            const audio = document.createElement('audio');
+            audio.src = url;
+            audio.controls = true;
+            audio.onloadeddata = () => URL.revokeObjectURL(url);
+            dynamicPreview.appendChild(audio);
+        } else {
+            dynamicPreview.innerHTML = `<div>File: ${file.name}</div>`;
+            URL.revokeObjectURL(url);
         }
-
-        // Notification System
-        function showNotification(message, isError = false) {
-            notificationText.textContent = message;
-            notification.style.background = isError ? 'var(--md-sys-color-error)' : 'var(--md-sys-color-primary)';
-            notification.style.display = 'flex';
-            
+        mediaPreviewContainer.style.display = 'block';
+    }
+    
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+    
+    async function handleFile(file) {
+        if(!file) return;
+        if(file.size > 20 * 1024 * 1024) { showMessage("Too large", true); return; }
+        renderMediaPreview(file);
+        try {
+            const b64 = await fileToBase64(file);
+            mediaBase64Out.value = b64;
+            showMessage("Encoded");
+        } catch(e) { showMessage("Failed", true); }
+    }
+    
+    dropzone.onclick = () => fileInput.click();
+    selectFileBtn.onclick = () => fileInput.click();
+    fileInput.onchange = (e) => { if(e.target.files.length) handleFile(e.target.files[0]); };
+    
+    dropzone.ondragover = (e) => { e.preventDefault(); dropzone.classList.add('drag-over'); };
+    dropzone.ondragleave = () => dropzone.classList.remove('drag-over');
+    dropzone.ondrop = async (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if(file && (file.type.startsWith('image/') || file.type.startsWith('video/') || file.type.startsWith('audio/'))) {
+            await handleFile(file);
+        } else showMessage("Unsupported", true);
+    };
+    
+    copyMediaBtn.onclick = () => copyToClipboard(mediaBase64Out.value, "Copied");
+    downloadMediaBtn.onclick = () => downloadAsTxt(mediaBase64Out.value, "media_base64.txt");
+    
+    // Decode Base64 to media
+    const decodeMediaInput = document.getElementById('decodeMediaBase64Input');
+    const decodeMediaBtn = document.getElementById('decodeMediaBtn');
+    const downloadDecodedBtn = document.getElementById('downloadDecodedMediaBtn');
+    const decodedPreviewArea = document.getElementById('decodedPreviewArea');
+    let currentDecodedBlob = null;
+    let currentDecodedUrl = null;
+    
+    function base64ToBlob(base64String, fallbackMime = 'application/octet-stream') {
+        let raw = base64String;
+        let mime = fallbackMime;
+        if(base64String.includes(',')) {
+            const parts = base64String.split(',');
+            raw = parts[1];
+            const mimeMatch = parts[0].match(/data:(.*?);base64/);
+            if(mimeMatch) mime = mimeMatch[1];
+        }
+        const binary = atob(raw);
+        const array = new Uint8Array(binary.length);
+        for(let i = 0; i < binary.length; i++) array[i] = binary.charCodeAt(i);
+        return new Blob([array], { type: mime });
+    }
+    
+    function showDecodedMedia(blob, mime) {
+        if (currentDecodedUrl) URL.revokeObjectURL(currentDecodedUrl);
+        currentDecodedBlob = blob;
+        const url = URL.createObjectURL(blob);
+        currentDecodedUrl = url;
+        decodedPreviewArea.style.display = 'block';
+        decodedPreviewArea.innerHTML = `<div class="input-label">Decoded Preview</div>`;
+        
+        if(mime.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = url;
+            img.className = 'media-preview';
+            img.onload = () => URL.revokeObjectURL(url);
+            decodedPreviewArea.appendChild(img);
+        } else if(mime.startsWith('video/')) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.controls = true;
+            video.className = 'media-preview';
+            video.onloadeddata = () => URL.revokeObjectURL(url);
+            decodedPreviewArea.appendChild(video);
+        } else if(mime.startsWith('audio/')) {
+            const audio = document.createElement('audio');
+            audio.src = url;
+            audio.controls = true;
+            audio.onloadeddata = () => URL.revokeObjectURL(url);
+            decodedPreviewArea.appendChild(audio);
+        } else {
+            decodedPreviewArea.innerHTML += `<div>Binary file (${blob.size} bytes)</div>`;
+            URL.revokeObjectURL(url);
+        }
+        downloadDecodedBtn.disabled = false;
+    }
+    
+    decodeMediaBtn.onclick = () => {
+        const rawB64 = decodeMediaInput.value.trim();
+        if(!rawB64) { showMessage("Empty", true); return; }
+        try {
+            const blob = base64ToBlob(rawB64);
+            if(blob.size === 0) throw new Error();
+            showDecodedMedia(blob, blob.type);
+            showMessage("Decoded");
+        } catch(e) { showMessage("Invalid", true); }
+    };
+    
+    downloadDecodedBtn.onclick = () => {
+        if(!currentDecodedBlob) return;
+        const link = document.createElement('a');
+        const ext = currentDecodedBlob.type.split('/')[1] || 'bin';
+        link.href = URL.createObjectURL(currentDecodedBlob);
+        link.download = `decoded.${ext}`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        showMessage("Saved");
+    };
+    
+    // ========== TAB SWITCHING ==========
+    const tabs = document.querySelectorAll('.m3-tab');
+    const panes = {
+        'text-tab': document.getElementById('text-tab'),
+        'media-tab': document.getElementById('media-tab')
+    };
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetId = tab.getAttribute('data-tab');
+            if(!targetId) return;
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            Object.values(panes).forEach(pane => pane.classList.remove('active-pane'));
+            panes[targetId].classList.add('active-pane');
+        });
+    });
+    
+    // ========== ORIGINAL SERVICE WORKER & INSTALL PROMPT (unchanged) ==========
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('SW registered:', reg.scope))
+                .catch(err => console.log('SW failed:', err));
+        });
+    }
+    
+    let deferredPrompt;
+    const installPromptShown = localStorage.getItem('installPromptShown');
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (!installPromptShown) {
             setTimeout(() => {
-                notification.style.display = 'none';
+                const promptDiv = document.createElement('div');
+                promptDiv.className = 'chip-notification';
+                promptDiv.style.pointerEvents = 'auto';
+                promptDiv.style.cursor = 'pointer';
+                promptDiv.style.background = 'var(--sys-primary-container)';
+                promptDiv.style.color = 'var(--sys-on-primary-container)';
+                promptDiv.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px;">install_desktop</span> Install';
+                document.body.appendChild(promptDiv);
+                promptDiv.onclick = async () => {
+                    if(deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        if(outcome === 'accepted') showMessage('Installed');
+                        deferredPrompt = null;
+                    }
+                    promptDiv.remove();
+                };
+                localStorage.setItem('installPromptShown', 'true');
             }, 3000);
         }
-
-        // Event Handlers
-        encodeBtn.addEventListener('click', () => {
-            const text = inputText.value.trim();
-            
-            if (!text) {
-                showNotification('Please enter text to encode', true);
-                return;
-            }
-            
-            try {
-                outputText.value = encodeToBase64(text);
-                showNotification('Text encoded successfully!');
-            } catch (error) {
-                showNotification(error.message, true);
-            }
-        });
-
-        decodeBtn.addEventListener('click', () => {
-            const base64 = inputText.value.trim();
-            
-            if (!base64) {
-                showNotification('Please enter Base64 to decode', true);
-                return;
-            }
-            
-            try {
-                outputText.value = decodeFromBase64(base64);
-                showNotification('Base64 decoded successfully!');
-            } catch (error) {
-                showNotification(error.message, true);
-            }
-        });
-
-        copyBtn.addEventListener('click', () => {
-            if (!outputText.value.trim()) {
-                showNotification('Nothing to copy', true);
-                return;
-            }
-            
-            navigator.clipboard.writeText(outputText.value)
-                .then(() => showNotification('Copied to clipboard!'))
-                .catch(() => {
-                    outputText.select();
-                    document.execCommand('copy');
-                    showNotification('Copied to clipboard!');
-                });
-        });
-
-        swapBtn.addEventListener('click', () => {
-            if (outputText.value) {
-                [inputText.value, outputText.value] = [outputText.value, inputText.value];
-                showNotification('Input and output swapped!');
-            }
-        });
-
-        inputText.addEventListener('input', () => {
-            if (outputText.value) outputText.value = '';
-        });
-
-        // Keyboard Shortcuts
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                e.preventDefault();
-                encodeBtn.click();
-            }
-            
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'Enter') {
-                e.preventDefault();
-                decodeBtn.click();
-            }
-            
-            if ((e.ctrlKey || e.metaKey) && e.key === 'c' && document.activeElement === outputText) {
-                copyBtn.click();
-            }
-        });
-
-        // Offline Detection
-        window.addEventListener('online', () => {
-            showNotification('Back online ✓', false);
-        });
-
-        window.addEventListener('offline', () => {
-            showNotification('Working offline - app fully functional', false);
-        });
-
-        // Initialize
-        if (navigator.onLine) {
-            showNotification('Endroid Base64 ready - 100% local processing', false);
-        }
-    </script>
+    });
+    
+    window.addEventListener('online', () => showMessage('Online'));
+    window.addEventListener('offline', () => showMessage('Offline', true));
+    showMessage('Ready');
+</script>
 </body>
 </html>
