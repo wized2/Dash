@@ -1,6 +1,6 @@
 {
   "name": "Endroid Maze",
-  "short_name": "App",
+  "short_name": "Maze",
   "description": "Endroid Maze is a fun, challenging neon maze game built with pure JavaScript and HTML Canvas. Navigate the glowing ball through twisting corridors to find the black hole exit!",
   "start_url": "/Maze",
   "display": "standalone",
