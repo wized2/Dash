@@ -102,6 +102,9 @@
             justify-content: center;
             align-items: center;
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
         .wrap {
             width: 95vw;
@@ -110,6 +113,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            touch-action: none;
         }
         canvas {
             background: #000022;
@@ -117,51 +121,40 @@
             box-shadow: 0 8px 30px rgba(5, 30, 60, 0.12);
             touch-action: none;
             display: block;
-        }
-
-        /* joystick */
-        #joystick {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            touch-action: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            user-select: none;
-            pointer-events: auto;
-        }
-        #arrows {
-            position: absolute;
             width: 100%;
             height: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr 1fr;
-            text-align: center;
-            align-items: center;
-            justify-items: center;
-            pointer-events: none;
         }
-        #arrows div {
-            opacity: 0.5;
+
+        /* ===== TRANSPARENT JOYSTICK (only stick visible) ===== */
+        #joystick {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            pointer-events: none;
+            display: none;
+            z-index: 10;
+        }
+        #joystick.active {
+            display: block;
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+        #joystick.fading {
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
         #stick {
             position: absolute;
             width: 60px;
             height: 60px;
-            background: #00ccff;
             border-radius: 50%;
-            top: 30px;
-            left: 30px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             touch-action: none;
+            pointer-events: auto;
+            transition: none;
+            will-change: transform, background, box-shadow;
         }
 
         /* win screen overlay */
@@ -179,24 +172,97 @@
             display: none;
             text-align: center;
             box-shadow: 0 8px 30px rgba(5, 30, 60, 0.2);
+            z-index: 20;
+            pointer-events: none;
+        }
+        #winScreen.show {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="wrap">
+    <div class="wrap" id="wrap">
         <canvas id="c"></canvas>
+
+        <!-- Transparent joystick – only the stick is visible -->
         <div id="joystick">
-            <div id="arrows">
-                <div></div><div>↑</div><div></div>
-                <div>←</div><div></div><div>→</div>
-                <div></div><div>↓</div><div></div>
-            </div>
             <div id="stick"></div>
         </div>
+
         <div id="winScreen">You Win 🎉</div>
     </div>
 
     <script>
+        // ============================================================
+        //  COLOR PALETTES – cycle on every win
+        // ============================================================
+        const PALETTES = [{
+            name: 'Cyan',
+            wall: '#0ff',
+            wallGlow: '#0ff',
+            ball: '#00ccff',
+            ballGlow: '#00ccff',
+            trail: '0,204,255',
+            stick: '#00ccff',
+            stickGlow: '0,204,255'
+        }, {
+            name: 'Pink',
+            wall: '#ff2d95',
+            wallGlow: '#ff2d95',
+            ball: '#ff2d95',
+            ballGlow: '#ff2d95',
+            trail: '255,45,149',
+            stick: '#ff2d95',
+            stickGlow: '255,45,149'
+        }, {
+            name: 'Neon Green',
+            wall: '#39ff14',
+            wallGlow: '#39ff14',
+            ball: '#39ff14',
+            ballGlow: '#39ff14',
+            trail: '57,255,20',
+            stick: '#39ff14',
+            stickGlow: '57,255,20'
+        }, {
+            name: 'Orange',
+            wall: '#ff6b00',
+            wallGlow: '#ff6b00',
+            ball: '#ff6b00',
+            ballGlow: '#ff6b00',
+            trail: '255,107,0',
+            stick: '#ff6b00',
+            stickGlow: '255,107,0'
+        }, {
+            name: 'Purple',
+            wall: '#9b59ff',
+            wallGlow: '#9b59ff',
+            ball: '#9b59ff',
+            ballGlow: '#9b59ff',
+            trail: '155,89,255',
+            stick: '#9b59ff',
+            stickGlow: '155,89,255'
+        }, {
+            name: 'Red',
+            wall: '#ff1744',
+            wallGlow: '#ff1744',
+            ball: '#ff1744',
+            ballGlow: '#ff1744',
+            trail: '255,23,68',
+            stick: '#ff1744',
+            stickGlow: '255,23,68'
+        }];
+
+        let currentPaletteIdx = 0;
+
+        function getCurrentPalette() {
+            return PALETTES[currentPaletteIdx];
+        }
+
+        function advancePalette() {
+            currentPaletteIdx = (currentPaletteIdx + 1) % PALETTES.length;
+            return getCurrentPalette();
+        }
+
         // ---- SVG Black Hole as image ----
         const svgString = `<?xml version="1.0" encoding="iso-8859-1"?>
         <svg height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -359,17 +425,13 @@
                 C192.826,268.042,194.693,250.146,202.672,236.369z"/>
         </g>
         <g>
-            
             <ellipse transform="matrix(-0.7087 -0.7055 0.7055 -0.7087 -101.7386 549.7513)" style="fill:#F4EBC1;" cx="62.624" cy="295.879" rx="13.249" ry="1.205"/>
-            
             <ellipse transform="matrix(0.7087 -0.7055 0.7055 0.7087 -190.4882 130.4142)" style="fill:#F4EBC1;" cx="62.685" cy="295.885" rx="13.249" ry="1.205"/>
             <ellipse style="fill:#F4EBC1;" cx="456.238" cy="188.399" rx="0.528" ry="5.805"/>
             <ellipse style="fill:#F4EBC1;" cx="456.238" cy="188.406" rx="5.813" ry="0.528"/>
             <ellipse style="fill:#F4EBC1;" cx="137.853" cy="119.475" rx="0.528" ry="5.805"/>
             <ellipse style="fill:#F4EBC1;" cx="137.853" cy="119.483" rx="5.813" ry="0.528"/>
-            
             <ellipse transform="matrix(-0.7101 -0.7041 0.7041 -0.7101 491.3557 507.3044)" style="fill:#F4EBC1;" cx="350.114" cy="152.499" rx="17.487" ry="1.583"/>
-            
             <ellipse transform="matrix(0.7095 -0.7047 0.7047 0.7095 -5.7187 291.0193)" style="fill:#F4EBC1;" cx="350.125" cy="152.446" rx="17.487" ry="1.583"/>
             <ellipse style="fill:#F4EBC1;" cx="308.538" cy="404.352" rx="1.591" ry="17.495"/>
             <ellipse style="fill:#F4EBC1;" cx="308.546" cy="404.352" rx="17.487" ry="1.583"/>
@@ -396,8 +458,9 @@
         // ---- Canvas setup ----
         const canvas = document.getElementById('c');
         const ctx = canvas.getContext('2d', { alpha: false });
-        const joystick = document.getElementById('joystick');
-        const stick = document.getElementById('stick');
+        const wrap = document.getElementById('wrap');
+        const joystickEl = document.getElementById('joystick');
+        const stickEl = document.getElementById('stick');
         const winScreen = document.getElementById('winScreen');
 
         let W, H, cols, rows, cell, maze = [];
@@ -423,6 +486,41 @@
         let ballOriginalR = 0;
         let showWin = false;
 
+        // ---- Joystick state ----
+        let joystickActive = false;
+        let joystickCenterX = 0;
+        let joystickCenterY = 0;
+        const joystickRadius = 60;
+
+        // ---- Current palette (starts at index 0: Cyan) ----
+        let palette = PALETTES[0];
+
+        // ============================================================
+        //  Apply palette to stick (CSS)
+        // ============================================================
+        function applyPaletteToStick(p) {
+            // Lighten the color for the gradient highlight
+            const r = parseInt(p.stick.slice(1, 3), 16);
+            const g = parseInt(p.stick.slice(3, 5), 16);
+            const b = parseInt(p.stick.slice(5, 7), 16);
+            const lightR = Math.min(255, r + 80);
+            const lightG = Math.min(255, g + 80);
+            const lightB = Math.min(255, b + 80);
+            const lightColor = `#${lightR.toString(16).padStart(2,'0')}${lightG.toString(16).padStart(2,'0')}${lightB.toString(16).padStart(2,'0')}`;
+
+            stickEl.style.background =
+                `radial-gradient(circle at 35% 35%, ${lightColor}, ${p.stick})`;
+            stickEl.style.boxShadow =
+                `0 0 30px rgba(${p.stickGlow}, 0.7), inset 0 -4px 8px rgba(0,0,0,0.3)`;
+            stickEl.style.border = `1px solid rgba(255,255,255,0.2)`;
+        }
+
+        // Initial stick style
+        applyPaletteToStick(palette);
+
+        // ============================================================
+        //  Maze building
+        // ============================================================
         function resize() {
             W = canvas.parentElement.clientWidth;
             H = canvas.parentElement.clientHeight;
@@ -435,8 +533,7 @@
             cols = Math.floor((W - pad * 2) / cell);
             rows = Math.floor((H - pad * 2) / cell);
             ball.r = Math.round(cell * 0.28);
-            // Make goal a bit bigger than ball
-            goal.r = Math.round(ball.r * 1.25); // slightly bigger
+            goal.r = Math.round(ball.r * 1.25);
             ballOriginalR = ball.r;
             buildMaze();
         }
@@ -495,23 +592,27 @@
             ballAlpha = 1;
             flashAlpha = 0;
             showWin = false;
-            winScreen.style.display = 'none';
+            winScreen.classList.remove('show');
+            joystickEl.classList.remove('active', 'fading');
+            joystickEl.style.display = 'none';
         }
 
-        // ---- Draw ----
+        // ============================================================
+        //  Draw – uses current palette
+        // ============================================================
         function draw() {
             ctx.clearRect(0, 0, W, H);
             const ox = Math.round((W - cols * cell) / 2);
             const oy = Math.round((H - rows * cell) / 2);
 
-            // neon walls
+            // ---- Draw walls with palette color ----
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     const c = maze[y][x];
                     const sx = ox + x * cell;
                     const sy = oy + y * cell;
-                    ctx.strokeStyle = "#0ff";
-                    ctx.shadowColor = "#0ff";
+                    ctx.strokeStyle = palette.wall;
+                    ctx.shadowColor = palette.wallGlow;
                     ctx.shadowBlur = 10;
                     ctx.lineWidth = wallW;
                     if (c.w[0]) { ctx.beginPath();
@@ -536,41 +637,40 @@
 
             // ---- Draw spinning SVG black hole ----
             if (blackHoleImg.complete && blackHoleImg.naturalWidth > 0) {
-                const size = goal.r * 2.4; // slightly bigger than goal radius
+                const size = goal.r * 2.4;
                 ctx.save();
                 ctx.translate(goal.x, goal.y);
                 ctx.rotate(blackHoleAngle);
                 ctx.drawImage(blackHoleImg, -size / 2, -size / 2, size, size);
                 ctx.restore();
             } else {
-                // fallback while loading
                 ctx.beginPath();
                 ctx.fillStyle = "#141160";
                 ctx.arc(goal.x, goal.y, goal.r, 0, 2 * Math.PI);
                 ctx.fill();
             }
 
-            // ---- Trail ----
+            // ---- Trail with palette color ----
             for (let i = 0; i < trail.length; i++) {
                 const p = trail[i];
                 const alpha = (i + 1) / trail.length * 0.4;
                 ctx.beginPath();
-                ctx.fillStyle = `rgba(0,204,255,${alpha})`;
-                ctx.shadowColor = "#00ccff";
+                ctx.fillStyle = `rgba(${palette.trail},${alpha})`;
+                ctx.shadowColor = palette.wallGlow;
                 ctx.shadowBlur = 10;
                 ctx.arc(p.x, p.y, ball.r * 0.9 * ballScale, 0, 2 * Math.PI);
                 ctx.fill();
             }
             ctx.shadowBlur = 0;
 
-            // ---- Ball ----
+            // ---- Ball with palette color ----
             if (!isConsuming || consumptionProgress < 1) {
                 const drawR = ball.r * ballScale;
                 const alpha = ballAlpha;
                 ctx.globalAlpha = alpha;
                 ctx.beginPath();
-                ctx.fillStyle = "#00ccff";
-                ctx.shadowColor = "#00ccff";
+                ctx.fillStyle = palette.ball;
+                ctx.shadowColor = palette.ballGlow;
                 ctx.shadowBlur = 20;
                 ctx.arc(ball.x, ball.y, Math.max(0.5, drawR), 0, 2 * Math.PI);
                 ctx.fill();
@@ -607,7 +707,7 @@
 
         // ---- Update ----
         function update() {
-            blackHoleAngle += 0.02; // spin speed
+            blackHoleAngle += 0.02;
 
             if (!isConsuming) {
                 ball.vy += gravity;
@@ -622,11 +722,10 @@
                 trail.push({ x: ball.x, y: ball.y });
                 if (trail.length > maxTrailLength) trail.shift();
 
-                // Check if ball reaches black hole (collision with goal radius)
                 const dx = ball.x - goal.x;
                 const dy = ball.y - goal.y;
                 const dist = Math.hypot(dx, dy);
-                const threshold = ball.r + goal.r * 0.6; // slightly inside
+                const threshold = ball.r + goal.r * 0.6;
                 if (dist < threshold && !showWin) {
                     isConsuming = true;
                     consumptionProgress = 0;
@@ -635,11 +734,9 @@
                     flashAlpha = 0;
                 }
             } else {
-                // ---- Consumption animation ----
                 consumptionProgress += 0.025;
                 if (consumptionProgress > 1) consumptionProgress = 1;
 
-                // Move ball toward center
                 const dx = goal.x - ball.x;
                 const dy = goal.y - ball.y;
                 const dist = Math.hypot(dx, dy);
@@ -654,29 +751,32 @@
                     ball.y = goal.y;
                 }
 
-                // Shrink and fade
                 ballScale = Math.max(0.01, 1 - consumptionProgress * 0.98);
                 ballAlpha = Math.max(0, 1 - consumptionProgress * 1.05);
 
-                // Flash pulse at the end
                 if (consumptionProgress > 0.7) {
                     flashAlpha = Math.max(0, (consumptionProgress - 0.7) / 0.3 * 0.8);
                 } else {
                     flashAlpha = 0;
                 }
 
-                // Trail during consumption (fading)
                 if (trail.length > 0 && consumptionProgress < 0.95) {
                     trail.push({ x: ball.x, y: ball.y });
                     if (trail.length > maxTrailLength) trail.shift();
                 }
 
-                // Completion
                 if (consumptionProgress >= 1) {
                     showWin = true;
-                    winScreen.style.display = 'block';
+                    winScreen.classList.add('show');
+
+                    // ---- ADVANCE TO NEXT PALETTE ----
+                    palette = advancePalette();
+                    applyPaletteToStick(palette);
+                    // Also update the win screen text color to match
+                    winScreen.style.color = palette.ball;
+
                     setTimeout(() => {
-                        winScreen.style.display = 'none';
+                        winScreen.classList.remove('show');
                         showWin = false;
                         isConsuming = false;
                         consumptionProgress = 0;
@@ -689,7 +789,7 @@
             }
         }
 
-        // ---- Input ----
+        // ---- Input (keyboard) ----
         const keys = { up: 0, down: 0, left: 0, right: 0 };
         window.addEventListener('keydown', e => {
             if (e.key === 'ArrowUp' || e.key === 'w') keys.up = 1;
@@ -704,32 +804,83 @@
             if (e.key === 'ArrowRight' || e.key === 'd') keys.right = 0;
         });
 
-        let stickActive = false;
-        let stickCenter = { x: 0, y: 0 };
-        stick.addEventListener('pointerdown', e => {
-            stickActive = true;
-            stickCenter = { x: e.clientX, y: e.clientY };
-            stick.setPointerCapture(e.pointerId);
-        });
-        stick.addEventListener('pointermove', e => {
-            if (!stickActive) return;
-            let dx = e.clientX - stickCenter.x;
-            let dy = e.clientY - stickCenter.y;
-            const max = 50;
-            let dist = Math.hypot(dx, dy);
-            if (dist > max) { dx = dx * max / dist;
-                dy = dy * max / dist; }
-            stick.style.transform = `translate(${dx}px,${dy}px)`;
-            if (!isConsuming) {
-                ball.vx += dx / 30;
-                ball.vy += dy / 30;
+        // ---- Joystick pointer events ----
+        function getPointerPos(e) {
+            const rect = wrap.getBoundingClientRect();
+            const clientX = e.clientX || e.pageX;
+            const clientY = e.clientY || e.pageY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function showJoystickAt(x, y) {
+            const size = 60;
+            joystickEl.style.left = (x - size / 2) + 'px';
+            joystickEl.style.top = (y - size / 2) + 'px';
+            joystickEl.style.display = 'block';
+            joystickEl.classList.remove('fading');
+            joystickEl.classList.add('active');
+            stickEl.style.transform = 'translate(-50%, -50%)';
+            joystickCenterX = x;
+            joystickCenterY = y;
+        }
+
+        function hideJoystick() {
+            if (joystickActive) {
+                joystickActive = false;
+                joystickEl.classList.remove('active');
+                joystickEl.classList.add('fading');
+                setTimeout(() => {
+                    if (!joystickActive) {
+                        joystickEl.style.display = 'none';
+                        joystickEl.classList.remove('fading');
+                    }
+                }, 200);
             }
-        });
-        stick.addEventListener('pointerup', e => {
-            stickActive = false;
-            stick.style.transform = 'translate(0,0)';
-            stick.releasePointerCapture(e.pointerId);
-        });
+        }
+
+        function onPointerDown(e) {
+            if (e.target === winScreen || e.target.closest('#winScreen')) return;
+            if (e.target.closest('#joystick')) return;
+            const pos = getPointerPos(e);
+            showJoystickAt(pos.x, pos.y);
+            joystickActive = true;
+            e.preventDefault();
+        }
+
+        function onPointerMove(e) {
+            if (!joystickActive) return;
+            const pos = getPointerPos(e);
+            let dx = pos.x - joystickCenterX;
+            let dy = pos.y - joystickCenterY;
+            const dist = Math.hypot(dx, dy);
+            const clamped = Math.min(dist, joystickRadius);
+            const angle = Math.atan2(dy, dx);
+            const stickX = Math.cos(angle) * clamped;
+            const stickY = Math.sin(angle) * clamped;
+
+            stickEl.style.transform = `translate(calc(-50% + ${stickX}px), calc(-50% + ${stickY}px))`;
+
+            if (!isConsuming) {
+                ball.vx += (stickX / 25) * 1.2;
+                ball.vy += (stickY / 25) * 1.2;
+            }
+            e.preventDefault();
+        }
+
+        function onPointerUp(e) {
+            if (joystickActive) {
+                hideJoystick();
+                e.preventDefault();
+            }
+        }
+
+        wrap.addEventListener('pointerdown', onPointerDown);
+        wrap.addEventListener('pointermove', onPointerMove);
+        wrap.addEventListener('pointerup', onPointerUp);
+        wrap.addEventListener('pointercancel', onPointerUp);
 
         // ---- Loop ----
         function loop() {
@@ -759,6 +910,5 @@
             });
         }
     </script>
-
 </body>
 </html>
