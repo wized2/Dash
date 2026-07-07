@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Endroid HTML Editor</title>
+
+    <!-- CodeMirror for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/codemirror.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/codemirror.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/mode/xml/xml.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/mode/css/css.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/mode/javascript/javascript.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.17/mode/htmlmixed/htmlmixed.min.js">
+    </script>
+
+    <style>
+        /* ===== STYLES ===== */
+        /* ----- Design Tokens (Light & Dark) ----- */
+        :root {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-editor: #fafafa;
+            --bg-preview: #ffffff;
+            --text-primary: #1c1c1e;
+            --text-secondary: #6c6c70;
+            --border-color: #d1d1d6;
+            --accent: #0a84ff;
+            --accent-hover: #0066d9;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0e0e10;
+            --bg-secondary: #1c1c1e;
+            --bg-editor: #151517;
+            --bg-preview: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989e;
+            --border-color: #3a3a3c;
+            --accent: #0a84ff;
+            --accent-hover: #409cff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ----- Reset & Base ----- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            transition: background var(--transition), color var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ----- Toolbar ----- */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            transition: background var(--transition), border-color var(--transition);
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 4px 12px;
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* ----- Icon Buttons (Download & Theme) ----- */
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 12px;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-primary);
+            text-decoration: none;
+        }
+        .icon-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .icon-btn:hover svg {
+            stroke: white;
+        }
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-secondary);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.2s;
+        }
+
+        .theme-toggle-wrap {
+            position: relative;
+            width: 56px;
+            height: 28px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .theme-toggle-wrap input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .theme-toggle-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--border-color);
+            border-radius: 28px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6px;
+        }
+        .theme-toggle-slider svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--bg-secondary);
+            stroke-width: 2;
+            fill: none;
+            z-index: 1;
+        }
+        .theme-toggle-slider .knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 2;
+        }
+        .theme-toggle-wrap.active .theme-toggle-slider {
+            background: var(--accent);
+        }
+        .theme-toggle-wrap.active .knob {
+            transform: translateX(28px);
+        }
+
+        /* ----- Main Layout (Editor + Preview) ----- */
+        .main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            gap: 0;
+            padding: 12px;
+            background: var(--bg-primary);
+            transition: background var(--transition);
+        }
+
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: background var(--transition), box-shadow var(--transition);
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .panel-header {
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background var(--transition), border-color var(--transition);
+        }
+        .panel-header .left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .panel-header .left svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-secondary);
+            stroke-width: 2;
+            fill: none;
+        }
+        .panel-header .count {
+            font-weight: 400;
+            font-size: 11px;
+            background: var(--border-color);
+            padding: 2px 10px;
+            border-radius: 100px;
+            color: var(--text-secondary);
+        }
+
+        /* ----- INPUT AREA (CodeMirror) ----- */
+        .cm-editor-wrap {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        .CodeMirror {
+            height: 100% !important;
+            font-family: var(--font-mono) !important;
+            font-size: 14px !important;
+            line-height: 1.7 !important;
+            background: var(--bg-editor) !important;
+            color: var(--text-primary) !important;
+            transition: background 0.3s, color 0.3s;
+        }
+        .CodeMirror-gutters {
+            background: var(--bg-editor) !important;
+            border-right: 1px solid var(--border-color) !important;
+        }
+        .CodeMirror-linenumber {
+            color: var(--text-secondary) !important;
+        }
+        .CodeMirror-cursor {
+            border-color: var(--text-primary) !important;
+        }
+        .CodeMirror-selected {
+            background: var(--accent) !important;
+            opacity: 0.3;
+        }
+        .CodeMirror-scroll {
+            padding: 8px 0;
+        }
+
+        /* ----- PREVIEW AREA (iframe) ----- */
+        #preview {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: var(--bg-preview);
+            transition: background var(--transition);
+        }
+
+        /* ----- DIVIDER (resize handle) ----- */
+        .divider {
+            width: 16px;
+            cursor: col-resize;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        .divider .handle {
+            width: 4px;
+            height: 40px;
+            background: var(--border-color);
+            border-radius: 4px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .divider:hover .handle,
+        .divider.active .handle {
+            background: var(--accent);
+            transform: scaleX(1.5);
+        }
+
+        /* ----- Mobile: stack vertically ----- */
+        @media (max-width: 768px) {
+            .main {
+                flex-direction: column;
+                padding: 8px;
+            }
+            .divider {
+                width: 100%;
+                height: 16px;
+                cursor: row-resize;
+            }
+            .divider .handle {
+                width: 40px;
+                height: 4px;
+            }
+            .divider:hover .handle,
+            .divider.active .handle {
+                transform: scaleY(1.5);
+            }
+        }
+
+        /* ----- Error Toast ----- */
+        .error-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff3b30;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(255, 59, 48, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .error-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .error-toast svg {
+            width: 18px;
+            height: 18px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOOLBAR ===== -->
+    <header class="toolbar">
+        <div class="toolbar-left">
+            <a class="logo" href="#">
+                <svg viewBox="0 0 24 24">
+                    <polygon points="12,2 22,7 22,17 12,22 2,17 2,7 12,2" />
+                    <polygon points="12,2 12,22 2,12 12,2" />
+                    <polygon points="12,2 12,22 22,12 12,2" />
+                </svg>
+                Endroid
+            </a>
+            <span class="badge">HTML Editor</span>
+        </div>
+        <div class="toolbar-right">
+            <!-- Download Button -->
+            <button class="icon-btn" id="downloadBtn" title="Download as index.html">
+                <svg viewBox="0 0 24 24">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download
+            </button>
+
+            <!-- Theme Toggle -->
+            <div class="theme-toggle-wrap" id="themeToggleWrap" role="button" tabindex="0">
+                <input type="checkbox" id="themeCheckbox" />
+                <div class="theme-toggle-slider">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span class="knob"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN: EDITOR + PREVIEW ===== -->
+    <div class="main" id="mainContainer">
+
+        <!-- INPUT AREA (Editor) -->
+        <div class="panel" id="editorPanel">
+            <div class="panel-header">
+                <span class="left">
+                    <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    HTML
+                </span>
+                <span class="count" id="charCount">0 chars</span>
+            </div>
+            <div class="cm-editor-wrap">
+                <textarea id="code" spellcheck="false"></textarea>
+            </div>
+        </div>
+
+        <!-- DIVIDER (drag to resize) -->
+        <div class="divider" id="divider">
+            <span class="handle"></span>
+        </div>
+
+        <!-- PREVIEW AREA -->
+        <div class="panel" id="previewPanel">
+            <div class="panel-header">
+                <span class="left">
+                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    Preview
+                </span>
+                <span class="count">auto-refresh</span>
+            </div>
+            <iframe id="preview" sandbox="allow-scripts allow-modals allow-same-origin"></iframe>
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div class="error-toast" id="errorToast">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        HTML error — check your markup
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        (function() {
+            // --- DOM refs ---
+            const editorTextarea = document.getElementById('code');
+            const preview = document.getElementById('preview');
+            const charCount = document.getElementById('charCount');
+            const errorToast = document.getElementById('errorToast');
+            const themeToggleWrap = document.getElementById('themeToggleWrap');
+            const themeCheckbox = document.getElementById('themeCheckbox');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const divider = document.getElementById('divider');
+            const mainContainer = document.getElementById('mainContainer');
+            const editorPanel = document.getElementById('editorPanel');
+            const previewPanel = document.getElementById('previewPanel');
+
+            // --- Default HTML template ---
+            const DEFAULT_HTML = `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Endroid Demo</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+              font-family: system-ui, -apple-system, sans-serif;
+              background: #f5f5f7;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-height: 100vh;
+              padding: 20px;
+            }
+            .card {
+              background: white;
+              border-radius: 24px;
+              padding: 48px 40px;
+              max-width: 480px;
+              width: 100%;
+              box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+              text-align: center;
+              transition: 0.3s;
+            }
+            .card:hover {
+              transform: translateY(-4px);
+              box-shadow: 0 28px 80px rgba(0,0,0,0.12);
+            }
+            h1 {
+              font-size: 28px;
+              font-weight: 700;
+              letter-spacing: -0.5px;
+              background: linear-gradient(135deg, #0a84ff, #7c3aed);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+            }
+            p {
+              color: #6c6c70;
+              margin: 16px 0 24px;
+              line-height: 1.6;
+            }
+            .btn {
+              display: inline-block;
+              background: #0a84ff;
+              color: white;
+              font-weight: 600;
+              padding: 12px 32px;
+              border-radius: 100px;
+              text-decoration: none;
+              transition: 0.2s;
+              border: none;
+              cursor: pointer;
+            }
+            .btn:hover {
+              background: #0066d9;
+              transform: scale(1.02);
+            }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <h1>◈ Endroid</h1>
+            <p>Live HTML editor with Material You 3 design.<br />Get start by writing the code.</p>
+            <button class="btn" onclick="alert('Hello from Endroid! ✨')">Click me</button>
+          </div>
+        </body>
+        </html>`;
+
+            // --- Init CodeMirror (syntax-highlighted input) ---
+            const editor = CodeMirror.fromTextArea(editorTextarea, {
+                mode: 'htmlmixed',
+                theme: 'default',
+                lineNumbers: true,
+                tabSize: 2,
+                indentUnit: 2,
+                lineWrapping: false,
+                extraKeys: {
+                    "Tab": function(cm) {
+                        cm.replaceSelection("  ", "end");
+                    }
+                }
+            });
+
+            editor.setValue(DEFAULT_HTML);
+            updateCharCount();
+
+            // --- State ---
+            let updateTimeout = null;
+            let errorVisible = false;
+            let isResizing = false;
+            let startX = 0,
+                startY = 0;
+            let startWidth = 0,
+                startHeight = 0;
+
+            // --- Theme ---
+            function getPreferredTheme() {
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                const isDark = theme === 'dark';
+                themeCheckbox.checked = isDark;
+                themeToggleWrap.classList.toggle('active', isDark);
+                localStorage.setItem('endroid-theme', theme);
+                editor.refresh(); // re-render CodeMirror
+            }
+
+            function toggleTheme() {
+                const current = document.documentElement.getAttribute('data-theme');
+                setTheme(current === 'dark' ? 'light' : 'dark');
+            }
+
+            // Load saved theme or system default
+            const savedTheme = localStorage.getItem('endroid-theme');
+            setTheme(savedTheme || getPreferredTheme());
+
+            themeToggleWrap.addEventListener('click', toggleTheme);
+            themeToggleWrap.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleTheme();
+                }
+            });
+
+            // Listen for system theme changes (if user never manually set)
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('endroid-theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+
+            // --- Update Preview ---
+            function updatePreview() {
+                const html = editor.getValue();
+                try {
+                    preview.srcdoc = html;
+                    hideError();
+                } catch (e) {
+                    preview.srcdoc =
+                        `<html><body style="font-family:system-ui;padding:40px;color:red;">⚠️ Invalid HTML</body></html>`;
+                    showError();
+                }
+                updateCharCount();
+            }
+
+            function scheduleUpdate() {
+                clearTimeout(updateTimeout);
+                updateTimeout = setTimeout(updatePreview, 300);
+            }
+
+            editor.on('change', scheduleUpdate);
+
+            // --- Character counter ---
+            function updateCharCount() {
+                const len = editor.getValue().length;
+                charCount.textContent = len + ' chars';
+            }
+
+            // --- Error toast ---
+            function showError() {
+                if (!errorVisible) {
+                    errorVisible = true;
+                    errorToast.classList.add('show');
+                    clearTimeout(errorToast._hide);
+                }
+            }
+
+            function hideError() {
+                if (errorVisible) {
+                    errorVisible = false;
+                    errorToast.classList.remove('show');
+                }
+            }
+
+            // --- Download ---
+            downloadBtn.addEventListener('click', function() {
+                const content = editor.getValue();
+                const blob = new Blob([content], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'index.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+
+            // --- Resize divider ---
+            function initResize(e) {
+                isResizing = true;
+                const isMobile = window.innerWidth <= 768;
+
+                if (isMobile) {
+                    startY = e.clientY || e.touches?.[0]?.clientY || 0;
+                    startHeight = editorPanel.offsetHeight;
+                } else {
+                    startX = e.clientX || e.touches?.[0]?.clientX || 0;
+                    startWidth = editorPanel.offsetWidth;
+                }
+
+                divider.classList.add('active');
+                document.addEventListener('mousemove', onResize);
+                document.addEventListener('touchmove', onResize, { passive: false });
+                document.addEventListener('mouseup', stopResize);
+                document.addEventListener('touchend', stopResize);
+                e.preventDefault?.();
+            }
+
+            function onResize(e) {
+                if (!isResizing) return;
+                const isMobile = window.innerWidth <= 768;
+                const containerRect = mainContainer.getBoundingClientRect();
+
+                if (isMobile) {
+                    const currentY = e.clientY || e.touches?.[0]?.clientY || 0;
+                    const deltaY = currentY - startY;
+                    const newHeight = startHeight + deltaY;
+                    const totalHeight = containerRect.height;
+                    const minHeight = 80;
+                    const clamped = Math.max(minHeight, Math.min(totalHeight - minHeight, newHeight));
+                    const percentage = (clamped / totalHeight) * 100;
+                    editorPanel.style.flex = `0 0 ${percentage}%`;
+                    previewPanel.style.flex = `1 1 ${100 - percentage}%`;
+                } else {
+                    const currentX = e.clientX || e.touches?.[0]?.clientX || 0;
+                    const deltaX = currentX - startX;
+                    const newWidth = startWidth + deltaX;
+                    const totalWidth = containerRect.width;
+                    const minWidth = 180;
+                    const clamped = Math.max(minWidth, Math.min(totalWidth - minWidth, newWidth));
+                    const percentage = (clamped / totalWidth) * 100;
+                    editorPanel.style.flex = `0 0 ${percentage}%`;
+                    previewPanel.style.flex = `1 1 ${100 - percentage}%`;
+                }
+                e.preventDefault?.();
+                editor.refresh();
+            }
+
+            function stopResize() {
+                isResizing = false;
+                divider.classList.remove('active');
+                document.removeEventListener('mousemove', onResize);
+                document.removeEventListener('touchmove', onResize);
+                document.removeEventListener('mouseup', stopResize);
+                document.removeEventListener('touchend', stopResize);
+                editor.refresh();
+            }
+
+            divider.addEventListener('mousedown', initResize);
+            divider.addEventListener('touchstart', initResize, { passive: false });
+
+            // Reset flex when crossing mobile breakpoint
+            let lastWidth = window.innerWidth;
+            window.addEventListener('resize', () => {
+                const currentWidth = window.innerWidth;
+                if ((lastWidth <= 768 && currentWidth > 768) || (lastWidth > 768 && currentWidth <= 768)) {
+                    editorPanel.style.flex = '';
+                    previewPanel.style.flex = '';
+                }
+                lastWidth = currentWidth;
+                editor.refresh();
+            });
+
+            // --- Initial render ---
+            updatePreview();
+            setTimeout(() => editor.refresh(), 100);
+        })();
+    </script>
+</body>
+</html>
