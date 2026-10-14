@@ -461,15 +461,22 @@
     }
   </style>
 
+
 <link rel="stylesheet" href="/shared/endroid.css" />
-<style>
-  .e-app-bar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.55rem 1rem;background:color-mix(in srgb,#1a1b26 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid rgba(169,177,214,.2);font-family:Inter,system-ui,sans-serif;font-size:.85rem}
-  .e-app-bar a{color:#7aa2f7;text-decoration:none;font-weight:600}
-  .e-app-bar .muted{color:#a9b1d6}
-</style>
+<script src="/shared/endroid.js" defer></script>
+<script src="https://unpkg.com/lucide@0.469.0" defer></script>
 
 </head>
 <body class="smooth-transition">
+
+<header class="e-topbar" role="navigation" aria-label="Endroid">
+  <a class="e-brand" href="/"><i data-lucide="hexagon"></i> Endroid <span>Dash</span></a>
+  <div class="e-actions">
+    <button type="button" class="e-icon-btn" aria-label="Toggle theme" onclick="endroidToggleTheme()"><i data-lucide="moon" data-theme-icon></i></button>
+    <a class="e-icon-btn" href="/" aria-label="Home"><i data-lucide="home"></i></a>
+  </div>
+</header>
+
   <div class="app-root">
     <div class="header">
       <div class="app-title">
@@ -612,5 +619,8 @@
       }
     })();
   </script>
+
+<script>document.addEventListener('DOMContentLoaded',function(){if(window.lucide)lucide.createIcons();});</script>
+
 </body>
 </html>
