@@ -1,1022 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Basic Meta Tags -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <!-- Primary Meta Tags -->
-  <title>Endroid Dashboard - Modern Web Applications Collection</title>
-  <meta name="description" content="A collection of modern web applications with Material You 3 design, expressive animations, and eye-catching visual effects. Includes AI assistant, search engine, notes, calculator, games and more.">
-  <meta name="keywords" content="endroid, dashboard, web applications, material you 3, PWA, progressive web app, AI assistant, modern design, open source, web tools">
-  <meta name="author" content="Endroid">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow">
-  <meta name="rating" content="General">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://endroid.pages.dev/">
-  
-  <!-- Open Graph / Facebook Meta Tags -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://endroid.pages.dev/">
-  <meta property="og:title" content="Endroid Dashboard - Modern Web Applications Collection">
-  <meta property="og:description" content="Experience modern design with Material You 3, expressive animations, and eye-catching visual effects across all our projects.">
-  <meta property="og:image" content="https://endroid.pages.dev/favicon.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Endroid Dashboard Preview">
-  <meta property="og:site_name" content="Endroid">
-  <meta property="og:locale" content="en_US">
-  
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://endroid.pages.dev/">
-  <meta name="twitter:title" content="Endroid Dashboard - Modern Web Applications Collection">
-  <meta name="twitter:description" content="Experience modern design with Material You 3, expressive animations, and eye-catching visual effects across all our projects.">
-  <meta name="twitter:image" content="https://endroid.pages.dev/favicon.png">
-  <meta name="twitter:creator" content="@Endroid">
-  <meta name="twitter:site" content="@Endroid">
-  
-  <!-- Additional Social Meta Tags -->
-  <meta property="og:image:type" content="image/png">
-  <meta name="twitter:image:alt" content="Endroid Dashboard Preview">
-  
-  <!-- PWA Meta Tags -->
-  <meta name="application-name" content="Endroid Dashboard">
-  <meta name="apple-mobile-web-app-title" content="Endroid">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="format-detection" content="telephone=no">
-
-  <!-- Icons -->
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/icons/icon-192x192.png" type="image/png" sizes="192x192">
-  <link rel="icon" href="/icons/icon-512x512.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="/icons/icon-180x180.png">
-  
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  
-  <!-- Additional SEO Meta Tags -->
-  <meta name="language" content="English">
-  <meta name="revisit-after" content="7 days">
-  <meta name="generator" content="Endroid">
-  <meta name="subject" content="Web Applications">
-  <meta name="copyright" content="Endroid">
-  <meta name="coverage" content="Worldwide">
-  <meta name="distribution" content="Global">
-  <meta name="classification" content="Web Applications">
-  
-  <!-- Structured Data / JSON-LD -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Endroid Dash — Free Material You Web Tools, Games & Apps by Mudasir Wazir</title>
+  <meta name="description" content="Endroid Dash is the home of Project Endroid: free offline-friendly web tools, games, and open-source Android apps. AI, Search, Calculator, Clock, Base64, Maze, HTML editor, Fern, CodeCanvas. Built by Mudasir Wazir in Rahim Yar Khan, Pakistan." />
+  <meta name="keywords" content="Endroid, Endroid Dash, Project Endroid, Mudasir Wazir, Mudsir Wazir, Rahim Yar Khan, Pakistan FOSS, Material You 3, web tools, Endroid Search, Endroid Calculator, Endroid Clock, Endroid Maze, Endroid Base64, Endroid AI, Fern Android, CodeCanvas, D-Harness, Class 8 app, open source Pakistan, PWA tools, offline web apps" />
+  <meta name="author" content="Mudasir Wazir" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f6f7fb" media="(prefers-color-scheme: light)" />
+  <meta name="application-name" content="Endroid Dash" />
+  <meta name="apple-mobile-web-app-title" content="Endroid" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="canonical" href="https://endroid.pages.dev/" />
+  <link rel="alternate" hreflang="en" href="https://endroid.pages.dev/" />
+  <link rel="alternate" hreflang="x-default" href="https://endroid.pages.dev/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Endroid Dash" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://endroid.pages.dev/" />
+  <meta property="og:title" content="Endroid Dash — Tools, Games & Apps" />
+  <meta property="og:description" content="Free Material You web tools and open-source Android apps from Project Endroid. Offline-friendly. No ads." />
+  <meta property="og:image" content="https://endroid.pages.dev/icons/icon-512x512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Endroid Dash — Tools, Games & Apps" />
+  <meta name="twitter:description" content="Project Endroid dashboard by Mudasir Wazir — FOSS tools & Android apps." />
+  <meta name="twitter:image" content="https://endroid.pages.dev/icons/icon-512x512.png" />
+  <link rel="icon" href="/icons/icon-192x192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/icons/icon-180x180.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="/shared/endroid.css" rel="stylesheet" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Endroid Dashboard",
-    "description": "A collection of modern web applications with Material You 3 design and expressive animations",
-    "url": "https://endroid.pages.dev/",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "Endroid",
-      "url": "https://github.com/Wized2"
-    },
-    "screenshot": "https://endroid.pages.dev/favicon.png",
-    "softwareVersion": "3.0",
-    "featureList": [
-      "AI Assistant",
-      "Search Engine",
-      "Notes App",
-      "Calculator",
-      "Clock",
-      "Maze Game",
-      "Base64 Encoder"
-    ],
-    "countriesSupported": "Worldwide"
-  }
-  </script>
-  
-  <!-- Additional Schema.org -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Endroid",
-    "url": "https://endroid.pages.dev/",
-    "logo": "https://endroid.pages.dev/favicon.svg",
-    "sameAs": [
-      "https://github.com/Wized2"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://endroid.pages.dev/#org",
+        "name": "Project Endroid",
+        "alternateName": ["Endroid", "Endroid Dash", "Endroid Studio"],
+        "url": "https://endroid.pages.dev/",
+        "logo": "https://endroid.pages.dev/icons/icon-512x512.png",
+        "founder": {
+          "@type": "Person",
+          "name": "Mudasir Wazir",
+          "alternateName": "Mudsir Wazir",
+          "url": "https://github.com/wized2",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Rahim Yar Khan",
+            "addressRegion": "Punjab",
+            "addressCountry": "PK"
+          }
+        },
+        "sameAs": [
+          "https://github.com/wized2",
+          "https://endroid.zone.id/",
+          "https://wized2.github.io/Endroid/",
+          "https://github.com/wized2/Fern",
+          "https://github.com/wized2/CodeCanvas"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://endroid.pages.dev/#website",
+        "url": "https://endroid.pages.dev/",
+        "name": "Endroid Dash",
+        "description": "Dashboard for Project Endroid web tools, games, and Android apps.",
+        "publisher": { "@id": "https://endroid.pages.dev/#org" },
+        "inLanguage": "en",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://endroid.pages.dev/Search/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Endroid web tools and games",
+        "itemListElement": [
+          {"@type":"ListItem","position":1,"name":"Endroid AI","url":"https://wized2.github.io/Ai/"},
+          {"@type":"ListItem","position":2,"name":"Endroid Search","url":"https://endroid.pages.dev/Search/"},
+          {"@type":"ListItem","position":3,"name":"Endroid Calculator","url":"https://endroid.pages.dev/Calculator/"},
+          {"@type":"ListItem","position":4,"name":"Endroid Clock","url":"https://endroid.pages.dev/Clock/"},
+          {"@type":"ListItem","position":5,"name":"Endroid Base64","url":"https://endroid.pages.dev/Base64/"},
+          {"@type":"ListItem","position":6,"name":"Endroid Maze","url":"https://endroid.pages.dev/Maze/"},
+          {"@type":"ListItem","position":7,"name":"Endroid HTML Editor","url":"https://endroid.pages.dev/HTML/"},
+          {"@type":"ListItem","position":8,"name":"Fern","url":"https://get-fern.vercel.app/"},
+          {"@type":"ListItem","position":9,"name":"CodeCanvas","url":"https://wized2.github.io/CodeCanvas/"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Endroid Dash?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Endroid Dash is the public dashboard for Project Endroid — free web tools, games, and links to open-source Android apps by Mudasir Wazir."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are Endroid tools free and open source?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Most Project Endroid software is free, offline-friendly where possible, without ads, and open source under MIT unless a project states otherwise."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who builds Project Endroid?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mudasir Wazir (GitHub wized2), based in Rahim Yar Khan, Punjab, Pakistan."
+            }
+          }
+        ]
+      }
     ]
   }
   </script>
-  
-  <!-- Preconnect and Preload -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://wized2.github.io">
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
   <style>
-    /* Your existing CSS styles remain exactly the same */
-    :root {
-      /* Milky Blue Color Palette - Dark Theme */
-      --md-sys-color-primary: #7CB9E8; /* Milky Blue */
-      --md-sys-color-primary-variant: #B0E0E6; /* Powder Blue */
-      --md-sys-color-secondary: #72A0C1; /* Air Force Blue */
-      --md-sys-color-secondary-variant: #5D8AA8; /* USAFA Blue */
-      --md-sys-color-tertiary: #89CFF0; /* Baby Blue */
-      --md-sys-color-tertiary-variant: #B0E0E6;
-      --md-sys-color-surface: #0F1621; /* Dark Blue-Gray */
-      --md-sys-color-surface-container: #1A2332;
-      --md-sys-color-surface-container-high: #243143;
-      --md-sys-color-on-surface: #E6F0FF; /* Milky Light Blue */
-      --md-sys-color-outline: #7CB9E8;
-      --md-sys-color-shadow: rgba(12, 20, 31, 0.5);
-      --md-sys-color-gradient-start: #7CB9E8;
-      --md-sys-color-gradient-end: #5D8AA8;
-      
-      /* Typography Scale */
-      --md-sys-typescale-display-large: 57px;
-      --md-sys-typescale-title-large: 22px;
-      --md-sys-typescale-title-medium: 18px;
-      --md-sys-typescale-body-large: 16px;
-      --md-sys-typescale-body-medium: 14px;
-      --md-sys-typescale-label-large: 14px;
-      
-      /* Motion & Effects */
-      --md-sys-motion-easing: cubic-bezier(0.2, 0, 0, 1);
-      --md-sys-motion-duration: 400ms;
-      --md-sys-motion-scale: 1;
-      
-      /* Dynamic Glass Effect */
-      --glass-blur: 12px;
-      --glass-border: rgba(124, 185, 232, 0.15);
-      --glass-background: rgba(26, 35, 50, 0.8);
-      
-      /* Custom Properties for Animation */
-      --float-animation: float 6s ease-in-out infinite;
-      --pulse-animation: pulse 3s ease-in-out infinite;
-      --gradient-animation: gradient-shift 8s ease infinite;
-      --neon-glow: 0 0 25px rgba(124, 185, 232, 0.4);
-      --frost-glow: 0 0 30px rgba(176, 224, 230, 0.3);
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100dvh; }
+    .hero {
+      max-width: 1080px; margin: 0 auto; padding: 3rem 1.25rem 1.5rem;
     }
-    
-    [data-theme="light"] {
-      /* Milky Blue Color Palette - Light Theme */
-      --md-sys-color-primary: #5D8AA8; /* USAFA Blue */
-      --md-sys-color-primary-variant: #7CB9E8; /* Milky Blue */
-      --md-sys-color-secondary: #72A0C1;
-      --md-sys-color-secondary-variant: #89CFF0;
-      --md-sys-color-tertiary: #B0E0E6; /* Powder Blue */
-      --md-sys-color-surface: #F8FBFF; /* Milky Light Blue Background */
-      --md-sys-color-surface-container: #FFFFFF;
-      --md-sys-color-surface-container-high: #F0F7FF;
-      --md-sys-color-on-surface: #1A365D; /* Deep Blue Text */
-      --md-sys-color-outline: #7CB9E8;
-      --md-sys-color-shadow: rgba(124, 185, 232, 0.15);
-      --md-sys-color-gradient-start: #5D8AA8;
-      --md-sys-color-gradient-end: #89CFF0;
-      --glass-background: rgba(255, 255, 255, 0.85);
-      --glass-border: rgba(124, 185, 232, 0.2);
-      --neon-glow: 0 0 20px rgba(93, 138, 168, 0.2);
-      --frost-glow: 0 0 25px rgba(176, 224, 230, 0.2);
+    .kicker {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--e-accent);
     }
-    
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: .6rem 0;
+      letter-spacing: -.03em;
     }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--md-sys-color-surface);
-      color: var(--md-sys-color-on-surface);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: auto;
-      transition: all 0.5s var(--md-sys-motion-easing);
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(124, 185, 232, 0.08) 0%, transparent 25%),
-        radial-gradient(circle at 90% 80%, rgba(93, 138, 168, 0.08) 0%, transparent 25%);
+    .lead { color: var(--e-muted); font-size: 1.1rem; max-width: 38rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .75rem 1.2rem; border-radius: var(--e-radius-pill);
+      font-weight: 600; text-decoration: none; border: none; cursor: pointer;
     }
-    
-    [data-theme="light"] body {
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(124, 185, 232, 0.1) 0%, transparent 25%),
-        radial-gradient(circle at 90% 80%, rgba(176, 224, 230, 0.1) 0%, transparent 25%);
+    .btn-primary { background: var(--e-primary); color: #0b1020; }
+    .btn-ghost { background: transparent; color: var(--e-fg); border: 1px solid color-mix(in srgb, var(--e-muted) 40%, transparent); }
+    section { max-width: 1080px; margin: 0 auto; padding: 1.5rem 1.25rem; }
+    section h2 { font-size: 1.25rem; margin: 0 0 1rem; letter-spacing: -.02em; }
+    .grid {
+      display: grid; gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
-    
-    /* Eye Illusion Background Elements - Milky Blue Theme */
-    .background-illusion {
-      position: fixed;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-      opacity: 0.05;
-      filter: blur(40px);
-      animation: var(--float-animation);
-      z-index: -1;
+    .card {
+      background: var(--e-surface);
+      border: 1px solid color-mix(in srgb, var(--e-muted) 18%, transparent);
+      border-radius: var(--e-radius);
+      padding: 1.15rem 1.2rem;
+      display: flex; flex-direction: column; gap: .55rem;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      text-decoration: none; color: inherit;
     }
-    
-    .illusion-1 {
-      top: 10%;
-      left: 5%;
-      animation-delay: 0s;
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--e-primary) 45%, transparent);
+      box-shadow: var(--e-shadow);
     }
-    
-    .illusion-2 {
-      bottom: 20%;
-      right: 10%;
-      animation-delay: -2s;
+    .card .ico {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: color-mix(in srgb, var(--e-primary) 18%, var(--e-surface-2));
+      color: var(--e-primary); font-size: 1.25rem; font-weight: 700;
     }
-    
-    .illusion-3 {
-      top: 60%;
-      left: 80%;
-      width: 200px;
-      height: 200px;
-      animation-delay: -4s;
+    .card h3 { margin: 0; font-size: 1.05rem; }
+    .card p { margin: 0; color: var(--e-muted); font-size: .9rem; flex: 1; }
+    .card .go { font-size: .85rem; font-weight: 600; color: var(--e-primary); }
+    .pill {
+      display: inline-block; font-size: .7rem; font-weight: 600;
+      padding: .15rem .5rem; border-radius: 999px;
+      background: color-mix(in srgb, var(--e-accent) 20%, transparent);
+      color: var(--e-accent);
     }
-    
-    /* Header with Frosted Glass Effect */
-    header {
-      background: var(--glass-background);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      color: var(--md-sys-color-on-surface);
-      padding: 22px 24px;
-      text-align: center;
-      font-family: 'Montserrat', sans-serif;
-      font-size: var(--md-sys-typescale-title-large);
-      font-weight: 600;
-      letter-spacing: -0.3px;
-      box-shadow: 0 4px 20px var(--md-sys-color-shadow);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid var(--glass-border);
-      transition: all 0.4s var(--md-sys-motion-easing);
+    .about {
+      background: var(--e-surface);
+      border-radius: var(--e-radius);
+      padding: 1.25rem 1.35rem;
+      border: 1px solid color-mix(in srgb, var(--e-muted) 18%, transparent);
+      color: var(--e-muted); font-size: .95rem;
     }
-    
-    /* Animated Gradient Text Effect - Milky Blue */
-    .header-gradient {
-      background: linear-gradient(90deg, 
-        var(--md-sys-color-primary), 
-        var(--md-sys-color-tertiary),
-        var(--md-sys-color-primary));
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: var(--gradient-animation);
-      display: inline-block;
-      font-weight: 700;
-    }
-    
-    /* Theme Toggle with Frosted Glass */
-    .theme-toggle {
-      position: absolute;
-      top: 50%;
-      right: 24px;
-      transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--md-sys-color-surface-container-high);
-      border: 1.5px solid var(--glass-border);
-      color: var(--md-sys-color-primary);
-      font-size: 22px;
-      cursor: pointer;
-      transition: all 0.3s var(--md-sys-motion-easing);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-    
-    .theme-toggle:hover {
-      background: var(--md-sys-color-primary);
-      color: var(--md-sys-color-surface);
-      transform: translateY(-50%) scale(1.1) rotate(180deg);
-      box-shadow: var(--frost-glow);
-      border-color: var(--md-sys-color-tertiary);
-    }
-    
-    .theme-toggle:active {
-      transform: translateY(-50%) scale(0.95);
-    }
-    
-    /* Main Container */
-    .main-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 32px 24px;
-      gap: 32px;
-      position: relative;
-    }
-    
-    /* Welcome Message */
-    .welcome-message {
-      text-align: center;
-      max-width: 600px;
-      margin-bottom: 16px;
-    }
-    
-    .welcome-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: clamp(28px, 5vw, 42px);
-      font-weight: 700;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
-    }
-    
-    .welcome-subtitle {
-      font-size: var(--md-sys-typescale-body-large);
-      color: var(--md-sys-color-on-surface);
-      opacity: 0.9;
-      line-height: 1.6;
-      font-weight: 400;
-    }
-    
-    /* Enhanced Cards Grid */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      width: 100%;
-      max-width: 1200px;
-    }
-    
-    /* Project Card with Frosted Glass */
-    .project-card {
-      background: var(--glass-background);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      border-radius: 24px;
-      padding: 28px;
-      border: 1px solid var(--glass-border);
-      transition: all 0.4s var(--md-sys-motion-easing);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, 
-        var(--md-sys-color-primary), 
-        var(--md-sys-color-tertiary));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s var(--md-sys-motion-easing);
-    }
-    
-    .project-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 
-        0 20px 40px var(--md-sys-color-shadow),
-        var(--frost-glow);
-      border-color: var(--md-sys-color-primary);
-    }
-    
-    .project-card:hover::before {
-      transform: scaleX(1);
-    }
-    
-    /* Card Content */
-    .project-icon {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      font-size: 28px;
-      color: white;
-      transition: all 0.3s var(--md-sys-motion-easing);
-      box-shadow: 0 4px 12px rgba(124, 185, 232, 0.2);
-    }
-    
-    .project-card:hover .project-icon {
-      transform: rotate(15deg) scale(1.1);
-      box-shadow: 0 8px 20px rgba(124, 185, 232, 0.3);
-    }
-    
-    .project-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: var(--md-sys-typescale-title-large);
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: var(--md-sys-color-on-surface);
-      transition: color 0.3s var(--md-sys-motion-easing);
-    }
-    
-    .project-card:hover .project-title {
-      color: var(--md-sys-color-primary);
-    }
-    
-    .project-description {
-      font-size: var(--md-sys-typescale-body-medium);
-      color: var(--md-sys-color-on-surface);
-      opacity: 0.9;
-      margin-bottom: 24px;
-      line-height: 1.6;
-      font-weight: 400;
-    }
-    
-    /* Enhanced Button with Milky Blue Theme */
-    .project-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      padding: 14px 24px;
-      background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-primary-variant));
-      color: var(--md-sys-color-surface);
-      border: none;
-      border-radius: 14px;
-      font-size: var(--md-sys-typescale-label-large);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s var(--md-sys-motion-easing);
-      text-decoration: none;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-    
-    .project-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s var(--md-sys-motion-easing);
-      z-index: -1;
-    }
-    
-    .project-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 
-        0 10px 25px rgba(124, 185, 232, 0.3),
-        var(--neon-glow);
-      color: white;
-    }
-    
-    .project-btn:hover::before {
-      left: 100%;
-    }
-    
-    .material-symbols-rounded {
-      font-size: 20px;
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      transition: transform 0.3s var(--md-sys-motion-easing);
-    }
-    
-    .project-btn:hover .material-symbols-rounded {
-      transform: translateX(4px);
-    }
-    
-    /* Footer with Animated Border */
-    footer {
-      background: var(--md-sys-color-surface-container);
-      color: var(--md-sys-color-on-surface);
-      text-align: center;
-      padding: 24px;
-      font-size: var(--md-sys-typescale-body-medium);
-      border-top: 1px solid var(--glass-border);
-      position: relative;
-      overflow: hidden;
-      margin-top: auto;
-    }
-    
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--md-sys-color-primary), transparent);
-      animation: slide-border 3s linear infinite;
-    }
-    
-    footer a {
-      color: var(--md-sys-color-primary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s var(--md-sys-motion-easing);
-      position: relative;
-    }
-    
-    footer a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1.5px;
-      background: var(--md-sys-color-primary);
-      transition: width 0.3s var(--md-sys-motion-easing);
-    }
-    
-    footer a:hover {
-      color: var(--md-sys-color-tertiary);
-    }
-    
-    footer a:hover::after {
-      width: 100%;
-    }
-    
-    /* Animations */
-    @keyframes float {
-      0%, 100% { 
-        transform: translateY(0px) translateX(0) scale(1); 
-      }
-      33% { 
-        transform: translateY(-20px) translateX(10px) scale(1.05); 
-      }
-      66% { 
-        transform: translateY(10px) translateX(-10px) scale(0.95); 
-      }
-    }
-    
-    @keyframes pulse {
-      0%, 100% { 
-        opacity: 0.05; 
-        transform: scale(1);
-      }
-      50% { 
-        opacity: 0.1; 
-        transform: scale(1.05);
-      }
-    }
-    
-    @keyframes gradient-shift {
-      0% { 
-        background-position: 0% 50%; 
-      }
-      50% { 
-        background-position: 100% 50%; 
-      }
-      100% { 
-        background-position: 0% 50%; 
-      }
-    }
-    
-    @keyframes slide-border {
-      0% { 
-        left: -100%; 
-      }
-      100% { 
-        left: 100%; 
-      }
-    }
-    
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) {
-      .cards-grid { 
-        grid-template-columns: 1fr; 
-        gap: 20px;
-      }
-      .main-container { 
-        padding: 24px 16px; 
-        gap: 28px;
-      }
-      header { 
-        padding: 18px 16px; 
-        font-size: 18px;
-      }
-      .theme-toggle {
-        width: 44px;
-        height: 44px;
-        right: 16px;
-      }
-      .project-card {
-        padding: 24px;
-      }
-      .welcome-title {
-        font-size: 32px;
-      }
-      .welcome-subtitle {
-        font-size: 15px;
-        padding: 0 8px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      :root {
-        --glass-blur: 8px;
-      }
-      .welcome-title {
-        font-size: 28px;
-      }
-      .project-icon {
-        width: 48px;
-        height: 48px;
-        font-size: 24px;
-      }
-    }
-    
-    /* Custom Scrollbar - Milky Blue Theme */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: var(--md-sys-color-surface-container);
-      border-radius: 4px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(to bottom, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-      border-radius: 4px;
-      border: 2px solid var(--md-sys-color-surface-container);
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(to bottom, var(--md-sys-color-primary-variant), var(--md-sys-color-tertiary));
-    }
-    
-    /* Additional styles for better theme visibility */
-    body[data-theme="light"] {
-      background-color: var(--md-sys-color-surface) !important;
-    }
-    
-    body[data-theme="dark"] {
-      background-color: var(--md-sys-color-surface) !important;
-    }
-    
-    /* Ensure theme variables are properly applied */
-    * {
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    .about strong { color: var(--e-fg); }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); border: 0;
     }
   </style>
 </head>
-<body data-theme="dark">
-
-  <!-- Eye Illusion Background Elements -->
-  <div class="background-illusion illusion-1"></div>
-  <div class="background-illusion illusion-2"></div>
-  <div class="background-illusion illusion-3"></div>
-
-  <!-- Header with Frosted Glass Effect -->
-  <header>
-    <span class="header-gradient">Endroid Dashboard</span>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
-    </button>
+<body class="e-shell">
+  <a class="sr-only" href="#tools">Skip to tools</a>
+  <header class="e-topbar">
+    <a class="e-brand" href="/">Endroid <span>Dash</span></a>
+    <nav aria-label="Primary">
+      <a href="#tools">Tools</a>
+      <a href="#games">Games</a>
+      <a href="#android">Android</a>
+      <a href="#about">About</a>
+      <a href="https://github.com/wized2" rel="noopener">GitHub</a>
+    </nav>
   </header>
 
-  <!-- Main Container -->
-  <div class="main-container">
-    <!-- Welcome Message -->
-    <div class="welcome-message">
-      <h1 class="welcome-title">Welcome to Endroid</h1>
-      <p class="welcome-subtitle">Experience modern design with Material You 3, expressive animations, and eye-catching visual effects across all our projects.</p>
-    </div>
-
-    <!-- Cards Grid -->
-    <div class="cards-grid">
-      <!-- Endroid Ai -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">mode_fan_2</span>
-        </div>
-        <div class="project-title">Endroid Elyx</div>
-        <div class="project-description">A free and Open-Source Ai powered by Gemini, with Material You 3 Expressive theme, icons, and seamless dark/light themes.</div>
-        <a href="https://wized2.github.io/Ai/" class="project-btn">
-          <span class="material-symbols-rounded">rocket_launch</span>
-          Launch Elyx AI
-        </a>
-      </div>
-      
-      <!-- Endroid Search -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">search</span>
-        </div>
-        <div class="project-title">Endroid Search</div>
-        <div class="project-description">A modern, customizable search engine with seamless browsing experience.</div>
-        <a href="https://endroid.pages.dev/Search/" class="project-btn">
-          <span class="material-symbols-rounded">explore</span>
-          Explore Search
-        </a>
-      </div>
- 
-      <!-- Endroid Base64 -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">security</span>
-        </div>
-        <div class="project-title">Endroid Base64</div>
-        <div class="project-description">Endroid Base64 | Secure Local Encoding Tool.100% local Base64 encoder/decoder. No data leaves your browser.</div>
-        <a href="https://endroid.pages.dev/Base64/" class="project-btn">
-          <span class="material-symbols-rounded">encrypted_add</span>
-          Endroid Base64
-        </a>
-      </div>
-
-
-      <!-- Endroid Clock -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">schedule</span>
-        </div>
-        <div class="project-title">Endroid Clock</div>
-        <div class="project-description">An interactive analog and digital clock app with Material You dynamic theming.</div>
-        <a href="https://endroid.pages.dev/Clock/" class="project-btn">
-          <span class="material-symbols-rounded">timer</span>
-          Check Time
-        </a>
-      </div>
-
-      <!-- Endroid Notes -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">note</span>
-        </div>
-        <div class="project-title">Endroid Notes</div>
-        <div class="project-description">A beautiful offline notes app with rich text editing, swipe-to-delete and auto-save.</div>
-        <a href="https://endroid.pages.dev/Notes/" class="project-btn">
-          <span class="material-symbols-rounded">edit_note</span>
-          Take Notes
-        </a>
-      </div>
-
-      <!-- Endroid Calculator -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">calculate</span>
-        </div>
-        <div class="project-title">Endroid Calculator</div>
-        <div class="project-description">Calculator app with Material You 3 expressive animations and theme.</div>
-        <a href="https://endroid.pages.dev/Calculator/" class="project-btn">
-          <span class="material-symbols-rounded">functions</span>
-          Start Calculating
-        </a>
-      </div>
-
-      <!-- Endroid Maze -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">stadia_controller</span>
-        </div>
-        <div class="project-title">Endroid Maze</div>
-        <div class="project-description">Impressive maze game with procedurally generated levels, multiple difficulty modes, and smooth animations.</div>
-        <a href="https://endroid.pages.dev/Maze/" class="project-btn">
-          <span class="material-symbols-rounded">sports_esports</span>
-          Play Game
-        </a>
-      </div>
-
-      <!-- Other Projects -->
-      <div class="project-card">
-        <div class="project-icon">
-          <span class="material-symbols-rounded">code</span>
-        </div>
-        <div class="project-title">More Projects</div>
-        <div class="project-description">Discover all our open-source projects, upcoming features, and contribute to the development on GitHub.     Made with ♥️ in Pakistan</div>
-        <a href="https://github.com/Wized2" class="project-btn">
-          <span class="material-symbols-rounded">code_blocks</span>
-          View All Projects
-        </a>
-      </div>
+  <div class="hero">
+    <div class="kicker">Project Endroid · FOSS · Pakistan</div>
+    <h1>Tools, games, and apps with one clear design language</h1>
+    <p class="lead">
+      Endroid Dash is the home base for lightweight web apps and open-source Android projects by
+      <strong>Mudasir Wazir</strong>. Material-inspired UI, offline-friendly logic, no ads, no accounts required for local tools.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#tools">Browse tools</a>
+      <a class="btn btn-ghost" href="https://wized2.github.io/Ai/">Try Endroid AI</a>
+      <a class="btn btn-ghost" href="https://get-fern.vercel.app/">Get Fern</a>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    © 2026 Endroid | All Rights Reserved | <a href="https://github.com/Wized2/Endroid">GitHub Repository</a>
+  <section id="tools">
+    <h2>Web tools</h2>
+    <div class="grid">
+      <a class="card" href="https://wized2.github.io/Ai/">
+        <div class="ico">AI</div>
+        <h3>Endroid AI</h3>
+        <p>Chat assistant with Material You styling. Fast answers in the browser.</p>
+        <span class="go">Open →</span>
+      </a>
+      <a class="card" href="/Search/">
+        <div class="ico">S</div>
+        <h3>Search</h3>
+        <p>Clean search shell — minimal UI, quick redirect, customizable feel.</p>
+        <span class="go">Open →</span>
+      </a>
+      <a class="card" href="/Calculator/">
+        <div class="ico">∑</div>
+        <h3>Calculator</h3>
+        <p>Offline-first calculator with expressive Material-style theme.</p>
+        <span class="go">Open →</span>
+      </a>
+      <a class="card" href="/Clock/">
+        <div class="ico">⏱</div>
+        <h3>Clock</h3>
+        <p>Digital and analog clock with smooth motion and day/night friendly UI.</p>
+        <span class="go">Open →</span>
+      </a>
+      <a class="card" href="/Base64/">
+        <div class="ico">64</div>
+        <h3>Base64</h3>
+        <p>Encode and decode locally. Nothing is uploaded from your browser.</p>
+        <span class="go">Open →</span>
+      </a>
+      <a class="card" href="/HTML/">
+        <div class="ico">&lt;/&gt;</div>
+        <h3>HTML Editor</h3>
+        <p>Quick playground for markup experiments in the browser.</p>
+        <span class="go">Open →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="games">
+    <h2>Games</h2>
+    <div class="grid">
+      <a class="card" href="/Maze/">
+        <div class="ico">◎</div>
+        <h3>Maze <span class="pill">game</span></h3>
+        <p>Procedural neon maze — pure HTML canvas and keyboard/touch friendly play.</p>
+        <span class="go">Play →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="android">
+    <h2>Android apps</h2>
+    <div class="grid">
+      <a class="card" href="https://get-fern.vercel.app/">
+        <div class="ico">F</div>
+        <h3>Fern</h3>
+        <p>Live system monitor — CPU, RAM, thermal, battery. Optional Shizuku advanced mode.</p>
+        <span class="go">Site →</span>
+      </a>
+      <a class="card" href="https://wized2.github.io/CodeCanvas/">
+        <div class="ico">C</div>
+        <h3>CodeCanvas</h3>
+        <p>Fast Material 3 code editor with debounced highlighting and SAF files.</p>
+        <span class="go">Site →</span>
+      </a>
+      <a class="card" href="https://github.com/wized2/Class8-Homework">
+        <div class="ico">8</div>
+        <h3>Class 8</h3>
+        <p>Student homework companion with AI helper for Class 8 study flow.</p>
+        <span class="go">GitHub →</span>
+      </a>
+      <a class="card" href="https://github.com/wized2/D-Harness">
+        <div class="ico">H</div>
+        <h3>D-Harness</h3>
+        <p>DeepSeek chat tool harness — shell-style agent tools on Android.</p>
+        <span class="go">GitHub →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Project Endroid</h2>
+    <div class="about">
+      <p>
+        <strong>Project Endroid</strong> is a FOSS studio led by <strong>Mudasir Wazir</strong>
+        from <strong>Rahim Yar Khan, Punjab, Pakistan</strong>.
+        The goal is simple: useful tools that look modern, work offline when possible, and stay open.
+      </p>
+      <p>
+        Brand hubs: <a href="https://endroid.zone.id/">endroid.zone.id</a> ·
+        <a href="https://wized2.github.io/Endroid/">GitHub Pages Endroid</a> ·
+        code on <a href="https://github.com/wized2">github.com/wized2</a>.
+      </p>
+    </div>
+  </section>
+
+  <footer class="e-footer">
+    <p>© 2026 Mudasir Wazir · Project Endroid · MIT unless noted</p>
+    <p>
+      <a href="/License/">Licenses</a> ·
+      <a href="https://github.com/wized2/Dash">Source (Dash)</a> ·
+      <a href="/sitemap.xml">Sitemap</a>
+    </p>
   </footer>
-
-  <!-- PWA Service Worker Registration -->
-  <script>
-    // Register service worker for PWA
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js').then(registration => {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, err => {
-          console.log('ServiceWorker registration failed: ', err);
-        });
-      });
-    }
-    
-    // Enhanced Theme Toggle with Milky Blue Theme
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-
-    // Fix: Load theme properly and ensure light mode works
-    document.addEventListener('DOMContentLoaded', () => {
-      // First, check if there's a saved theme
-      const savedTheme = localStorage.getItem('endroid-dashboard-theme');
-      
-      if (savedTheme) {
-        body.dataset.theme = savedTheme;
-      } else {
-        // Check system preference
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        body.dataset.theme = prefersDark ? 'dark' : 'light';
-        localStorage.setItem('endroid-dashboard-theme', body.dataset.theme);
-      }
-      
-      updateThemeIcon();
-      
-      // Add smooth entrance animation for cards
-      const cards = document.querySelectorAll('.project-card');
-      cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-          card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, 100 + (index * 100));
-      });
-    });
-
-    // Enhanced theme toggle with visual feedback
-    themeToggle.addEventListener('click', () => {
-      const isDark = body.dataset.theme === 'dark';
-      const newTheme = isDark ? 'light' : 'dark';
-      
-      // Add ripple effect
-      createRipple(event);
-      
-      // Smooth theme transition
-      body.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      body.dataset.theme = newTheme;
-      
-      // Save preference
-      localStorage.setItem('endroid-dashboard-theme', newTheme);
-      updateThemeIcon();
-      
-      // Animate background illusions
-      const illusions = document.querySelectorAll('.background-illusion');
-      illusions.forEach(illusion => {
-        illusion.style.animation = 'none';
-        setTimeout(() => {
-          illusion.style.animation = '';
-        }, 10);
-      });
-    });
-
-    function updateThemeIcon() {
-      themeIcon.textContent = body.dataset.theme === 'dark' ? 'dark_mode' : 'light_mode';
-      themeIcon.style.transition = 'transform 0.3s ease';
-      themeIcon.style.transform = 'scale(1.2)';
-      
-      setTimeout(() => {
-        themeIcon.style.transform = 'scale(1)';
-      }, 300);
-    }
-
-    // Auto-detect system theme changes
-    const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    function handleSystemThemeChange(e) {
-      // Only update if user hasn't set a preference
-      if (!localStorage.getItem('endroid-dashboard-theme')) {
-        const newTheme = e.matches ? 'dark' : 'light';
-        body.dataset.theme = newTheme;
-        updateThemeIcon();
-      }
-    }
-    
-    systemThemeQuery.addEventListener('change', handleSystemThemeChange);
-
-    // Ripple effect function
-    function createRipple(event) {
-      const button = event.currentTarget;
-      const circle = document.createElement('span');
-      const diameter = Math.max(button.clientWidth, button.clientHeight);
-      const radius = diameter / 2;
-
-      circle.style.width = circle.style.height = `${diameter}px`;
-      circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
-      circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
-      circle.classList.add('ripple');
-
-      const ripple = button.getElementsByClassName('ripple')[0];
-      if (ripple) ripple.remove();
-
-      button.appendChild(circle);
-    }
-
-    // Parallax effect for background illusions
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      
-      const illusions = document.querySelectorAll('.background-illusion');
-      illusions.forEach((illusion, index) => {
-        const speed = 0.015 * (index + 1);
-        const currentX = parseFloat(illusion.style.transform?.match(/translateX\(([^)]+)\)/)?.[1] || 0);
-        const currentY = parseFloat(illusion.style.transform?.match(/translateY\(([^)]+)\)/)?.[1] || 0);
-        
-        // Smooth interpolation
-        const targetX = x * speed;
-        const targetY = y * speed;
-        
-        illusion.style.transform = `translate(${targetX}px, ${targetY}px)`;
-      });
-    });
-
-    // Enhanced hover effects for cards
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        const icon = card.querySelector('.project-icon');
-        if (icon) {
-          icon.style.transform = 'rotate(15deg) scale(1.1)';
-        }
-      });
-      
-      card.addEventListener('mouseleave', () => {
-        const icon = card.querySelector('.project-icon');
-        if (icon) {
-          icon.style.transform = 'rotate(0) scale(1)';
-        }
-      });
-    });
-
-    // Add CSS for ripple effect
-    const style = document.createElement('style');
-    style.textContent = `
-      .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(124, 185, 232, 0.3);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
-        pointer-events: none;
-      }
-      
-      @keyframes ripple-animation {
-        to {
-          transform: scale(4);
-          opacity: 0;
-        }
-      }
-      
-      /* Ensure smooth transitions */
-      body, header, .project-card, .project-btn, .theme-toggle {
-        transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                    color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                    border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                    box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Force light mode testing function (for debugging)
-    window.enableLightMode = function() {
-      body.dataset.theme = 'light';
-      localStorage.setItem('endroid-dashboard-theme', 'light');
-      updateThemeIcon();
-    };
-    
-    window.enableDarkMode = function() {
-      body.dataset.theme = 'dark';
-      localStorage.setItem('endroid-dashboard-theme', 'dark');
-      updateThemeIcon();
-    };
-  </script>
 </body>
 </html>
