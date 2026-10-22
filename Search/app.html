@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Endroid Search</title>
-  <meta name="description" content="Endroid Search — clean Material You search shell with dark mode and UUID helper." />
+  <meta name="description" content="Endroid Search — clean Material You search shell with light and dark mode." />
   <meta name="theme-color" content="#fef7ff" />
   <link rel="canonical" href="https://endroid.pages.dev/Search/" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
@@ -18,7 +18,7 @@
       min-height: calc(100dvh - 56px);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 1.5rem max(1rem, env(safe-area-inset-left)) 2rem max(1rem, env(safe-area-inset-right));
-      gap: 1.25rem;
+      gap: 1rem;
     }
     .logo {
       width: 72px; height: 72px; border-radius: 20px;
@@ -27,7 +27,7 @@
       display: grid; place-items: center;
       box-shadow: var(--md-elevation-2);
     }
-    .logo svg, .logo i { width: 36px; height: 36px; }
+    .logo i { width: 36px; height: 36px; }
     h1 { margin: 0; font-size: 1.5rem; letter-spacing: -.02em; }
     form.search {
       width: min(560px, 100%);
@@ -52,22 +52,7 @@
       background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);
       display: grid; place-items: center; cursor: pointer;
     }
-    .util {
-      width: min(560px, 100%);
-      background: var(--md-sys-color-surface-container-low);
-      border: 1px solid var(--md-sys-color-outline-variant);
-      border-radius: var(--md-radius-md);
-      padding: 1rem;
-    }
-    .util h2 { margin: 0 0 .5rem; font-size: 1rem; }
-    .util-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-    .util code {
-      flex: 1; min-width: 12rem;
-      font-size: .85rem; word-break: break-all;
-      background: var(--md-sys-color-surface-container-highest);
-      padding: .55rem .7rem; border-radius: 10px;
-    }
-    .hint { color: var(--md-sys-color-on-surface-variant); font-size: .85rem; margin: 0; }
+    .hint { color: var(--md-sys-color-on-surface-variant); font-size: .9rem; margin: 0; }
   </style>
 </head>
 <body class="e-shell">
@@ -80,46 +65,18 @@
       <a class="e-icon-btn" href="/" aria-label="Home"><i data-lucide="home"></i></a>
     </div>
   </header>
-
   <div class="wrap">
     <div class="logo" aria-hidden="true"><i data-lucide="search"></i></div>
     <h1>Endroid Search</h1>
-    <p class="hint">Type a query and go — or grab a UUID from the edge API.</p>
+    <p class="hint">Search the web</p>
     <form class="search" action="https://www.google.com/search" method="get" role="search">
-      <input name="q" type="search" placeholder="Search the web" required autocomplete="off" autofocus />
+      <input name="q" type="search" placeholder="Search…" required autocomplete="off" autofocus />
       <button type="submit" aria-label="Search"><i data-lucide="arrow-right"></i></button>
     </form>
-    <div class="util">
-      <h2>UUID</h2>
-      <div class="util-row">
-        <code id="uuid-out">—</code>
-        <button type="button" class="e-btn e-btn-tonal" id="uuid-btn">Generate</button>
-        <button type="button" class="e-btn e-btn-outline" id="uuid-copy">Copy</button>
-      </div>
-      <p class="hint" style="margin-top:.65rem">Powered by <code>/api/uuid</code> on Cloudflare Pages.</p>
-    </div>
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       if (window.lucide) lucide.createIcons();
-      var out = document.getElementById("uuid-out");
-      var btn = document.getElementById("uuid-btn");
-      var copy = document.getElementById("uuid-copy");
-      async function gen() {
-        out.textContent = "…";
-        try {
-          var r = await fetch("/api/uuid");
-          var j = await r.json();
-          out.textContent = j.uuid || "error";
-        } catch (e) {
-          out.textContent = crypto.randomUUID ? crypto.randomUUID() : "offline";
-        }
-      }
-      btn.addEventListener("click", gen);
-      copy.addEventListener("click", function () {
-        if (out.textContent && out.textContent !== "—") navigator.clipboard.writeText(out.textContent);
-      });
-      gen();
     });
   </script>
 </body>
