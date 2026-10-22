@@ -4,9 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Endroid Search</title>
-  <meta name="description" content="Endroid Search — clean Material You search shell with light and dark mode." />
+  <meta name="description" content="Endroid Search — clean Material 3 inspired search shell. Fast Google redirect, light and dark mode." />
   <meta name="theme-color" content="#fef7ff" />
-  <link rel="canonical" href="https://endroid.pages.dev/Search/" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="manifest" href="manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -18,7 +17,7 @@
       min-height: calc(100dvh - 56px);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 1.5rem max(1rem, env(safe-area-inset-left)) 2rem max(1rem, env(safe-area-inset-right));
-      gap: 1rem;
+      gap: 1.25rem;
     }
     .logo {
       width: 72px; height: 72px; border-radius: 20px;
@@ -27,9 +26,9 @@
       display: grid; place-items: center;
       box-shadow: var(--md-elevation-2);
     }
-    .logo i { width: 36px; height: 36px; }
+    .logo svg { width: 36px; height: 36px; }
     h1 { margin: 0; font-size: 1.5rem; letter-spacing: -.02em; }
-    form.search {
+    form {
       width: min(560px, 100%);
       display: flex; align-items: center; gap: .5rem;
       background: var(--md-sys-color-surface-container-highest);
@@ -38,45 +37,68 @@
       box-shadow: var(--md-elevation-2);
       border: 1px solid var(--md-sys-color-outline-variant);
     }
-    form.search:focus-within {
+    form:focus-within {
       border-color: var(--md-sys-color-primary);
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-sys-color-primary) 25%, transparent);
     }
-    form.search input {
+    form input {
       flex: 1; border: none; background: transparent; outline: none;
       font: 500 1rem var(--md-font); color: var(--md-sys-color-on-surface);
       min-width: 0; padding: .65rem 0;
     }
-    form.search button[type=submit] {
+    form button[type=submit] {
       width: 48px; height: 48px; border: none; border-radius: 999px;
       background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);
       display: grid; place-items: center; cursor: pointer;
     }
-    .hint { color: var(--md-sys-color-on-surface-variant); font-size: .9rem; margin: 0; }
+    form button svg { width: 20px; height: 20px; }
+    .hints {
+      display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center;
+      max-width: 560px;
+    }
+    .hints button {
+      border: 1px solid var(--md-sys-color-outline-variant);
+      background: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface-variant);
+      border-radius: 999px; padding: .45rem .9rem; font-size: .85rem; font-weight: 500;
+      cursor: pointer; display: inline-flex; align-items: center; gap: .35rem;
+    }
+    .hints button svg { width: 14px; height: 14px; }
+    .note { font-size: .8rem; color: var(--md-sys-color-outline); text-align: center; }
   </style>
 </head>
 <body class="e-shell">
   <header class="e-topbar">
-    <a class="e-brand" href="/"><i data-lucide="hexagon"></i> Endroid <span>Dash</span></a>
+    <a class="e-brand" href="/"><i data-lucide="hexagon"></i> Endroid <span>Search</span></a>
     <div class="e-actions">
-      <button type="button" class="e-icon-btn" aria-label="Toggle theme" onclick="endroidToggleTheme()">
-        <i data-lucide="moon" data-theme-icon></i>
-      </button>
+      <button type="button" class="e-icon-btn" aria-label="Toggle theme" onclick="endroidToggleTheme()"><i data-lucide="moon" data-theme-icon></i></button>
       <a class="e-icon-btn" href="/" aria-label="Home"><i data-lucide="home"></i></a>
     </div>
   </header>
   <div class="wrap">
-    <div class="logo" aria-hidden="true"><i data-lucide="search"></i></div>
-    <h1>Endroid Search</h1>
-    <p class="hint">Search the web</p>
-    <form class="search" action="https://www.google.com/search" method="get" role="search">
-      <input name="q" type="search" placeholder="Search…" required autocomplete="off" autofocus />
+    <div class="logo"><i data-lucide="search"></i></div>
+    <h1>Search the web</h1>
+    <form id="f" action="https://www.google.com/search" method="get" role="search">
+      <input id="q" name="q" type="search" placeholder="Type and go" autocomplete="off" autofocus enterkeyhint="search" />
       <button type="submit" aria-label="Search"><i data-lucide="arrow-right"></i></button>
     </form>
+    <div class="hints">
+      <button type="button" data-q="weather"><i data-lucide="cloud-sun"></i> Weather</button>
+      <button type="button" data-q="maps"><i data-lucide="map-pin"></i> Maps</button>
+      <button type="button" data-q="news"><i data-lucide="newspaper"></i> News</button>
+      <button type="button" data-q="translate"><i data-lucide="languages"></i> Translate</button>
+    </div>
+    <p class="note">Opens Google results in a new navigation. No tracking by Endroid.</p>
   </div>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener('DOMContentLoaded', () => {
       if (window.lucide) lucide.createIcons();
+      document.querySelectorAll('.hints button').forEach(b => {
+        b.addEventListener('click', () => {
+          document.getElementById('q').value = b.getAttribute('data-q');
+          document.getElementById('f').submit();
+        });
+      });
     });
   </script>
 </body>

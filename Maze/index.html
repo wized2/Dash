@@ -110,13 +110,11 @@
             min-height: 100dvh;
             height: 100dvh;
         }
-        /* Compact game chrome — does not steal canvas space */
         body > .e-topbar {
             flex: 0 0 auto;
             position: relative;
             background: rgba(0, 0, 34, 0.92);
             border-bottom: 1px solid rgba(3, 218, 198, 0.25);
-            color: #e6e0e9;
         }
         body > .e-topbar .e-brand { color: #e6e0e9; }
         body > .e-topbar .e-brand span { color: #03dac6; }
@@ -208,6 +206,7 @@
 <header class="e-topbar" role="navigation" aria-label="Endroid">
   <a class="e-brand" href="/"><i data-lucide="hexagon"></i> Endroid <span>Dash</span></a>
   <div class="e-actions">
+    <button type="button" class="e-icon-btn" aria-label="Toggle theme" onclick="endroidToggleTheme()"><i data-lucide="moon" data-theme-icon></i></button>
     <a class="e-icon-btn" href="/" aria-label="Home"><i data-lucide="home"></i></a>
   </div>
 </header>
