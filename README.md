@@ -1,24 +1,23 @@
 # Endroid Dash
 
-Public dashboard for **Project Endroid** — web tools, games, and links to Android FOSS apps.
+Web tools & games for **Project Endroid** — live at [endroid.pages.dev](https://endroid.pages.dev/).
 
-**Live:** https://endroid.pages.dev/
+Brand hub: [endroid.zone.id](https://endroid.zone.id/) ([Endroid](https://github.com/wized2/Endroid) repo).
 
-Built by **Mudasir Wazir** (Rahim Yar Khan, Pakistan) · GitHub [@wized2](https://github.com/wized2)
+## Apps (this repo)
 
-## Structure
+Search · Calculator · Base64 · Clock · HTML · License · Maze · We
 
-| Path | App |
-|------|-----|
-| `/` | Dashboard hub |
-| `/Search/` | Endroid Search |
-| `/Calculator/` | Calculator |
-| `/Clock/` | Clock |
-| `/Base64/` | Local Base64 |
-| `/Maze/` | Maze game |
-| `/HTML/` | HTML editor |
-| `/shared/endroid.css` | Shared design tokens |
+## Cloudflare Pages Functions
 
-## Brand
+| Path | Method | Purpose |
+|------|--------|---------|
+| `/api/health` | GET | Service health |
+| `/api/uuid` | GET | Random UUID |
+| `/api/hash` | POST | SHA-256 of body / `{ "text": "..." }` |
 
-Consistent Endroid surface colors, Inter typography, sticky top bar, and card grid across the hub.
+Deploy on Cloudflare Pages with Functions enabled (default for `functions/`).
+
+## Shared UI
+
+`shared/endroid.css` + `shared/endroid.js` — keep in sync with the Endroid hub.
