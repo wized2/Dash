@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Endroid Ludo</title>
+  <meta name="description" content="Play Ludo in the browser — Endroid Dash. Classic board race with dice and captures." />
+  <meta name="theme-color" content="#faf9f5" />
+  <link rel="canonical" href="https://endroid.pages.dev/Ludo/" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="/shared/endroid.css" rel="stylesheet" />
+  <script src="/shared/endroid.js" defer></script>
+  <script src="https://unpkg.com/lucide@0.469.0" defer></script>
+  <style>
+    body.e-shell { overflow-x: hidden; }
+    .game {
+      width: min(520px, calc(100% - 1.5rem));
+      margin: 0 auto;
+      padding: 1rem 0 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+    }
+    .status {
+      display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+      justify-content: space-between;
+    }
+    .status .turn {
+      font-weight: 650; font-size: 1rem;
+    }
+    .board-wrap {
+      aspect-ratio: 1;
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      background: #fff;
+      box-shadow: var(--md-elevation-1);
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+    html[data-theme="dark"] .board-wrap { background: var(--md-sys-color-surface-container); }
+    canvas { width: 100%; height: 100%; display: block; }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: .55rem; align-items: center;
+    }
+    .die {
+      width: 52px; height: 52px; border-radius: 12px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      background: var(--md-sys-color-surface-container-high);
+      display: grid; place-items: center;
+      font-size: 1.4rem; font-weight: 700;
+    }
+    .hint { color: var(--md-sys-color-on-surface-variant); font-size: .88rem; margin: 0; }
+    .legend { display: flex; gap: .75rem; flex-wrap: wrap; font-size: .85rem; }
+    .swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: .3rem; vertical-align: middle; }
+  </style>
+</head>
+<body class="e-shell">
+  <header class="e-topbar">
+    <a class="e-brand" href="/"><i data-lucide="hexagon"></i> Endroid <span>Dash</span></a>
+    <div class="e-actions">
+      <button type="button" class="e-icon-btn" aria-label="Toggle theme" onclick="endroidToggleTheme()">
+        <i data-lucide="moon" data-theme-icon></i>
+      </button>
+      <a class="e-icon-btn" href="/" aria-label="Home"><i data-lucide="home"></i></a>
+    </div>
+  </header>
+
+  <div class="game">
+    <div class="status">
+      <div class="turn" id="turnLabel">Your turn (Red)</div>
+      <div class="legend">
+        <span><i class="swatch" style="background:#c62828"></i>You</span>
+        <span><i class="swatch" style="background:#1565c0"></i>CPU</span>
+      </div>
+    </div>
+    <div class="board-wrap"><canvas id="board" width="600" height="600" aria-label="Ludo board"></canvas></div>
+    <div class="controls">
+      <div class="die" id="die" aria-live="polite">—</div>
+      <button type="button" class="e-btn e-btn-filled" id="rollBtn">Roll dice</button>
+      <button type="button" class="e-btn e-btn-outline" id="newBtn">New game</button>
+    </div>
+    <p class="hint" id="hint">Roll a 6 to leave the yard. Land on the CPU to send it home. First to get all 4 tokens home wins.</p>
+  </div>
+
+  <script>
+(function () {
+  const COLORS = {
+    red: { fill: "#c62828", soft: "#ffcdd2", start: 0 },
+    blue: { fill: "#1565c0", soft: "#bbdefb", start: 26 },
+  };
+  // Main track length 52; home stretch 5; total steps to finish 57 from entry
+  const TRACK = 52;
+  const HOME_LEN = 6; // includes finish cell
+
+  // Token path positions: -1 = yard, 0..51 track (relative to color start), 52..56 home stretch, 57 finished
+  const state = {
+    turn: "red", // red = human
+    dice: null,
+    rolled: false,
+    tokens: {
+      red: [-1, -1, -1, -1],
+      blue: [-1, -1, -1, -1],
+    },
+    winner: null,
+    anim: null,
+  };
+
+  const canvas = document.getElementById("board");
+  const ctx = canvas.getContext("2d");
+  const dieEl = document.getElementById("die");
+  const rollBtn = document.getElementById("rollBtn");
+  const newBtn = document.getElementById("newBtn");
+  const turnLabel = document.getElementById("turnLabel");
+  const hint = document.getElementById("hint");
+
+  function cellCenter(col, row, n) {
+    const s = canvas.width / n;
+    return { x: col * s + s / 2, y: row * s + s / 2, s };
+  }
+
+  // Map track index 0..51 to board grid (15x15 style simplified to 11x11 visual)
+  // Using classic Ludo layout coordinates on a 15-grid
+  const N = 15;
+  function trackXY(globalIndex) {
+    // Path clockwise starting from red entry (bottom vertical middle-left-ish)
+    // Precomputed path for standard Ludo outer track
+    const path = [];
+    // Bottom arm leftward to left, up, right, down — simplified loop
+    // Row 8 is middle horizontal lower, etc. Build standard path:
+    // Red starts at (6,13) going up
+    const coords = [
+      // red vertical up
+      [6,13],[6,12],[6,11],[6,10],[6,9],
+      // bottom of left-center to left
+      [5,8],[4,8],[3,8],[2,8],[1,8],[0,8],
+      // left column up
+      [0,7],[0,6],
+      // top of left to right along top-left
+      [0,5],[1,5],[2,5],[3,5],[4,5],[5,5],
+      // into top vertical
+      [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],
+      // top row to right
+      [7,0],[8,0],
+      // right side of top
+      [8,1],[8,2],[8,3],[8,4],[8,5],
+      // across top-right
+      [9,5],[10,5],[11,5],[12,5],[13,5],[14,5],
+      // right column down
+      [14,6],[14,7],
+      // bottom of right across left
+      [14,8],[13,8],[12,8],[11,8],[10,8],[9,8],
+      // down right center
+      [8,8],[8,9],[8,10],[8,11],[8,12],[8,13],
+      // bottom edge left to red approach
+      [8,14],[7,14],[6,14],
+    ];
+    // coords length should be 52
+    while (coords.length < 52) coords.push(coords[coords.length - 1]);
+    const i = ((globalIndex % 52) + 52) % 52;
+    return coords[i];
+  }
+
+  function homeXY(color, step) {
+    // step 0..5 along home column toward center
+    if (color === "red") return [7, 13 - step];
+    return [7, 1 + step]; // blue from top toward center
+  }
+
+  function yardSlots(color) {
+    if (color === "red") return [[2,11],[3,11],[2,12],[3,12]];
+    return [[11,2],[12,2],[11,3],[12,3]];
+  }
+
+  function tokenGlobalPos(color, pos) {
+    if (pos < 0) return null;
+    if (pos >= 52 && pos < 57) {
+      return homeXY(color, pos - 52);
+    }
+    if (pos >= 57) return [7, 7]; // finished pile center-ish
+    const start = COLORS[color].start;
+    return trackXY(start + pos);
+  }
+
+  function drawBoard() {
+    const w = canvas.width;
+    const s = w / N;
+    ctx.clearRect(0, 0, w, w);
+
+    // background
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--md-sys-color-surface").trim() || "#faf9f5";
+    // force light board for contrast
+    ctx.fillStyle = "#f7f5ef";
+    ctx.fillRect(0, 0, w, w);
+
+    // home bases
+    ctx.fillStyle = COLORS.red.soft;
+    ctx.fillRect(0, s * 9, s * 6, s * 6);
+    ctx.fillStyle = COLORS.blue.soft;
+    ctx.fillRect(s * 9, 0, s * 6, s * 6);
+
+    // center
+    ctx.fillStyle = "#efeae3";
+    ctx.fillRect(s * 6, s * 6, s * 3, s * 3);
+
+    // grid lines light
+    ctx.strokeStyle = "rgba(0,0,0,.08)";
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= N; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * s, 0); ctx.lineTo(i * s, w); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, i * s); ctx.lineTo(w, i * s); ctx.stroke();
+    }
+
+    // colored path accents
+    for (let i = 0; i < 52; i++) {
+      const [c, r] = trackXY(i);
+      const isRedStart = i === COLORS.red.start;
+      const isBlueStart = i === COLORS.blue.start;
+      if (isRedStart) ctx.fillStyle = COLORS.red.soft;
+      else if (isBlueStart) ctx.fillStyle = COLORS.blue.soft;
+      else continue;
+      ctx.fillRect(c * s + 1, r * s + 1, s - 2, s - 2);
+    }
+
+    // home stretch cells
+    for (let step = 0; step < 6; step++) {
+      let [c, r] = homeXY("red", step);
+      ctx.fillStyle = COLORS.red.soft;
+      ctx.fillRect(c * s + 1, r * s + 1, s - 2, s - 2);
+      [c, r] = homeXY("blue", step);
+      ctx.fillStyle = COLORS.blue.soft;
+      ctx.fillRect(c * s + 1, r * s + 1, s - 2, s - 2);
+    }
+
+    // tokens
+    ["red", "blue"].forEach((color) => {
+      state.tokens[color].forEach((pos, idx) => {
+        let col, row;
+        if (pos < 0) {
+          const slot = yardSlots(color)[idx];
+          col = slot[0]; row = slot[1];
+        } else {
+          const p = tokenGlobalPos(color, pos);
+          col = p[0]; row = p[1];
+        }
+        const x = col * s + s / 2;
+        const y = row * s + s / 2;
+        // slight offset if stacked
+        const stack = state.tokens[color].filter((p, j) => j < idx && p === pos).length;
+        ctx.beginPath();
+        ctx.fillStyle = COLORS[color].fill;
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 2;
+        ctx.arc(x + stack * 3, y - stack * 3, s * 0.32, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        // selectable glow for human moves
+        if (color === "red" && state.turn === "red" && state.rolled && canMove("red", idx, state.dice)) {
+          ctx.beginPath();
+          ctx.strokeStyle = "#111";
+          ctx.lineWidth = 2;
+          ctx.setLineDash([3, 3]);
+          ctx.arc(x + stack * 3, y - stack * 3, s * 0.4, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      });
+    });
+  }
+
+  function canMove(color, idx, dice) {
+    if (state.winner || dice == null) return false;
+    const pos = state.tokens[color][idx];
+    if (pos < 0) return dice === 6;
+    if (pos >= 57) return false;
+    const next = pos + dice;
+    if (pos < 52) {
+      // entering home
+      if (next >= 52) {
+        const homeStep = next - 52;
+        return homeStep < HOME_LEN;
+      }
+      return true;
+    }
+    // already in home stretch
+    return next <= 57;
+  }
+
+  function legalMoves(color, dice) {
+    const moves = [];
+    for (let i = 0; i < 4; i++) if (canMove(color, i, dice)) moves.push(i);
+    return moves;
+  }
+
+  function captureIfAny(color, pos) {
+    if (pos < 0 || pos >= 52) return; // no capture in yard/home
+    const global = (COLORS[color].start + pos) % 52;
+    const other = color === "red" ? "blue" : "red";
+    state.tokens[other].forEach((p, i) => {
+      if (p >= 0 && p < 52) {
+        const og = (COLORS[other].start + p) % 52;
+        if (og === global) state.tokens[other][i] = -1;
+      }
+    });
+  }
+
+  function applyMove(color, idx, dice) {
+    let pos = state.tokens[color][idx];
+    if (pos < 0) {
+      state.tokens[color][idx] = 0;
+      captureIfAny(color, 0);
+    } else {
+      pos += dice;
+      if (pos > 57) return false;
+      state.tokens[color][idx] = pos;
+      if (pos < 52) captureIfAny(color, pos);
+    }
+    if (state.tokens[color].every((p) => p >= 57)) {
+      state.winner = color;
+    }
+    return true;
+  }
+
+  function updateUI() {
+    if (state.winner) {
+      turnLabel.textContent = state.winner === "red" ? "You win!" : "CPU wins";
+      hint.textContent = "Start a new game to play again.";
+      rollBtn.disabled = true;
+    } else if (state.turn === "red") {
+      turnLabel.textContent = state.rolled ? "Choose a token" : "Your turn (Red)";
+      hint.textContent = state.rolled
+        ? "Tap a highlighted token to move."
+        : "Roll a 6 to leave the yard.";
+      rollBtn.disabled = state.rolled;
+    } else {
+      turnLabel.textContent = "CPU thinking…";
+      rollBtn.disabled = true;
+    }
+    dieEl.textContent = state.dice == null ? "—" : String(state.dice);
+    drawBoard();
+  }
+
+  function endTurn(extraSix) {
+    state.rolled = false;
+    if (state.winner) {
+      updateUI();
+      return;
+    }
+    if (extraSix) {
+      // same player rolls again
+      state.dice = null;
+      updateUI();
+      if (state.turn === "blue") setTimeout(cpuPlay, 400);
+      return;
+    }
+    state.dice = null;
+    state.turn = state.turn === "red" ? "blue" : "red";
+    updateUI();
+    if (state.turn === "blue") setTimeout(cpuPlay, 500);
+  }
+
+  function afterMove(color, dice) {
+    const extra = dice === 6 && !state.winner;
+    endTurn(extra);
+  }
+
+  function cpuPlay() {
+    if (state.winner || state.turn !== "blue") return;
+    const dice = 1 + Math.floor(Math.random() * 6);
+    state.dice = dice;
+    state.rolled = true;
+    updateUI();
+    setTimeout(() => {
+      const moves = legalMoves("blue", dice);
+      if (!moves.length) {
+        endTurn(false);
+        return;
+      }
+      // Prefer capture, else advance furthest
+      let best = moves[0];
+      let bestScore = -1;
+      moves.forEach((i) => {
+        const pos = state.tokens.blue[i];
+        let score = pos < 0 ? 10 : pos;
+        if (pos >= 0 && pos < 52) {
+          const next = pos + dice;
+          if (next < 52) {
+            const g = (COLORS.blue.start + next) % 52;
+            state.tokens.red.forEach((rp) => {
+              if (rp >= 0 && rp < 52 && (COLORS.red.start + rp) % 52 === g) score += 50;
+            });
+          }
+        }
+        if (score > bestScore) { bestScore = score; best = i; }
+      });
+      applyMove("blue", best, dice);
+      afterMove("blue", dice);
+    }, 450);
+  }
+
+  rollBtn.addEventListener("click", () => {
+    if (state.turn !== "red" || state.rolled || state.winner) return;
+    const dice = 1 + Math.floor(Math.random() * 6);
+    state.dice = dice;
+    state.rolled = true;
+    const moves = legalMoves("red", dice);
+    updateUI();
+    if (!moves.length) {
+      setTimeout(() => endTurn(false), 500);
+    }
+  });
+
+  newBtn.addEventListener("click", () => {
+    state.turn = "red";
+    state.dice = null;
+    state.rolled = false;
+    state.tokens = { red: [-1,-1,-1,-1], blue: [-1,-1,-1,-1] };
+    state.winner = null;
+    rollBtn.disabled = false;
+    updateUI();
+  });
+
+  canvas.addEventListener("click", (e) => {
+    if (state.turn !== "red" || !state.rolled || state.winner) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * canvas.width;
+    const y = ((e.clientY - rect.top) / rect.height) * canvas.height;
+    const s = canvas.width / N;
+    const moves = legalMoves("red", state.dice);
+    for (const idx of moves) {
+      const pos = state.tokens.red[idx];
+      let col, row;
+      if (pos < 0) {
+        const slot = yardSlots("red")[idx];
+        col = slot[0]; row = slot[1];
+      } else {
+        const p = tokenGlobalPos("red", pos);
+        col = p[0]; row = p[1];
+      }
+      const cx = col * s + s / 2;
+      const cy = row * s + s / 2;
+      if (Math.hypot(x - cx, y - cy) < s * 0.55) {
+        applyMove("red", idx, state.dice);
+        afterMove("red", state.dice);
+        return;
+      }
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.lucide) lucide.createIcons();
+    updateUI();
+  });
+  // first paint
+  updateUI();
+})();
+  </script>
+</body>
+</html>
